@@ -50,6 +50,38 @@
         </dependency>
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>ebi-nexus</id>
+            <name>Nexus</name>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>ebi-atlas</id>
+            <name>Atlas</name>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/groups/atlas-repos</url>
+        </repository>
+        <repository>
+            <id>ebi-repo</id>
+            <name>The EBI internal repository</name>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo/</url>
+        </repository>
+        <repository>
+            <id>ebi-snapshot-repo</id>
+            <name>The EBI internal snapshot repository</name>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots/</url>
+        </repository>
+        <repository>
+            <id>oracleReleases</id>
+            <name>Oracle Released Java Packages</name>
+            <url>http://download.oracle.com/maven</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots/>
+        </repository>
+    </repositories>
+
     <profiles>
 
         <profile>
