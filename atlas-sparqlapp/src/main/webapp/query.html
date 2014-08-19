@@ -77,8 +77,8 @@ For optimal performance, use a custom Modernizr build: www.modernizr.com/downloa
 <body class="level1 section-services"   onload="$('#sparql-endpoint').sparql({
     namespaces : lodeNamespacePrefixes,
     example_queries: exampleQueries,
-    inference : true,
-    default_query: 'SELECT DISTINCT ?experiment ?description WHERE {\n?experiment a atlasterms:Experiment .\n?experiment dcterms:description ?description\n}',
+    inference : false,
+    default_query: 'SELECT DISTINCT ?experiment ?experimentType ?description WHERE {\n  ?experiment rdf:type ?type .\n  ?type rdfs:label ?experimentType .\n  ?experiment dcterms:description ?description\n}',
     logging: false});" class="level2"><!-- add any of your classes or IDs -->
 <div id="skip-to">
     <ul>

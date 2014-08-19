@@ -76,6 +76,16 @@ public abstract class DifferentialExperimentDesignRDFBuilder<T extends Different
                     assayUri
             );
         }
+
+        // link experiment to analysis
+
+        URI experimentUri = getUriProvider().getExperimentUri(experiment.getAccession());
+        builder.createObjectPropertyAssertion(
+                experimentUri,
+                getUriProvider().getExperimentToAnalysisRel(),
+                analysisURI
+        );
+
         return analysisURI;
     }
 }

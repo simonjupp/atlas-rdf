@@ -148,6 +148,12 @@ public interface URIProvider {
     URI getExperimentToAssayRel();
 
     /**
+     * relate an experiment to an analysis
+     * @return
+     */
+    URI getExperimentToAnalysisRel();
+
+    /**
      * Get the URI for a pubmed resource
      * @param pubmedId
      * @return

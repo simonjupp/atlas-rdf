@@ -191,6 +191,10 @@ public class PropertiesBasedURIProvider implements URIProvider {
         return URI.create(read("gxa.hasPart.relation"));
     }
 
+    public URI getExperimentToAnalysisRel() {
+        return URI.create(read("gxa.hasPart.relation"));
+    }
+
     public URI getPubmedUri(String pubmedId) {
         String path = MessageFormat.format(read("pubmed.resource.uri"), pubmedId);
         return URI.create(path.toString());

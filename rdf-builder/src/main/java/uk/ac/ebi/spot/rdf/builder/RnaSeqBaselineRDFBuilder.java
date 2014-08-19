@@ -43,6 +43,14 @@ public class RnaSeqBaselineRDFBuilder extends AbstractExperimentBuilder<Baseline
                 getUriProvider().getRNASeqBaselineAnalysisTypeUri()
         );
 
+        // link experiment to analysis
+        URI experimentUri = getUriProvider().getExperimentUri(experiment.getAccession());
+        builder.createObjectPropertyAssertion(
+                experimentUri,
+                getUriProvider().getExperimentToAnalysisRel(),
+                analysisURI
+        );
+
         // get the groups and link to assays,
         for (AssayGroup group : experiment.getAssayGroups()) {
             for (String assay : group) {

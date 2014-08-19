@@ -42,6 +42,7 @@ public class MicroarrayContrastRDFBuilder extends DifferentialExperimentDesignRD
                 URI analysisUri = getAnalaysisUriForContrast(experiment, contrast);
                 // create a URI for the expression value based on the accession, contrast id, design element, element id and an incremental number
 
+
                 MicroarrayExpression expression = profile.getExpression(contrast);
 
                 String frag = HashingIdGenerator.generateHashEncodedID(

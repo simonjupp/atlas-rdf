@@ -121,7 +121,7 @@ function _buildVoid(element) {
         "PREFIX void: <http://rdfs.org/ns/void#> " +
         "PREFIX pav: <http://purl.org/pav/2.0/> " +
         "PREFIX prov: <http://www.w3.org/ns/prov#> " +
-        "SELECT ?dataset ?title ?description ?version ?triples ?created ?previous " +
+        "SELECT ?dataset ?title ?description ?version ?triples ?created " +
         "where { " +
         "?dataset a void:Dataset ; " +
         "dcterms:title ?title; " +
