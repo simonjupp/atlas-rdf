@@ -140,11 +140,10 @@ public class PropertiesBasedURIProvider implements URIProvider {
 
 
     public URI getOrganismUri(String organismName) throws UnknownOrganismTypeException {
-        String on = organismName.toUpperCase().replaceAll(" ", "_").replace("(", "").replace(")","");
-        if (Organism.isValid(on)) {
+        if (Organism.isValid(organismName)) {
             return URI.create(
                     read("obo.base") +
-                            "NCBITaxon_" + Organism.valueOf(on).getId()
+                            "NCBITaxon_" + Organism.getOrganimsByName(organismName).getId()
             ) ;
         }
         throw new UnknownOrganismTypeException("Unknown organism class:" + organismName);
@@ -184,7 +183,7 @@ public class PropertiesBasedURIProvider implements URIProvider {
     public URI getBioentityUri(String id, String speciesName) {
         String path = MessageFormat.format(read("ensembl.resource.uri"), "", id);
         if (Organism.isValid(speciesName)) {
-            String kingdom = Organism.valueOf(speciesName).getKingdom();
+            String kingdom = Organism.getOrganimsByName(speciesName).getKingdom();
 
             if (!kingdom.equals("eukaryote")) {
                 path = MessageFormat.format(read("ensembl.resource.uri"), "." + kingdom, id);

@@ -58,9 +58,10 @@ public enum Organism {
         return kingdom;
     }
 
-    public static boolean isValid(String name) {
+    public static boolean isValid(String speciesName) {
+
         for(Organism v : Organism.values()) {
-            if (v.name().equals(name.toUpperCase().replace(" ", "_"))) {
+            if (v.name().equals(clean(speciesName))) {
                 return true;
             }
         }
@@ -70,7 +71,7 @@ public enum Organism {
 
     public static Organism getOrganimsByName(String speciesName) {
         for(Organism v : Organism.values()) {
-            if (v.name().equals(speciesName.toUpperCase().replace(" ", "_"))) {
+            if (v.name().equals(clean(speciesName))) {
                 return v;
             }
         }
@@ -84,5 +85,10 @@ public enum Organism {
             }
         }
         return null;
+    }
+
+    public static String clean (String id) {
+        return id.toUpperCase().replaceAll(" ", "_").replace("(", "").replace(")","");
+
     }
 }
