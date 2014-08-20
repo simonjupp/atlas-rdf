@@ -118,7 +118,7 @@ public class MicroarrayContrastRDFBuilder extends DifferentialExperimentDesignRD
                 );
 
                 // add the link to gene
-                URI geneidUri = getUriProvider().getBioentityUri(geneId);
+                URI geneidUri = getUriProvider().getBioentityUri(geneId, experiment.getFirstSpecies());
                 builder.createTypeInstance(
                         geneidUri,
                         getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")

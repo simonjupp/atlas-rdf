@@ -181,8 +181,21 @@ public class PropertiesBasedURIProvider implements URIProvider {
     }
 
 
-    public URI getBioentityUri(String id) {
-        String path = MessageFormat.format(read("ensembl.resource.uri"), id);
+    public URI getBioentityUri(String id, String speciesName) {
+        String path = MessageFormat.format(read("ensembl.resource.uri"), "", id);
+        if (Organism.isValid(speciesName)) {
+            String kingdom = Organism.valueOf(speciesName).getKingdom();
+
+            if (!kingdom.equals("eukaryote")) {
+                path = MessageFormat.format(read("ensembl.resource.uri"), "." + kingdom, id);
+            }
+        }
+        else if (id.startsWith("MIMAT"))  {
+            path = MessageFormat.format(read("mirBase.mature.resource.uri"),  id);
+        }
+        else if (id.startsWith("MI"))  {
+            path = MessageFormat.format(read("mirBase.resource.uri"),  id);
+        }
         return URI.create(path.toString());
     }
 

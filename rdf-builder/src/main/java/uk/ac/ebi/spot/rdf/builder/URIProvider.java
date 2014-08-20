@@ -137,9 +137,10 @@ public interface URIProvider {
     /**
      * Get the URI for an Ensembl gene given a ensemble gene id
      * @param id id for the accession
+     * @param speciesName name of the species, optional, can be used to determine the URI
      * @return URI class URI
      */
-    URI getBioentityUri(String id);
+    URI getBioentityUri(String id, String speciesName);
 
     /**
      * relate an experiment to an assay

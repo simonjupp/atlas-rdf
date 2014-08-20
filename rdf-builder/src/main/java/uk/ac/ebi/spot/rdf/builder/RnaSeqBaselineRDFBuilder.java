@@ -109,7 +109,7 @@ public class RnaSeqBaselineRDFBuilder extends AbstractExperimentBuilder<Baseline
                         baselineValueUri
                 );
 
-                URI geneidUri = getUriProvider().getBioentityUri(profile.getId());
+                URI geneidUri = getUriProvider().getBioentityUri(profile.getId(), experiment.getFirstSpecies());
                 builder.createTypeInstance(
                         geneidUri,
                         getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")

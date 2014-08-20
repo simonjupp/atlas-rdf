@@ -80,7 +80,7 @@ public class RnaSeqContrastRDFBuilder extends DifferentialExperimentDesignRDFBui
                 );
 
                 // link to ensembl gene
-                URI geneidUri = getUriProvider().getBioentityUri(geneId);
+                URI geneidUri = getUriProvider().getBioentityUri(geneId, experiment.getFirstSpecies());
                 builder.createTypeInstance(
                         geneidUri,
                         getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")
