@@ -28,7 +28,7 @@ do
     basename=${fname##*/} ;
     experiment=${basename%.*}
     filename=$NEWDIR/$experiment.ttl
-    if [ -f $filename ] ; then
+    if [! -f $filename ] ; then
     	echo "<http://rdf.ebi.ac.uk/resource/atlas/$experiment> a <http://rdf.ebi.ac.uk/terms/atlas/Experiment> ."
     	echo "<http://rdf.ebi.ac.uk/resource/atlas/$experiment> <http://rdfs.org/ns/void#inDataset> <$VOIDURI> ."
     fi
