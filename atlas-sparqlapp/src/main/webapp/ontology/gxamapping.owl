@@ -17,22 +17,22 @@
 
 
 <rdf:RDF xmlns="http://rdf.ebi.ac.uk/terms/atlas-mapping/"
-     xml:base="http://rdf.ebi.ac.uk/terms/atlas-mapping"
+     xml:base="http://rdf.ebi.ac.uk/terms/atlas-mapping/"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
      xmlns:swo="http://www.ebi.ac.uk/swo/"
      xmlns:efo="http://www.ebi.ac.uk/efo/"
      xmlns:resource="http://semanticscience.org/resource/"
      xmlns:obo="http://purl.obolibrary.org/obo/"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:terms2="http://purl.org/dc/terms/"
      xmlns:atlas="http://rdf.ebi.ac.uk/terms/atlas/">
     <owl:Ontology rdf:about="http://rdf.ebi.ac.uk/terms/atlas-mapping">
         <rdfs:label>Gene Expression Atlas vocabulary mapping file</rdfs:label>
-        <owl:imports rdf:resource="http://rdf.ebi.ac.uk/terms/atlas"/>
-        <owl:versionIRI rdf:resource="http://rdf.ebi.ac.uk/terms/v1.0/atlas-mapping"/>
+        <owl:versionIRI rdf:resource="http://rdf.ebi.ac.uk/terms/2.0/atlas-mapping"/>
+        <owl:imports rdf:resource="http://rdf.ebi.ac.uk/terms/v2.0/atlas"/>
         <owl:imports rdf:resource="http://semanticscience.org/ontology/sio.owl"/>
         <owl:imports rdf:resource="http://www.ebi.ac.uk/efo/"/>
     </owl:Ontology>
@@ -108,9 +108,9 @@
 
     <!-- http://rdf.ebi.ac.uk/terms/atlas/hasExpressionValue -->
 
-    <rdf:Description rdf:about="&atlas;hasExpressionValue">
+    <owl:ObjectProperty rdf:about="&atlas;hasExpressionValue">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000312"/>
-    </rdf:Description>
+    </owl:ObjectProperty>
     
 
 
@@ -124,9 +124,9 @@
 
     <!-- http://rdf.ebi.ac.uk/terms/atlas/hasSample -->
 
-    <rdf:Description rdf:about="&atlas;hasSample">
+    <owl:ObjectProperty rdf:about="&atlas;hasSample">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000230"/>
-    </rdf:Description>
+    </owl:ObjectProperty>
     
 
 
@@ -156,9 +156,9 @@
 
     <!-- http://rdf.ebi.ac.uk/terms/atlas/isMeasurementOf -->
 
-    <rdf:Description rdf:about="&atlas;isMeasurementOf">
+    <owl:ObjectProperty rdf:about="&atlas;isMeasurementOf">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000215"/>
-    </rdf:Description>
+    </owl:ObjectProperty>
     
 
 

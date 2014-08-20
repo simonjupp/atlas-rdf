@@ -52,6 +52,11 @@
 
     <repositories>
         <repository>
+            <id>coconut.ebi.ac.uk</id>
+            <name>coconut.ebi.ac.uk</name>
+            <url>http://coconut.ebi.ac.uk:8081/artifactory/local-repo</url>
+        </repository>
+        <repository>
             <id>ebi-nexus</id>
             <name>Nexus</name>
             <url>http://www.ebi.ac.uk/intact/maven/nexus/content/groups/public</url>
@@ -70,15 +75,6 @@
             <id>ebi-snapshot-repo</id>
             <name>The EBI internal snapshot repository</name>
             <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots/</url>
-        </repository>
-        <repository>
-            <id>oracleReleases</id>
-            <name>Oracle Released Java Packages</name>
-            <url>http://download.oracle.com/maven</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots/>
         </repository>
     </repositories>
 
