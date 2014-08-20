@@ -54,17 +54,17 @@
     </logger>
 
     <logger name="uk.ac.ebi.spot" additivity="false">
-        <level value="ERROR"/>
+        <level value="INFO"/>
         <appender-ref ref="atlas-rdf-error-log"/>
     </logger>
 
     <logger name="org.springframework" additivity="false">
-        <level value="WARN"/>
+        <level value="INFO"/>
         <appender-ref ref="atlas-rdf-log"/>
     </logger>
 
     <root>
-        <priority value="WARN"/>
+        <priority value="INFO"/>
         <appender-ref ref="atlas-rdf-log"/>
     </root>
 
