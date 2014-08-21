@@ -15,19 +15,27 @@
         </layout>
     </appender>
 
+    <appender name="atlasrdf-error-log" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+            <param name="File" value="${catalina.base}/logs/${tomcat.hostname}/expression-atlas-error.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+        </layout>
+    </appender>
+
     <logger name="org.springframework" additivity="false">
         <level value="INFO"/>
-        <appender-ref ref="console"/>
+        <appender-ref ref="atlasrdf-log"/>
     </logger>
 
     <logger name="uk.ac.ebi.fgpt" additivity="false">
-        <level value="INFO"/>
-        <appender-ref ref="console"/>
+        <level value="ERROR"/>
+        <appender-ref ref="atlasrdf-error-log"/>
     </logger>
 
     <root>
         <priority value="INFO" />
-        <appender-ref ref="console" />
+        <appender-ref ref="atlasrdf-log" />
     </root>
 
 </log4j:configuration>
