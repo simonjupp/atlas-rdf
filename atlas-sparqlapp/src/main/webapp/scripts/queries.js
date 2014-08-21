@@ -67,28 +67,28 @@ var exampleQueries = [
                 " FILTER regex(?pt, \"^organism$\", \"i\")\n" +
                 "}"
     }
-    ,
-    {
-        shortname : "Query 4",
-        description: "Show expression for ENSG00000129991 (TNNI3) with its GO annotations from Uniprot (Federated query to http://beta.sparql.uniprot.org/sparql)",
-        query: "PREFIX upc:<http://purl.uniprot.org/core/>\n" +
-            "PREFIX identifiers:<http://identifiers.org/ensembl/>\n\n" +
-            "SELECT distinct ?valueLabel ?goid ?golabel \n" +
-            "WHERE { \n" +
-
-            "?value rdfs:label ?valueLabel .\n" +
-            "?value atlasterms:isMeasurementOf ?probe  .\n" +
-            "?probe atlasterms:dbXref identifiers:ENSG00000129991  .\n" +
-            "?probe atlasterms:dbXref ?uniprot .\n" +
-
-            "SERVICE <http://beta.sparql.uniprot.org/sparql> {   \n" +
-            "?uniprot a upc:Protein  .\n" +
-            "?uniprot upc:classifiedWith ?keyword  .\n" +
-            "?keyword rdfs:seeAlso ?goid  .\n" +
-            "?goid rdfs:label ?golabel  .\n" +
-            "}   \n" +
-            "}"
-    },
+//    ,
+//    {
+//        shortname : "Query 4",
+//        description: "Show expression for ENSG00000129991 (TNNI3) with its GO annotations from Uniprot (Federated query to http://beta.sparql.uniprot.org/sparql)",
+//        query: "PREFIX upc:<http://purl.uniprot.org/core/>\n" +
+//            "PREFIX identifiers:<http://identifiers.org/ensembl/>\n\n" +
+//            "SELECT distinct ?valueLabel ?goid ?golabel \n" +
+//            "WHERE { \n" +
+//
+//            "?value rdfs:label ?valueLabel .\n" +
+//            "?value atlasterms:isMeasurementOf ?probe  .\n" +
+//            "?probe atlasterms:dbXref identifiers:ENSG00000129991  .\n" +
+//            "?probe atlasterms:dbXref ?uniprot .\n" +
+//
+//            "SERVICE <http://beta.sparql.uniprot.org/sparql> {   \n" +
+//            "?uniprot a upc:Protein  .\n" +
+//            "?uniprot upc:classifiedWith ?keyword  .\n" +
+//            "?keyword rdfs:seeAlso ?goid  .\n" +
+//            "?goid rdfs:label ?golabel  .\n" +
+//            "}   \n" +
+//            "}"
+//    },
 //    {
 //        shortname : "Query 5",
 //        description: "For the genes differentially expressed in asthma, get the gene products associated to a Reactome pathway",
