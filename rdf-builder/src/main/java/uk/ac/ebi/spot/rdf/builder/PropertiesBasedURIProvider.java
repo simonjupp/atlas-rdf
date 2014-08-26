@@ -12,6 +12,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * @author Simon Jupp
@@ -180,8 +182,12 @@ public class PropertiesBasedURIProvider implements URIProvider {
     }
 
 
-    public URI getBioentityUri(String id, String speciesName) {
-        String path = MessageFormat.format(read("ensembl.resource.uri"), "", id);
+    public Collection<URI> getBioentityUri(String id, String speciesName) {
+
+        Collection<URI> uris = new HashSet<URI>();
+
+        String path = MessageFormat.format(read("ensembl.identifiers.uri"), "", id);
+        String path2 = MessageFormat.format(read("ensembl.resource.uri"), id);
         if (Organism.isValid(speciesName)) {
             String kingdom = Organism.getOrganimsByName(speciesName).getKingdom();
 
@@ -195,7 +201,10 @@ public class PropertiesBasedURIProvider implements URIProvider {
         else if (id.startsWith("MI"))  {
             path = MessageFormat.format(read("mirBase.resource.uri"),  id);
         }
-        return URI.create(path.toString());
+        uris.add(URI.create(path));
+        uris.add(URI.create(path2));
+
+        return uris;
     }
 
 

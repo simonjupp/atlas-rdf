@@ -80,20 +80,27 @@ public class RnaSeqContrastRDFBuilder extends DifferentialExperimentDesignRDFBui
                 );
 
                 // link to ensembl gene
-                URI geneidUri = getUriProvider().getBioentityUri(geneId, experiment.getFirstSpecies());
-                builder.createTypeInstance(
-                        geneidUri,
-                        getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")
-                );
-                builder.createLabel(
-                        geneidUri,
-                        geneName
-                );
-                builder.createAnnotationAssertion(
-                        geneidUri,
-                        getUriProvider().getIdentifierRelUri(),
-                        geneId
-                );
+                for (URI geneidUri : getUriProvider().getBioentityUri(geneId, experiment.getFirstSpecies())) {
+                    builder.createTypeInstance(
+                            geneidUri,
+                            getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")
+                    );
+                    builder.createLabel(
+                            geneidUri,
+                            geneName
+                    );
+                    builder.createAnnotationAssertion(
+                            geneidUri,
+                            getUriProvider().getIdentifierRelUri(),
+                            geneId
+                    );
+                    builder.createObjectPropertyAssertion(
+                            diffValueUri,
+                            getUriProvider().getDiffValueToProbeElementRel(),
+                            geneidUri
+                    );
+
+                }
 
 
                 // finally link the expression value to the assay groups and the design element and assert the expression values
@@ -110,11 +117,7 @@ public class RnaSeqContrastRDFBuilder extends DifferentialExperimentDesignRDFBui
                 );
 
 
-                builder.createObjectPropertyAssertion(
-                        diffValueUri,
-                        getUriProvider().getDiffValueToProbeElementRel(),
-                        geneidUri
-                );
+
 
                 builder.createDataPropertyAssertion(
                         diffValueUri,

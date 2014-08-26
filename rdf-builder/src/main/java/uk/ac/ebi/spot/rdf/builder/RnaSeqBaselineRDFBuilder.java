@@ -109,27 +109,30 @@ public class RnaSeqBaselineRDFBuilder extends AbstractExperimentBuilder<Baseline
                         baselineValueUri
                 );
 
-                URI geneidUri = getUriProvider().getBioentityUri(profile.getId(), experiment.getFirstSpecies());
-                builder.createTypeInstance(
-                        geneidUri,
-                        getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")
-                );
-                builder.createLabel(
-                        geneidUri,
-                        profile.getName()
-                );
-                builder.createAnnotationAssertion(
-                        geneidUri,
-                        getUriProvider().getIdentifierRelUri(),
-                        profile.getId()
-                );
+                for (URI geneidUri : getUriProvider().getBioentityUri(profile.getId(), experiment.getFirstSpecies())) {
 
+                    builder.createTypeInstance(
+                            geneidUri,
+                            getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")
+                    );
 
-                builder.createObjectPropertyAssertion(
-                        baselineValueUri,
-                        getUriProvider().getDiffValueToProbeElementRel(),
-                        geneidUri
-                );
+                    builder.createLabel(
+                            geneidUri,
+                            profile.getName()
+                    );
+
+                    builder.createAnnotationAssertion(
+                            geneidUri,
+                            getUriProvider().getIdentifierRelUri(),
+                            profile.getId()
+                    );
+
+                    builder.createObjectPropertyAssertion(
+                            baselineValueUri,
+                            getUriProvider().getDiffValueToProbeElementRel(),
+                            geneidUri
+                    );
+                }
 
                 buildExpressionForFactor(baselineValueUri, expression);
             }

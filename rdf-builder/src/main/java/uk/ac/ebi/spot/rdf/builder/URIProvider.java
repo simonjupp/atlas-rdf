@@ -140,7 +140,7 @@ public interface URIProvider {
      * @param speciesName name of the species, optional, can be used to determine the URI
      * @return URI class URI
      */
-    URI getBioentityUri(String id, String speciesName);
+    Collection<URI> getBioentityUri(String id, String speciesName);
 
     /**
      * relate an experiment to an assay
