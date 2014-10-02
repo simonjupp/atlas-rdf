@@ -51,7 +51,7 @@ public abstract class DifferentialExperimentDesignRDFBuilder<T extends Different
             type = getUriProvider().getRNASeqDiffAnalysisTypeUri();
         }
         else  {
-            type = URI.create("http://rdf.ebi.ac.uk/terms/atlas/Analysis");
+            type = URI.create("http://rdf.ebi.ac.uk/terms/expressionatlas/Analysis");
             log.warn("No analysis type for differential experiment " + experiment.getAssayAccessions());
         }
 

@@ -309,7 +309,7 @@ function _buildSparqlPage(element) {
                 .append('<option value="TSV">TSV</option>')
                 .append('<option value="RDF/XML">RDF/XML</option>')
                 .append('<option value="N3">RDF/N3</option>')
-                .append('<option value="JSON-LD">RDF/JSON</option>')
+                .append('<option value="JSON-LD">JSON-LD</option>')
         )
     );
 

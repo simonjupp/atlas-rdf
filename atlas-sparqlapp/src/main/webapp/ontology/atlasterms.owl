@@ -8,16 +8,17 @@
     <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
     <!ENTITY obo "http://purl.obolibrary.org/obo/" >
     <!ENTITY images "http://www.ebi.ac.uk/fgpt/images/" >
-    <!ENTITY atlas "http://rdf.ebi.ac.uk/terms/atlas/" >
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
     <!ENTITY sio "http://semanticscience.org/resource/" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY expressionatlas "http://rdf.ebi.ac.uk/terms/expressionatlas/" >
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
 ]>
 
 
 <rdf:RDF xmlns="http://rdf.ebi.ac.uk/resource/gxa/terms#"
      xml:base="http://rdf.ebi.ac.uk/resource/gxa/terms"
+     xmlns:expressionatlas="http://rdf.ebi.ac.uk/terms/expressionatlas/"
      xmlns:foaf="http://xmlns.com/foaf/0.1/"
      xmlns:swo="http://www.ebi.ac.uk/swo/"
      xmlns:dcterms="http://purl.org/dc/terms/"
@@ -27,17 +28,16 @@
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:images="http://www.ebi.ac.uk/fgpt/images/"
-     xmlns:atlas="http://rdf.ebi.ac.uk/terms/atlas/">
-    <owl:Ontology rdf:about="http://rdf.ebi.ac.uk/terms/atlas">
-        <dcterms:rights>This Ontology is distributed under a Creative Commons Attribution License - http://creativecommons.org/licenses/by/3.0/</dcterms:rights>
-        <dcterms:title>EBI Gene Expression Atlas RDF Schema vocabulary</dcterms:title>
-        <dcterms:creator>James Malone</dcterms:creator>
-        <owl:versionInfo>2</owl:versionInfo>
-        <rdfs:comment>This resource defines a vocabulary used to create a schema for the RDF transformation of the EMBL-EBI Gene Expression Atlas database. The vocabulary defined in here is mapped where possible to external reference ontologies such as EFO, SIO and OBI. See http://rdf.ebi.ac.uk/resource/gxa/mapping</rdfs:comment>
+     xmlns:images="http://www.ebi.ac.uk/fgpt/images/">
+    <owl:Ontology rdf:about="http://rdf.ebi.ac.uk/terms/expressionatlas">
         <dcterms:creator>Simon Jupp</dcterms:creator>
-        <rdfs:seeAlso rdf:resource="http://rdf.ebi.ac.uk/terms/atlas-mapping"/>
-        <owl:versionIRI rdf:resource="http://rdf.ebi.ac.uk/terms/v2.0/atlas"/>
+        <dcterms:title>EBI Expression Atlas RDF Schema vocabulary</dcterms:title>
+        <owl:versionInfo>1</owl:versionInfo>
+        <rdfs:comment>This resource defines a vocabulary used to create a schema for the RDF transformation of the EMBL-EBI Expression Atlas database. The vocabulary defined in here is mapped where possible to external reference ontologies such as EFO, SIO and OBI. See http://rdf.ebi.ac.uk/resource/gxa/mapping</rdfs:comment>
+        <dcterms:creator>James Malone</dcterms:creator>
+        <dcterms:rights>This Ontology is distributed under a Creative Commons Attribution License - http://creativecommons.org/licenses/by/3.0/</dcterms:rights>
+        <rdfs:seeAlso rdf:resource="http://rdf.ebi.ac.uk/terms/expression-atlas-mapping"/>
+        <owl:versionIRI rdf:resource="http://rdf.ebi.ac.uk/terms/1.0/expressionatlas"/>
         <rdfs:seeAlso rdf:resource="http://www.ebi.ac.uk/gxa"/>
     </owl:Ontology>
     
@@ -85,118 +85,118 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/dbXref -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/dbXref -->
 
-    <owl:ObjectProperty rdf:about="&atlas;dbXref">
+    <owl:ObjectProperty rdf:about="&expressionatlas;dbXref">
         <rdfs:comment>a releationship between some information entity and a reference database entry</rdfs:comment>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/geneXref -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/geneXref -->
 
-    <owl:ObjectProperty rdf:about="&atlas;geneXref">
+    <owl:ObjectProperty rdf:about="&expressionatlas;geneXref">
         <dcterms:description>A relationship to a gene database reference</dcterms:description>
-        <rdfs:range rdf:resource="&atlas;GeneDatabaseReference"/>
-        <rdfs:subPropertyOf rdf:resource="&atlas;dbXref"/>
+        <rdfs:range rdf:resource="&expressionatlas;GeneDatabaseReference"/>
+        <rdfs:subPropertyOf rdf:resource="&expressionatlas;dbXref"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasAnalysis -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasAnalysis -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasAnalysis">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasAnalysis">
         <dcterms:description>A relationship to a resource that represents some analysis e.g. The analysis of data from a micro-array experiment to generate a gene list</dcterms:description>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasAssay -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasAssay -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasAssay">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasAssay">
         <dcterms:description>A relation from an Experiment to an Assay</dcterms:description>
-        <rdfs:range rdf:resource="&atlas;Assay"/>
-        <rdfs:domain rdf:resource="&atlas;Experiment"/>
+        <rdfs:range rdf:resource="&expressionatlas;Assay"/>
+        <rdfs:domain rdf:resource="&expressionatlas;Experiment"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasAssociatedArrayDesign -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasAssociatedArrayDesign -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasAssociatedArrayDesign">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasAssociatedArrayDesign">
         <dcterms:description>A relation between an differential gene expression analysis and the associated type of array design</dcterms:description>
-        <rdfs:range rdf:resource="&atlas;DesignPlatform"/>
+        <rdfs:range rdf:resource="&expressionatlas;DesignPlatform"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasFactorValue -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasFactorValue -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasFactorValue">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasFactorValue">
         <rdfs:label>has factor value</rdfs:label>
         <dcterms:description>A relationship between an information entity and an independent experimental factor variable</dcterms:description>
-        <rdfs:range rdf:resource="&atlas;ExperimentalFactor"/>
+        <rdfs:range rdf:resource="&expressionatlas;ExperimentalFactor"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasOutput -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasOutput -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasOutput">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasOutput">
         <dcterms:description>A relation between a differentional gene expression analysis and an individual gene expression value</dcterms:description>
-        <rdfs:domain rdf:resource="&atlas;DifferentialExpressionAnalysis"/>
-        <rdfs:range rdf:resource="&atlas;DifferentialExpressionRatio"/>
-        <owl:inverseOf rdf:resource="&atlas;isOutputOf"/>
+        <rdfs:domain rdf:resource="&expressionatlas;DifferentialExpressionAnalysis"/>
+        <rdfs:range rdf:resource="&expressionatlas;DifferentialExpressionRatio"/>
+        <owl:inverseOf rdf:resource="&expressionatlas;isOutputOf"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasReferenceAssay -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasReferenceAssay -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasReferenceAssay">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasReferenceAssay">
         <rdfs:label xml:lang="en">hasReferenceAssay</rdfs:label>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasSampleCharacteristic -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasSampleCharacteristic -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasSampleCharacteristic">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasSampleCharacteristic">
         <dcterms:description>A characteristic born in a biological sample e.g. human sample</dcterms:description>
-        <rdfs:domain rdf:resource="&atlas;Sample"/>
+        <rdfs:domain rdf:resource="&expressionatlas;Sample"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasSpecifiedInput -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasSpecifiedInput -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasSpecifiedInput">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasSpecifiedInput">
         <dcterms:description>A relation from an assay to the related samples</dcterms:description>
-        <rdfs:domain rdf:resource="&atlas;Assay"/>
-        <rdfs:range rdf:resource="&atlas;Sample"/>
+        <rdfs:domain rdf:resource="&expressionatlas;Assay"/>
+        <rdfs:range rdf:resource="&expressionatlas;Sample"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasTestAssay -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasTestAssay -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasTestAssay">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasTestAssay">
         <rdfs:label xml:lang="en">hasTestAssay</rdfs:label>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/implementedBy -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/implementedBy -->
 
-    <owl:ObjectProperty rdf:about="&atlas;implementedBy">
+    <owl:ObjectProperty rdf:about="&expressionatlas;implementedBy">
         <dcterms:description>A relation from a software analysis process and the softwrare that performed the analysis</dcterms:description>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/isAbout -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/isAbout -->
 
-    <owl:ObjectProperty rdf:about="&atlas;isAbout">
+    <owl:ObjectProperty rdf:about="&expressionatlas;isAbout">
         <rdfs:label xml:lang="en">is about</rdfs:label>
         <sio:equivalentTo rdf:resource="&obo;IAO_0000136"/>
         <sio:equivalentTo rdf:resource="&sio;SIO_000332"/>
@@ -204,35 +204,35 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/isIdentifierFor -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/isIdentifierFor -->
 
-    <owl:ObjectProperty rdf:about="&atlas;isIdentifierFor"/>
+    <owl:ObjectProperty rdf:about="&expressionatlas;isIdentifierFor"/>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/isOutputOf -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/isOutputOf -->
 
-    <owl:ObjectProperty rdf:about="&atlas;isOutputOf">
+    <owl:ObjectProperty rdf:about="&expressionatlas;isOutputOf">
         <rdfs:label xml:lang="en">isOutputOf</rdfs:label>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/refersTo -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/refersTo -->
 
-    <owl:ObjectProperty rdf:about="&atlas;refersTo">
+    <owl:ObjectProperty rdf:about="&expressionatlas;refersTo">
         <dcterms:description>A relation between a measurement value and the probe design element being measured </dcterms:description>
-        <rdfs:range rdf:resource="&atlas;ProbeDesignElement"/>
+        <rdfs:range rdf:resource="&expressionatlas;ProbeDesignElement"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/taxon -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/taxon -->
 
-    <owl:ObjectProperty rdf:about="&atlas;taxon">
+    <owl:ObjectProperty rdf:about="&expressionatlas;taxon">
         <rdfs:label>taxon</rdfs:label>
         <dcterms:description>An assoiative relationship between some entity or resource and an organism</dcterms:description>
-        <rdfs:subPropertyOf rdf:resource="&atlas;dbXref"/>
+        <rdfs:subPropertyOf rdf:resource="&expressionatlas;dbXref"/>
     </owl:ObjectProperty>
     
 
@@ -281,33 +281,33 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/fpkm -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/fpkm -->
 
-    <owl:DatatypeProperty rdf:about="&atlas;fpkm">
+    <owl:DatatypeProperty rdf:about="&expressionatlas;fpkm">
         <rdfs:label xml:lang="en">fpkm</rdfs:label>
         <dcterms:description>Fragments Per Kilobase of transcript per Million mapped reads</dcterms:description>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/pValue -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/pValue -->
 
-    <owl:DatatypeProperty rdf:about="&atlas;pValue">
+    <owl:DatatypeProperty rdf:about="&expressionatlas;pValue">
         <sio:equivalentTo rdf:resource="&obo;OBI_0001442"/>
         <sio:equivalentTo rdf:resource="&sio;SIO_000765"/>
     </owl:DatatypeProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/pubmedid -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/pubmedid -->
 
-    <owl:DatatypeProperty rdf:about="&atlas;pubmedid"/>
+    <owl:DatatypeProperty rdf:about="&expressionatlas;pubmedid"/>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/tStatistic -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/tStatistic -->
 
-    <owl:DatatypeProperty rdf:about="&atlas;tStatistic">
+    <owl:DatatypeProperty rdf:about="&expressionatlas;tStatistic">
         <sio:equivalentTo rdf:resource="&sio;SIO_001074"/>
     </owl:DatatypeProperty>
     
@@ -339,29 +339,29 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Analysis -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Analysis -->
 
-    <owl:Class rdf:about="&atlas;Analysis">
+    <owl:Class rdf:about="&expressionatlas;Analysis">
         <rdfs:label xml:lang="en">Analysis</rdfs:label>
         <dcterms:description>A planned process that produces output data from input data.</dcterms:description>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Assay -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Assay -->
 
-    <owl:Class rdf:about="&atlas;Assay">
+    <owl:Class rdf:about="&expressionatlas;Assay">
         <rdfs:label>Assay</rdfs:label>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;hasSpecifiedInput"/>
-                <owl:someValuesFrom rdf:resource="&atlas;Sample"/>
+                <owl:onProperty rdf:resource="&expressionatlas;hasFactorValue"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;ExperimentalFactor"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;hasFactorValue"/>
-                <owl:someValuesFrom rdf:resource="&atlas;ExperimentalFactor"/>
+                <owl:onProperty rdf:resource="&expressionatlas;hasSpecifiedInput"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;Sample"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <dcterms:description>An assay is an investigative (analytic) procedure in laboratory medicine, pharmacology, environmental biology, and molecular biology for qualitatively assessing or quantitatively measuring the presence or amount or the functional activity of a target entity (the analyte) which can be a drug or biochemical substance or a cell in an organism or organic sample.</dcterms:description>
@@ -371,15 +371,15 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/BaselineExpressionAnalysis -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/BaselineExpressionAnalysis -->
 
-    <owl:Class rdf:about="&atlas;BaselineExpressionAnalysis">
+    <owl:Class rdf:about="&expressionatlas;BaselineExpressionAnalysis">
         <rdfs:label xml:lang="en">BaselineExpressionAnalysis</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;Analysis"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;Analysis"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;hasReferenceAssay"/>
-                <owl:someValuesFrom rdf:resource="&atlas;Assay"/>
+                <owl:onProperty rdf:resource="&expressionatlas;hasReferenceAssay"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;Assay"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <dcterms:description>A basline expression analysis is a data transformation that has an objective to detremine which gene products are present (and at what abundance) in normal conditions (e.g. tissue, cell type). FASTQ files are mapped to the reference genome from Ensembl using TopHat. FPKMs are generated by cufflinks. Raw counts are generated using htseq-count. </dcterms:description>
@@ -387,9 +387,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/BaselineExpressionValue -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/BaselineExpressionValue -->
 
-    <owl:Class rdf:about="&atlas;BaselineExpressionValue">
+    <owl:Class rdf:about="&expressionatlas;BaselineExpressionValue">
         <rdfs:label xml:lang="en">BaselineExpressionValue</rdfs:label>
         <rdfs:subClassOf rdf:resource="&owl;Thing"/>
         <dcterms:description>A gene expression value representing normalized expression levels (FPKMs) across the analyzed experimental factor values</dcterms:description>
@@ -397,32 +397,32 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DatabaseReference -->
 
-    <owl:Class rdf:about="&atlas;DatabaseReference">
+    <owl:Class rdf:about="&expressionatlas;DatabaseReference">
         <dcterms:description>Reference to a database entry. This is usually some database accession that uniquely identifes an entry</dcterms:description>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DecreasedDifferentialExpressionRatio -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DecreasedDifferentialExpressionRatio -->
 
-    <owl:Class rdf:about="&atlas;DecreasedDifferentialExpressionRatio">
+    <owl:Class rdf:about="&expressionatlas;DecreasedDifferentialExpressionRatio">
         <rdfs:label>Decreased differential expression ratio</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;DifferentialExpressionRatio"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;DifferentialExpressionRatio"/>
         <dcterms:description>A descreased ratio of gene expression values from a test sample compared to a control sample.</dcterms:description>
         <sio:equivalentTo rdf:resource="&sio;SIO_001082"/>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DesignPlatform -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DesignPlatform -->
 
-    <owl:Class rdf:about="&atlas;DesignPlatform">
+    <owl:Class rdf:about="&expressionatlas;DesignPlatform">
         <rdfs:label>design platform</rdfs:label>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;taxon"/>
+                <owl:onProperty rdf:resource="&expressionatlas;taxon"/>
                 <owl:someValuesFrom rdf:resource="&obo;OBI_0100026"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -432,39 +432,39 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DifferentialExpressionAnalysis -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DifferentialExpressionAnalysis -->
 
-    <owl:Class rdf:about="&atlas;DifferentialExpressionAnalysis">
+    <owl:Class rdf:about="&expressionatlas;DifferentialExpressionAnalysis">
         <rdfs:label>Differential expression analysis</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;Analysis"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;Analysis"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;hasTestAssay"/>
-                <owl:someValuesFrom rdf:resource="&atlas;Assay"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;hasReferenceAssay"/>
-                <owl:someValuesFrom rdf:resource="&atlas;Assay"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;implementedBy"/>
-                <owl:someValuesFrom rdf:resource="&swo;SWO_0000090"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;hasOutput"/>
-                <owl:someValuesFrom rdf:resource="&atlas;DifferentialExpressionRatio"/>
+                <owl:onProperty rdf:resource="&expressionatlas;hasTestAssay"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;Assay"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&foaf;depiction"/>
                 <owl:hasValue rdf:resource="&images;diff_expression_analysis.gif"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&expressionatlas;hasReferenceAssay"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;Assay"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&expressionatlas;implementedBy"/>
+                <owl:someValuesFrom rdf:resource="&swo;SWO_0000090"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&expressionatlas;hasOutput"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;DifferentialExpressionRatio"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <dcterms:description>A differential expression analysis is a data transformation that has objective differential expression analysis</dcterms:description>
@@ -474,32 +474,32 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DifferentialExpressionRatio -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DifferentialExpressionRatio -->
 
-    <owl:Class rdf:about="&atlas;DifferentialExpressionRatio">
+    <owl:Class rdf:about="&expressionatlas;DifferentialExpressionRatio">
         <rdfs:label>Differential expression ratio</rdfs:label>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;hasFactorValue"/>
-                <owl:someValuesFrom rdf:resource="&atlas;ExperimentalFactor"/>
+                <owl:onProperty rdf:resource="&expressionatlas;refersTo"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;ProbeDesignElement"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;refersTo"/>
-                <owl:someValuesFrom rdf:resource="&atlas;ProbeDesignElement"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;pValue"/>
+                <owl:onProperty rdf:resource="&expressionatlas;pValue"/>
                 <owl:someValuesFrom rdf:resource="&xsd;double"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;tStatistic"/>
+                <owl:onProperty rdf:resource="&expressionatlas;tStatistic"/>
                 <owl:allValuesFrom rdf:resource="&xsd;double"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&expressionatlas;hasFactorValue"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;ExperimentalFactor"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <dcterms:description>The ratio of gene expression values from a test sample compared to a control sample.</dcterms:description>
@@ -509,30 +509,48 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/EnsemblDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/EnsemblDatabaseReference -->
 
-    <owl:Class rdf:about="&atlas;EnsemblDatabaseReference">
-        <rdfs:subClassOf rdf:resource="&atlas;GeneDatabaseReference"/>
+    <owl:Class rdf:about="&expressionatlas;EnsemblDatabaseReference">
+        <rdfs:subClassOf rdf:resource="&expressionatlas;GeneDatabaseReference"/>
         <dcterms:description>Reference to an ensembl gene entry</dcterms:description>
         <sio:equivalentTo rdf:resource="http://edamontology.org/data_1033"/>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/EntrezGeneDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/EntrezGeneDatabaseReference -->
 
-    <owl:Class rdf:about="&atlas;EntrezGeneDatabaseReference">
-        <rdfs:subClassOf rdf:resource="&atlas;GeneDatabaseReference"/>
+    <owl:Class rdf:about="&expressionatlas;EntrezGeneDatabaseReference">
+        <rdfs:subClassOf rdf:resource="&expressionatlas;GeneDatabaseReference"/>
         <dcterms:description>Reference to an NCBI entrez gene entry</dcterms:description>
         <sio:equivalentTo rdf:resource="http://edamontology.org/data_1027"/>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Experiment -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Experiment -->
 
-    <owl:Class rdf:about="&atlas;Experiment">
+    <owl:Class rdf:about="&expressionatlas;Experiment">
         <rdfs:label>Experiment</rdfs:label>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&dcterms;bibliographicCitation"/>
+                <owl:someValuesFrom rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&foaf;depiction"/>
+                <owl:hasValue rdf:resource="&images;experiment_image.gif"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&expressionatlas;hasAssay"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;Assay"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&dcterms;identifier"/>
@@ -547,32 +565,14 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&foaf;depiction"/>
-                <owl:hasValue rdf:resource="&images;experiment_image.gif"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&dcterms;bibliographicCitation"/>
-                <owl:someValuesFrom rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="&dcterms;dateSubmitted"/>
                 <owl:someValuesFrom rdf:resource="&xsd;dateTime"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;pubmedid"/>
+                <owl:onProperty rdf:resource="&expressionatlas;pubmedid"/>
                 <owl:someValuesFrom rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;hasAssay"/>
-                <owl:someValuesFrom rdf:resource="&atlas;Assay"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <dcterms:description>An experiment is an investigation that has the goal of verifying, falsifying, or establishing the validity of a hypothesis. </dcterms:description>
@@ -582,9 +582,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/ExperimentalFactor -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/ExperimentalFactor -->
 
-    <owl:Class rdf:about="&atlas;ExperimentalFactor">
+    <owl:Class rdf:about="&expressionatlas;ExperimentalFactor">
         <rdfs:label>Experimental Factor</rdfs:label>
         <dcterms:description>An experimental factor is a variable that may change within the scope of a given experiment.</dcterms:description>
         <sio:equivalentTo rdf:resource="&sio;SIO_000367"/>
@@ -592,19 +592,19 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/FlybaseDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/FlybaseDatabaseReference -->
 
-    <owl:Class rdf:about="&atlas;FlybaseDatabaseReference">
-        <rdfs:subClassOf rdf:resource="&atlas;GeneDatabaseReference"/>
+    <owl:Class rdf:about="&expressionatlas;FlybaseDatabaseReference">
+        <rdfs:subClassOf rdf:resource="&expressionatlas;GeneDatabaseReference"/>
         <dcterms:description>Reference to a flybase gene entry</dcterms:description>
         <sio:equivalentTo rdf:resource="http://edamontology.org/data_1089"/>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Gene -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Gene -->
 
-    <owl:Class rdf:about="&atlas;Gene">
+    <owl:Class rdf:about="&expressionatlas;Gene">
         <rdfs:label>Gene</rdfs:label>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -619,21 +619,21 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/GeneDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/GeneDatabaseReference -->
 
-    <owl:Class rdf:about="&atlas;GeneDatabaseReference">
+    <owl:Class rdf:about="&expressionatlas;GeneDatabaseReference">
         <rdfs:label>Gene database reference</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;DatabaseReference"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;DatabaseReference"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;taxon"/>
-                <owl:someValuesFrom rdf:resource="&obo;OBI_0100026"/>
+                <owl:onProperty rdf:resource="&expressionatlas;isIdentifierFor"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;Gene"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;isIdentifierFor"/>
-                <owl:someValuesFrom rdf:resource="&atlas;Gene"/>
+                <owl:onProperty rdf:resource="&expressionatlas;taxon"/>
+                <owl:someValuesFrom rdf:resource="&obo;OBI_0100026"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <dcterms:description>Reference to a gene entry. This is usually some database accession that uniquely identifes that entry</dcterms:description>
@@ -641,31 +641,31 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/IncreasedDifferentialExpressionRatio -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/IncreasedDifferentialExpressionRatio -->
 
-    <owl:Class rdf:about="&atlas;IncreasedDifferentialExpressionRatio">
+    <owl:Class rdf:about="&expressionatlas;IncreasedDifferentialExpressionRatio">
         <rdfs:label>Increased differential expression ratio</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;DifferentialExpressionRatio"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;DifferentialExpressionRatio"/>
         <dcterms:description>A increased ratio of gene expression values from a test sample compared to a control sample.</dcterms:description>
         <sio:equivalentTo rdf:resource="&sio;SIO_001081"/>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/MgiGeneDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/MgiGeneDatabaseReference -->
 
-    <owl:Class rdf:about="&atlas;MgiGeneDatabaseReference">
-        <rdfs:subClassOf rdf:resource="&atlas;GeneDatabaseReference"/>
+    <owl:Class rdf:about="&expressionatlas;MgiGeneDatabaseReference">
+        <rdfs:subClassOf rdf:resource="&expressionatlas;GeneDatabaseReference"/>
         <dcterms:description>Reference to a MGI gene database entry</dcterms:description>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/MicroarrayDifferentialExpressionAnalysis -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/MicroarrayDifferentialExpressionAnalysis -->
 
-    <owl:Class rdf:about="&atlas;MicroarrayDifferentialExpressionAnalysis">
+    <owl:Class rdf:about="&expressionatlas;MicroarrayDifferentialExpressionAnalysis">
         <rdfs:label xml:lang="en">MicroarrayDifferentialExpressionAnalysis</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;DifferentialExpressionAnalysis"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;DifferentialExpressionAnalysis"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&foaf;depiction"/>
@@ -677,23 +677,23 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/MicroarrayExperiment -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/MicroarrayExperiment -->
 
-    <owl:Class rdf:about="&atlas;MicroarrayExperiment">
+    <owl:Class rdf:about="&expressionatlas;MicroarrayExperiment">
         <rdfs:label xml:lang="en">Microarray experiment</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;Experiment"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;Experiment"/>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/ProbeDesignElement -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/ProbeDesignElement -->
 
-    <owl:Class rdf:about="&atlas;ProbeDesignElement">
+    <owl:Class rdf:about="&expressionatlas;ProbeDesignElement">
         <rdfs:label>Probe design element</rdfs:label>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;dbXref"/>
-                <owl:someValuesFrom rdf:resource="&atlas;DatabaseReference"/>
+                <owl:onProperty rdf:resource="&expressionatlas;dbXref"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;DatabaseReference"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <dcterms:description>The probe which is used in an assay such as an array for detecting sequence or gene expression levels.</dcterms:description>
@@ -702,14 +702,14 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/ProteinDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/ProteinDatabaseReference -->
 
-    <owl:Class rdf:about="&atlas;ProteinDatabaseReference">
+    <owl:Class rdf:about="&expressionatlas;ProteinDatabaseReference">
         <rdfs:label>Protein database reference</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;DatabaseReference"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;DatabaseReference"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;taxon"/>
+                <owl:onProperty rdf:resource="&expressionatlas;taxon"/>
                 <owl:someValuesFrom rdf:resource="&obo;OBI_0100026"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -718,11 +718,11 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/RNASeqDifferentialAnalysis -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/RNASeqDifferentialAnalysis -->
 
-    <owl:Class rdf:about="&atlas;RNASeqDifferentialAnalysis">
+    <owl:Class rdf:about="&expressionatlas;RNASeqDifferentialAnalysis">
         <rdfs:label xml:lang="en">RNASeqDifferentialAnalysis</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;DifferentialExpressionAnalysis"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;DifferentialExpressionAnalysis"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&foaf;depiction"/>
@@ -734,23 +734,23 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/RicegapDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/RicegapDatabaseReference -->
 
-    <owl:Class rdf:about="&atlas;RicegapDatabaseReference">
-        <rdfs:subClassOf rdf:resource="&atlas;GeneDatabaseReference"/>
+    <owl:Class rdf:about="&expressionatlas;RicegapDatabaseReference">
+        <rdfs:subClassOf rdf:resource="&expressionatlas;GeneDatabaseReference"/>
         <dcterms:description>Reference to the Rice genome annotation project database</dcterms:description>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Sample -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Sample -->
 
-    <owl:Class rdf:about="&atlas;Sample">
+    <owl:Class rdf:about="&expressionatlas;Sample">
         <rdfs:label>Sample</rdfs:label>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&atlas;hasSampleCharacteristic"/>
-                <owl:someValuesFrom rdf:resource="&atlas;ExperimentalFactor"/>
+                <owl:onProperty rdf:resource="&expressionatlas;hasSampleCharacteristic"/>
+                <owl:someValuesFrom rdf:resource="&expressionatlas;ExperimentalFactor"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <dcterms:description>a sample is a limited quantity of something (e.g. an individual or set of individuals from a population, or a portion of a substance) to be used for testing, analysis, inspection, investigation, demonstration, or trial use.</dcterms:description>
@@ -760,71 +760,71 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/TairDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/TairDatabaseReference -->
 
-    <owl:Class rdf:about="&atlas;TairDatabaseReference">
-        <rdfs:subClassOf rdf:resource="&atlas;GeneDatabaseReference"/>
+    <owl:Class rdf:about="&expressionatlas;TairDatabaseReference">
+        <rdfs:subClassOf rdf:resource="&expressionatlas;GeneDatabaseReference"/>
         <dcterms:description>Reference to a TAIR gene database entry. The Arabidiopsis Information Resource </dcterms:description>
         <sio:equivalentTo rdf:resource="http://edamontology.org/data_1037"/>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/UniprotDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/UniprotDatabaseReference -->
 
-    <owl:Class rdf:about="&atlas;UniprotDatabaseReference">
-        <rdfs:subClassOf rdf:resource="&atlas;ProteinDatabaseReference"/>
+    <owl:Class rdf:about="&expressionatlas;UniprotDatabaseReference">
+        <rdfs:subClassOf rdf:resource="&expressionatlas;ProteinDatabaseReference"/>
         <dcterms:description>Reference to a uniprot protein databse entry</dcterms:description>
         <sio:equivalentTo rdf:resource="http://edamontology.org/data_2291"/>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/microarray_1colour_microrna_differential -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/microarray_1colour_microrna_differential -->
 
-    <owl:Class rdf:about="&atlas;microarray_1colour_microrna_differential">
+    <owl:Class rdf:about="&expressionatlas;microarray_1colour_microrna_differential">
         <rdfs:label xml:lang="en">Microarray 1 colour microRNA differential</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;MicroarrayExperiment"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;MicroarrayExperiment"/>
         <dcterms:description>A differential experiment dtermines which microRNA is up– or down–regulated in different experimental conditions. They are based on a set of highly curated differential expression Microarray 1 colour experiments from ArrayExpress that have been re-processed using our in–house differential expression statistical analysis pipeline.</dcterms:description>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/microarray_1colour_mrna_differential -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/microarray_1colour_mrna_differential -->
 
-    <owl:Class rdf:about="&atlas;microarray_1colour_mrna_differential">
+    <owl:Class rdf:about="&expressionatlas;microarray_1colour_mrna_differential">
         <rdfs:label>Microarray 1 colour mRNA differential</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;MicroarrayExperiment"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;MicroarrayExperiment"/>
         <dcterms:description>A differential experiment dtermines which mRNA ise up– or down–regulated in different experimental conditions. They are based on a set of highly curated differential expression Microarray 1 colour experiments from ArrayExpress that have been re-processed using our in–house differential expression statistical analysis pipeline.</dcterms:description>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/microarray_2colour_mrna_differential -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/microarray_2colour_mrna_differential -->
 
-    <owl:Class rdf:about="&atlas;microarray_2colour_mrna_differential">
+    <owl:Class rdf:about="&expressionatlas;microarray_2colour_mrna_differential">
         <rdfs:label>Microarray 2 colour mRNA differential</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;MicroarrayExperiment"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;MicroarrayExperiment"/>
         <dcterms:description>A differential experiment dtermines which mRNAs is up– or down–regulated in different experimental conditions. They are based on a set of highly curated differential expression Microarray 2 colour experiments from ArrayExpress that have been re-processed using our in–house differential expression statistical analysis pipeline.</dcterms:description>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/rnaseq_mrna_baseline -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/rnaseq_mrna_baseline -->
 
-    <owl:Class rdf:about="&atlas;rnaseq_mrna_baseline">
+    <owl:Class rdf:about="&expressionatlas;rnaseq_mrna_baseline">
         <rdfs:label>RNA-Seq mRNA baseline</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;Experiment"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;Experiment"/>
         <dcterms:description>A Baseline experiment represents information about which gene products are present (and at what abundance) in which norma&quot; condition (e.g., tissue, cell type). These experiments  consists of highly curated RNA–seq experiments from ArrayExpress. The above experiments have been re–analyzed using an in–house RNA–seq processing pipeline. The resulting data matrix stores gene expression profiles across the analyzed experimental factor values as a set of normalized expression levels (FPKMs)</dcterms:description>
     </owl:Class>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/rnaseq_mrna_differential -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/rnaseq_mrna_differential -->
 
-    <owl:Class rdf:about="&atlas;rnaseq_mrna_differential">
+    <owl:Class rdf:about="&expressionatlas;rnaseq_mrna_differential">
         <rdfs:label>RNA-Seq mRNA differential</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&atlas;Experiment"/>
+        <rdfs:subClassOf rdf:resource="&expressionatlas;Experiment"/>
         <dcterms:description>A differential experiment dtermines which genes are up– or down–regulated in different experimental conditions. They are based on a set of highly curated differential expression RNA-Seq experiments from ArrayExpress that have been re-processed using our in–house differential expression statistical analysis pipeline.</dcterms:description>
     </owl:Class>
     
@@ -833,7 +833,7 @@
     <!-- http://www.ebi.ac.uk/swo/SWO_0000090 -->
 
     <owl:Class rdf:about="&swo;SWO_0000090">
-        <rdfs:label>Atlas R statistics package</rdfs:label>
+        <rdfs:label>expressionatlas R statistics package</rdfs:label>
     </owl:Class>
     
 
@@ -867,9 +867,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Assay -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Assay -->
 
-    <owl:NamedIndividual rdf:about="&atlas;Assay">
+    <owl:NamedIndividual rdf:about="&expressionatlas;Assay">
         <rdfs:label>Assay</rdfs:label>
         <dcterms:description>An assay is an investigative (analytic) procedure in laboratory medicine, pharmacology, environmental biology, and molecular biology for qualitatively assessing or quantitatively measuring the presence or amount or the functional activity of a target entity (the analyte) which can be a drug or biochemical substance or a cell in an organism or organic sample.</dcterms:description>
         <sio:equivalentTo rdf:resource="&obo;OBI_0000070"/>
@@ -879,9 +879,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DecreasedDifferentialExpressionRatio -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DecreasedDifferentialExpressionRatio -->
 
-    <owl:NamedIndividual rdf:about="&atlas;DecreasedDifferentialExpressionRatio">
+    <owl:NamedIndividual rdf:about="&expressionatlas;DecreasedDifferentialExpressionRatio">
         <rdfs:label>Decreased differential expression ratio</rdfs:label>
         <dcterms:description>A descreased ratio of gene expression values from a test sample compared to a control sample.</dcterms:description>
         <sio:equivalentTo rdf:resource="&sio;SIO_001082"/>
@@ -890,9 +890,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DifferentialExpressionAnalysis -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DifferentialExpressionAnalysis -->
 
-    <owl:NamedIndividual rdf:about="&atlas;DifferentialExpressionAnalysis">
+    <owl:NamedIndividual rdf:about="&expressionatlas;DifferentialExpressionAnalysis">
         <rdfs:label>Differential expression analysis</rdfs:label>
         <dcterms:description>A differential expression analysis is a data transformation that has objective differential expression analysis</dcterms:description>
         <sio:equivalentTo rdf:resource="&obo;OBI_0000650"/>
@@ -902,9 +902,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/EnsemblDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/EnsemblDatabaseReference -->
 
-    <owl:NamedIndividual rdf:about="&atlas;EnsemblDatabaseReference">
+    <owl:NamedIndividual rdf:about="&expressionatlas;EnsemblDatabaseReference">
         <dcterms:description>Reference to an ensembl gene entry</dcterms:description>
         <sio:equivalentTo rdf:resource="http://edamontology.org/data_1033"/>
         <foaf:depiction rdf:resource="&images;genomes.gif"/>
@@ -912,9 +912,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/EntrezGeneDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/EntrezGeneDatabaseReference -->
 
-    <owl:NamedIndividual rdf:about="&atlas;EntrezGeneDatabaseReference">
+    <owl:NamedIndividual rdf:about="&expressionatlas;EntrezGeneDatabaseReference">
         <dcterms:description>Reference to an NCBI entrez gene entry</dcterms:description>
         <sio:equivalentTo rdf:resource="http://edamontology.org/data_1027"/>
         <foaf:depiction rdf:resource="&images;genomes.gif"/>
@@ -922,9 +922,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Experiment -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Experiment -->
 
-    <owl:NamedIndividual rdf:about="&atlas;Experiment">
+    <owl:NamedIndividual rdf:about="&expressionatlas;Experiment">
         <rdfs:label>Experiment</rdfs:label>
         <dcterms:description>An experiment is an investigation that has the goal of verifying, falsifying, or establishing the validity of a hypothesis. </dcterms:description>
         <sio:equivalentTo rdf:resource="&sio;SIO_000994"/>
@@ -934,9 +934,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/FlybaseDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/FlybaseDatabaseReference -->
 
-    <owl:NamedIndividual rdf:about="&atlas;FlybaseDatabaseReference">
+    <owl:NamedIndividual rdf:about="&expressionatlas;FlybaseDatabaseReference">
         <dcterms:description>Reference to a flybase gene entry</dcterms:description>
         <sio:equivalentTo rdf:resource="http://edamontology.org/data_1089"/>
         <foaf:depiction rdf:resource="&images;genomes.gif"/>
@@ -944,9 +944,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Gene -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Gene -->
 
-    <owl:NamedIndividual rdf:about="&atlas;Gene">
+    <owl:NamedIndividual rdf:about="&expressionatlas;Gene">
         <rdfs:label>Gene</rdfs:label>
         <dcterms:description>A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.</dcterms:description>
         <sio:equivalentTo rdf:resource="&obo;SO_0000704"/>
@@ -956,9 +956,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/IncreasedDifferentialExpressionRatio -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/IncreasedDifferentialExpressionRatio -->
 
-    <owl:NamedIndividual rdf:about="&atlas;IncreasedDifferentialExpressionRatio">
+    <owl:NamedIndividual rdf:about="&expressionatlas;IncreasedDifferentialExpressionRatio">
         <rdfs:label>Increased differential expression ratio</rdfs:label>
         <dcterms:description>A increased ratio of gene expression values from a test sample compared to a control sample.</dcterms:description>
         <sio:equivalentTo rdf:resource="&sio;SIO_001081"/>
@@ -967,27 +967,27 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/MgiGeneDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/MgiGeneDatabaseReference -->
 
-    <owl:NamedIndividual rdf:about="&atlas;MgiGeneDatabaseReference">
+    <owl:NamedIndividual rdf:about="&expressionatlas;MgiGeneDatabaseReference">
         <dcterms:description>Reference to a MGI gene database entry</dcterms:description>
         <foaf:depiction rdf:resource="&images;genomes.gif"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/RicegapDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/RicegapDatabaseReference -->
 
-    <owl:NamedIndividual rdf:about="&atlas;RicegapDatabaseReference">
+    <owl:NamedIndividual rdf:about="&expressionatlas;RicegapDatabaseReference">
         <dcterms:description>Reference to the Rice genome annotation project database</dcterms:description>
         <foaf:depiction rdf:resource="&images;genomes.gif"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Sample -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Sample -->
 
-    <owl:NamedIndividual rdf:about="&atlas;Sample">
+    <owl:NamedIndividual rdf:about="&expressionatlas;Sample">
         <rdfs:label>Sample</rdfs:label>
         <dcterms:description>a sample is a limited quantity of something (e.g. an individual or set of individuals from a population, or a portion of a substance) to be used for testing, analysis, inspection, investigation, demonstration, or trial use.</dcterms:description>
         <sio:equivalentTo rdf:resource="&obo;OBI_0100051"/>
@@ -997,9 +997,9 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/TairDatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/TairDatabaseReference -->
 
-    <owl:NamedIndividual rdf:about="&atlas;TairDatabaseReference">
+    <owl:NamedIndividual rdf:about="&expressionatlas;TairDatabaseReference">
         <dcterms:description>Reference to a TAIR gene database entry. The Arabidiopsis Information Resource </dcterms:description>
         <sio:equivalentTo rdf:resource="http://edamontology.org/data_1037"/>
         <foaf:depiction rdf:resource="&images;genomes.gif"/>

@@ -8,7 +8,7 @@
     <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
     <!ENTITY obo "http://purl.obolibrary.org/obo/" >
     <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
-    <!ENTITY atlas "http://rdf.ebi.ac.uk/terms/atlas/" >
+    <!ENTITY expressionatlas "http://rdf.ebi.ac.uk/terms/expressionatlas/" >
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
     <!ENTITY resource "http://semanticscience.org/resource/" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
@@ -16,8 +16,8 @@
 ]>
 
 
-<rdf:RDF xmlns="http://rdf.ebi.ac.uk/terms/atlas-mapping/"
-     xml:base="http://rdf.ebi.ac.uk/terms/atlas-mapping/"
+<rdf:RDF xmlns="http://rdf.ebi.ac.uk/terms/expression-atlas-mapping/"
+     xml:base="http://rdf.ebi.ac.uk/terms/expression-atlas-mapping/"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
      xmlns:swo="http://www.ebi.ac.uk/swo/"
      xmlns:efo="http://www.ebi.ac.uk/efo/"
@@ -28,11 +28,11 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:terms2="http://purl.org/dc/terms/"
-     xmlns:atlas="http://rdf.ebi.ac.uk/terms/atlas/">
-    <owl:Ontology rdf:about="http://rdf.ebi.ac.uk/terms/atlas-mapping">
-        <rdfs:label>Gene Expression Atlas vocabulary mapping file</rdfs:label>
-        <owl:versionIRI rdf:resource="http://rdf.ebi.ac.uk/terms/2.0/atlas-mapping"/>
-        <owl:imports rdf:resource="http://rdf.ebi.ac.uk/terms/v2.0/atlas"/>
+     xmlns:expressionatlas="http://rdf.ebi.ac.uk/terms/expressionatlas/">
+    <owl:Ontology rdf:about="http://rdf.ebi.ac.uk/terms/expression-atlas-mapping">
+        <rdfs:label>Expression Atlas vocabulary mapping file</rdfs:label>
+        <owl:versionIRI rdf:resource="http://rdf.ebi.ac.uk/terms/1.0/expression-atlas-mapping"/>
+        <owl:imports rdf:resource="http://rdf.ebi.ac.uk/terms/1.0/expression-atlas"/>
         <owl:imports rdf:resource="http://semanticscience.org/ontology/sio.owl"/>
         <owl:imports rdf:resource="http://www.ebi.ac.uk/efo/"/>
     </owl:Ontology>
@@ -53,12 +53,12 @@
     <owl:AnnotationProperty rdf:about="&efo;definition">
         <rdfs:subPropertyOf rdf:resource="&dc;description"/>
     </owl:AnnotationProperty>
-    <owl:AnnotationProperty rdf:about="&atlas;pValue"/>
+    <owl:AnnotationProperty rdf:about="&expressionatlas;pValue"/>
     <owl:AnnotationProperty rdf:about="&terms2;description">
         <rdfs:subPropertyOf rdf:resource="&dc;description"/>
     </owl:AnnotationProperty>
     <owl:AnnotationProperty rdf:about="&resource;SIO_000300"/>
-    <owl:AnnotationProperty rdf:about="&atlas;tStatistic"/>
+    <owl:AnnotationProperty rdf:about="&expressionatlas;tStatistic"/>
     <owl:AnnotationProperty rdf:about="&dc;description"/>
     
 
@@ -74,89 +74,89 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/dbXref -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/dbXref -->
 
-    <rdf:Description rdf:about="&atlas;dbXref">
+    <rdf:Description rdf:about="&expressionatlas;dbXref">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000425"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasAnalysis -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasAnalysis -->
 
-    <rdf:Description rdf:about="&atlas;hasAnalysis">
+    <rdf:Description rdf:about="&expressionatlas;hasAnalysis">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000053"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasAssay -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasAssay -->
 
-    <rdf:Description rdf:about="&atlas;hasAssay">
+    <rdf:Description rdf:about="&expressionatlas;hasAssay">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000053"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasAssociatedArrayDesign -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasAssociatedArrayDesign -->
 
-    <rdf:Description rdf:about="&atlas;hasAssociatedArrayDesign">
+    <rdf:Description rdf:about="&expressionatlas;hasAssociatedArrayDesign">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000425"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasExpressionValue -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasExpressionValue -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasExpressionValue">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasExpressionValue">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000312"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasFactorValue -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasFactorValue -->
 
-    <rdf:Description rdf:about="&atlas;hasFactorValue">
+    <rdf:Description rdf:about="&expressionatlas;hasFactorValue">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000008"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasSample -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasSample -->
 
-    <owl:ObjectProperty rdf:about="&atlas;hasSample">
+    <owl:ObjectProperty rdf:about="&expressionatlas;hasSample">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000230"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/hasSampleCharacteristic -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/hasSampleCharacteristic -->
 
-    <rdf:Description rdf:about="&atlas;hasSampleCharacteristic">
+    <rdf:Description rdf:about="&expressionatlas;hasSampleCharacteristic">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000223"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/implementedBy -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/implementedBy -->
 
-    <rdf:Description rdf:about="&atlas;implementedBy">
+    <rdf:Description rdf:about="&expressionatlas;implementedBy">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000139"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/isIdentifierFor -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/isIdentifierFor -->
 
-    <rdf:Description rdf:about="&atlas;isIdentifierFor">
+    <rdf:Description rdf:about="&expressionatlas;isIdentifierFor">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000672"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/isMeasurementOf -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/isMeasurementOf -->
 
-    <owl:ObjectProperty rdf:about="&atlas;isMeasurementOf">
+    <owl:ObjectProperty rdf:about="&expressionatlas;isMeasurementOf">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000215"/>
     </owl:ObjectProperty>
     
@@ -173,17 +173,17 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/pValue -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/pValue -->
 
-    <rdf:Description rdf:about="&atlas;pValue">
+    <rdf:Description rdf:about="&expressionatlas;pValue">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000300"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/tStatistic -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/tStatistic -->
 
-    <rdf:Description rdf:about="&atlas;tStatistic">
+    <rdf:Description rdf:about="&expressionatlas;tStatistic">
         <rdfs:subPropertyOf rdf:resource="&resource;SIO_000300"/>
     </rdf:Description>
     
@@ -200,83 +200,83 @@
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Assay -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Assay -->
 
-    <rdf:Description rdf:about="&atlas;Assay">
+    <rdf:Description rdf:about="&expressionatlas;Assay">
         <rdfs:subClassOf rdf:resource="&resource;SIO_001007"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DatabaseReference -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DatabaseReference -->
 
-    <rdf:Description rdf:about="&atlas;DatabaseReference">
+    <rdf:Description rdf:about="&expressionatlas;DatabaseReference">
         <rdfs:subClassOf rdf:resource="&resource;SIO_000731"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DesignPlatform -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DesignPlatform -->
 
-    <rdf:Description rdf:about="&atlas;DesignPlatform">
+    <rdf:Description rdf:about="&expressionatlas;DesignPlatform">
         <rdfs:subClassOf rdf:resource="&efo;EFO_0001451"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DifferentialExpressionAnalysis -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DifferentialExpressionAnalysis -->
 
-    <rdf:Description rdf:about="&atlas;DifferentialExpressionAnalysis">
+    <rdf:Description rdf:about="&expressionatlas;DifferentialExpressionAnalysis">
         <rdfs:subClassOf rdf:resource="&obo;OBI_0000650"/>
         <rdfs:subClassOf rdf:resource="&resource;SIO_000594"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/DifferentialExpressionRatio -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/DifferentialExpressionRatio -->
 
-    <rdf:Description rdf:about="&atlas;DifferentialExpressionRatio">
+    <rdf:Description rdf:about="&expressionatlas;DifferentialExpressionRatio">
         <rdfs:subClassOf rdf:resource="&resource;SIO_001078"/>
         <rdfs:subClassOf rdf:resource="&efo;EFO_0004034"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Experiment -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Experiment -->
 
-    <rdf:Description rdf:about="&atlas;Experiment">
+    <rdf:Description rdf:about="&expressionatlas;Experiment">
         <rdfs:subClassOf rdf:resource="&resource;SIO_000994"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/ExperimentalFactor -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/ExperimentalFactor -->
 
-    <rdf:Description rdf:about="&atlas;ExperimentalFactor">
+    <rdf:Description rdf:about="&expressionatlas;ExperimentalFactor">
         <rdfs:subClassOf rdf:resource="&resource;SIO_000367"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Gene -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Gene -->
 
-    <rdf:Description rdf:about="&atlas;Gene">
+    <rdf:Description rdf:about="&expressionatlas;Gene">
         <rdfs:subClassOf rdf:resource="&resource;SIO_010035"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/ProbeDesignElement -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/ProbeDesignElement -->
 
-    <rdf:Description rdf:about="&atlas;ProbeDesignElement">
+    <rdf:Description rdf:about="&expressionatlas;ProbeDesignElement">
         <rdfs:subClassOf rdf:resource="&efo;EFO_0004903"/>
     </rdf:Description>
     
 
 
-    <!-- http://rdf.ebi.ac.uk/terms/atlas/Sample -->
+    <!-- http://rdf.ebi.ac.uk/terms/expressionatlas/Sample -->
 
-    <rdf:Description rdf:about="&atlas;Sample">
+    <rdf:Description rdf:about="&expressionatlas;Sample">
         <rdfs:subClassOf rdf:resource="&obo;OBI_0100051"/>
         <rdfs:subClassOf rdf:resource="&resource;SIO_010412"/>
     </rdf:Description>
@@ -300,7 +300,7 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    <rdf:Description rdf:about="&atlas;UniprotDatabaseReference">
+    <rdf:Description rdf:about="&expressionatlas;UniprotDatabaseReference">
         <resource:equivalentTo rdf:resource="http://purl.uniprot.org/core/Protein"/>
     </rdf:Description>
     <rdf:Description rdf:about="&obo;OBI_0100026">

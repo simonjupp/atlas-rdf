@@ -18,8 +18,8 @@ var lodeNamespacePrefixes = {
     obo: 'http://purl.obolibrary.org/obo/',
     sio: 'http://semanticscience.org/resource/',
     efo: 'http://www.ebi.ac.uk/efo/',
-    atlas: 'http://rdf.ebi.ac.uk/resource/atlas/',
-    atlasterms: 'http://rdf.ebi.ac.uk/terms/atlas/'
+    expressionatlas: 'http://rdf.ebi.ac.uk/resource/expressionatlas/',
+    expressionatlasterms: 'http://rdf.ebi.ac.uk/terms/expressionatlas/'
 
 };
 

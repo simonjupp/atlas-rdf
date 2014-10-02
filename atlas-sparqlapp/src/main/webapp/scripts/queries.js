@@ -19,11 +19,11 @@ var exampleQueries = [
         description: "Get experiments with an analysis of wild type vs mutant ",
         query: "SELECT DISTINCT ?experiment ?refLabel ?testLabel WHERE        \n" +
             "{           \n" +
-            " ?analysis atlasterms:hasReferenceAssay ?referenceAssay ;         \n" +
-            " atlasterms:hasTestAssay ?testAssay .                 \n" +
-            " ?referenceAssay atlasterms:hasFactorValue [rdfs:label ?refLabel ] .        \n" +
-            " ?testAssay atlasterms:hasFactorValue [rdfs:label ?testLabel ] .         \n" +
-            " ?experiment atlasterms:hasPart ?testAssay .            \n\n" +
+            " ?analysis expressionatlasterms:hasReferenceAssay ?referenceAssay ;         \n" +
+            " expressionatlasterms:hasTestAssay ?testAssay .                 \n" +
+            " ?referenceAssay expressionatlasterms:hasFactorValue [rdfs:label ?refLabel ] .        \n" +
+            " ?testAssay expressionatlasterms:hasFactorValue [rdfs:label ?testLabel ] .         \n" +
+            " ?experiment expressionatlasterms:hasPart ?testAssay .            \n\n" +
             " FILTER regex(?refLabel, \"wild type\",\"i\") .        \n" +
             " FILTER regex(?testLabel, \"mutant\",\"i\") .         \n" +
             "}"
@@ -33,16 +33,16 @@ var exampleQueries = [
         description: "Get baseline gene expression values from the Illumina Body Map (E-MTAB-513) along with tissue ontology annotation",
         query: "SELECT DISTINCT ?geneid ?genename ?level ?ontologyType ?factorLabel WHERE   \n" +
                "{\n" +
-                " atlas:E-MTAB-513 atlasterms:hasPart ?referenceAssay .    \n" +
-                " ?analysis atlasterms:hasReferenceAssay ?referenceAssay ;  \n" +
-                "           atlasterms:hasOutput ?baselineExpression . \n" +
-                " ?baselineExpression atlasterms:hasFactorValue ?factor . \n" +
+                " expressionatlas:E-MTAB-513 expressionatlasterms:hasPart ?referenceAssay .    \n" +
+                " ?analysis expressionatlasterms:hasReferenceAssay ?referenceAssay ;  \n" +
+                "           expressionatlasterms:hasOutput ?baselineExpression . \n" +
+                " ?baselineExpression expressionatlasterms:hasFactorValue ?factor . \n" +
                 " ?factor a ?ontologyType . \n" +
                 " ?ontologyType rdfs:label ?factorLabel .  \n" +
-                " ?baselineExpression atlasterms:refersTo ?gene . \n" +
+                " ?baselineExpression expressionatlasterms:refersTo ?gene . \n" +
                 " ?gene dcterms:identifier ?geneid .  \n" +
                 " ?gene rdfs:label ?genename . \n" +
-                " ?baselineExpression atlasterms:fpkm ?level . \n" +
+                " ?baselineExpression expressionatlasterms:fpkm ?level . \n" +
                 " FILTER (?ontologyType != efo:EFO_0000001)  \n" +
                 "}"
     },
@@ -51,18 +51,18 @@ var exampleQueries = [
         description: "In what conditions is ASPM differentially expressed?",
         query:   "SELECT DISTINCT ?genename ?pv  ?factorLabel ?pValue ?foldChange ?tStat WHERE\n" +
                 "{\n" +
-                " ?differentialExpression atlasterms:hasFactorValue ?factor .\n" +
+                " ?differentialExpression expressionatlasterms:hasFactorValue ?factor .\n" +
                 " ?factor rdfs:label ?factorLabel .\n" +
-                " ?differentialExpression atlasterms:refersTo ?gene .\n" +
+                " ?differentialExpression expressionatlasterms:refersTo ?gene .\n" +
                 " ?gene rdfs:label ?genename .\n" +
-                " ?differentialExpression atlasterms:pValue ?pValue .\n" +
-                " ?differentialExpression atlasterms:tStatistic ?tStat .\n" +
-                " ?differentialExpression atlasterms:foldChange ?foldChange .\n\n" +
+                " ?differentialExpression expressionatlasterms:pValue ?pValue .\n" +
+                " ?differentialExpression expressionatlasterms:tStatistic ?tStat .\n" +
+                " ?differentialExpression expressionatlasterms:foldChange ?foldChange .\n\n" +
                 " # get the species \n" +
-                " ?assay atlasterms:hasFactorValue ?factor .\n" +
-                " ?assay atlasterms:hasSpecifiedInput ?sample .\n" +
-                " ?sample atlasterms:propertyType ?pt .\n" +
-                " ?sample atlasterms:propertyValue ?pv .\n\n" +
+                " ?assay expressionatlasterms:hasFactorValue ?factor .\n" +
+                " ?assay expressionatlasterms:hasSpecifiedInput ?sample .\n" +
+                " ?sample expressionatlasterms:propertyType ?pt .\n" +
+                " ?sample expressionatlasterms:propertyValue ?pv .\n\n" +
                 " FILTER regex(?genename, \"aspm\", \"i\")\n" +
                 " FILTER regex(?pt, \"^organism$\", \"i\")\n" +
                 "}"

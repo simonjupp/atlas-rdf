@@ -20,8 +20,8 @@
         "PREFIX dcterms: <http://purl.org/dc/terms/>   \n" +
         "PREFIX obo: <http://purl.obolibrary.org/obo/>  \n" +
         "PREFIX efo: <http://www.ebi.ac.uk/efo/>     \n" +
-        "PREFIX atlas: <http://rdf.ebi.ac.uk/resource/atlas/>   \n" +
-        "PREFIX atlasterms: <http://rdf.ebi.ac.uk/terms/atlas/>  \n" +
+        "PREFIX eatlas: <http://rdf.ebi.ac.uk/resource/expressionatlas/>   \n" +
+        "PREFIX eatlasterms: <http://rdf.ebi.ac.uk/terms/expressionatlas/>  \n" +
         "PREFIX sio: <http://semanticscience.org/resource/>    \n" +
 
         "SELECT DISTINCT ?term ?label ?description ?relation ?relatedterm WHERE   \n" +
@@ -32,8 +32,8 @@
         "?term dcterms:description ?description .   \n" +
         " ?term ?relation ?relatedterm .   \n" +
         " ?relatedterm a owl:Class .     \n" +
-        " FILTER regex(str(?term), \"^http://rdf.ebi.ac.uk/terms/atlas/\") .    \n" +
-        " FILTER (! regex( str(?relatedterm), \"^http://rdf.ebi.ac.uk/terms/atlas/\")) . \n" +
+        " FILTER regex(str(?term), \"^http://rdf.ebi.ac.uk/terms/expressionatlas/\") .    \n" +
+        " FILTER (! regex( str(?relatedterm), \"^http://rdf.ebi.ac.uk/terms/expressionatlas/\")) . \n" +
         "}    \n" +
         "ORDER BY ?label";
 

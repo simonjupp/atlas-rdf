@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# this is script is no longer required - Jupp Sept 2014
+
 # read experiments from old dir and check which don't exist in new dir
 # print out void statements that link to the old dataset description URI
 

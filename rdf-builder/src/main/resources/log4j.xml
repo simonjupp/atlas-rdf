@@ -52,12 +52,12 @@
 
     <logger name="org.springframework" additivity="false">
         <level value="INFO"/>
-        <appender-ref ref="atlas-rdf-log"/>
+        <appender-ref ref="e-atlas-rdf-log"/>
     </logger>
 
     <root>
         <priority value="INFO"/>
-        <appender-ref ref="atlas-rdf-log"/>
+        <appender-ref ref="e-atlas-rdf-log"/>
     </root>
 
 </log4j:configuration>
