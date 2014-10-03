@@ -32,7 +32,7 @@
         </layout>
     </appender>
 
-    <appender name="atlas-rdf-log" class="org.apache.log4j.DailyRollingFileAppender">
+    <appender name="e-atlas-rdf-log" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <param name="File" value="atlas2rdf.log"/>
         <layout class="org.apache.log4j.PatternLayout">
