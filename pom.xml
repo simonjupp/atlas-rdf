@@ -90,7 +90,7 @@
 
                 <java.args>-Xmx1000M</java.args>
                 <ui.sparql.endpoint>rdf-hx-01.ebi.ac.uk</ui.sparql.endpoint>
-                <ui.sparql.endpoint.port>1120</ui.sparql.endpoint.port>
+                <ui.sparql.endpoint.port>1119</ui.sparql.endpoint.port>
                 <ui.sparql.endpoint.max>-1</ui.sparql.endpoint.max>
             </properties>
        </profile>

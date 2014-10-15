@@ -512,7 +512,7 @@ function querySparql () {
 
     // about to execute query
     displayBusyMessage();
-    setNextPrevUrl(querytext, limit, offset);
+    setNextPrevUrl(querytext, limit, offset, rdfs);
     $.ajax ( {
         type: 'GET',
         url: loadestarQueryService + "?" + queryString,
@@ -527,14 +527,14 @@ function querySparql () {
     })
 }
 
-function setNextPrevUrl (queryString, limit, offset) {
+function setNextPrevUrl (queryString, limit, offset, rdfs) {
 
-    lodestarNextUrl = "query=" + encodeURIComponent(queryString) + "&limit=" + limit + "&offset=" + (parseInt(offset) + parseInt(lodestarResultsPerPage));
+    lodestarNextUrl = "query=" + encodeURIComponent(queryString) + "&limit=" + limit + "&inference=" + rdfs + "&offset=" + (parseInt(offset) + parseInt(lodestarResultsPerPage));
     if (offset >= lodestarResultsPerPage) {
-        loadstarPrevUrl = "query=" + encodeURIComponent(queryString) + "&limit=" + limit + "&offset=" + (parseInt(offset) - parseInt(lodestarResultsPerPage));
+        loadstarPrevUrl = "query=" + encodeURIComponent(queryString) + "&limit=" + limit + "&inference=" + rdfs + "&offset=" + (parseInt(offset) - parseInt(lodestarResultsPerPage));
     }
     else {
-        loadstarPrevUrl = "query=" + encodeURIComponent(queryString) + "&limit=" + limit + "&offset=0";
+        loadstarPrevUrl = "query=" + encodeURIComponent(queryString) + "&limit=" + limit + "&inference=" + rdfs + "&offset=0";
     }
 }
 
