@@ -192,7 +192,7 @@ public class PropertiesBasedURIProvider implements URIProvider {
             String kingdom = Organism.getOrganimsByName(speciesName).getKingdom();
 
             if (!kingdom.equals("eukaryote")) {
-                path = MessageFormat.format(read("ensembl.resource.uri"), "." + kingdom, id);
+                path = MessageFormat.format(read("ensembl.identifiers.uri"), "." + kingdom, id);
             }
         }
         else if (id.startsWith("MIMAT"))  {
