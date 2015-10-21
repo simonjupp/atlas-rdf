@@ -42,6 +42,9 @@ public class BaselineExpression implements Expression {
     }
 
     public BaselineExpression(String expressionLevelString, FactorGroup factorGroup) {
+        if (expressionLevelString.contains(",")) {
+            expressionLevelString = expressionLevelString.split(",")[2];
+        }
         this.levelString = expressionLevelString;
 
         switch (expressionLevelString) {
