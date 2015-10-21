@@ -173,7 +173,11 @@ public class PropertiesBasedURIProvider implements URIProvider {
 
     public URI getDesignElementUri(String platform, String designElement) {
         String path = MessageFormat.format(read("gxa.probe.uri"), platform, designElement);
-        return URI.create(path.toString());
+        try {
+            return URI.create(URLEncoder.encode(path, "ISO-8859-1"));
+        } catch (UnsupportedEncodingException e) {
+            return URI.create(path);
+        }
     }
 
 
