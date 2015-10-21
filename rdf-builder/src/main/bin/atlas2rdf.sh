@@ -2,8 +2,8 @@
 
 base=${0%/*}/..;
 current=`pwd`;
-java=${java.location};
-args="${java.args}";
+java='/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/bin/java'; # ${java.location};
+#args="${java.args}";
 
 
 for file in `ls $base/lib`
@@ -13,5 +13,5 @@ done
 
 classpath="$base/config:$jars";
 
-$java $args -classpath $classpath uk.ac.ebi.spot.rdf.cli.Gxa2RdfDriver $@ 2>&1;
+$java -classpath $classpath uk.ac.ebi.spot.rdf.cli.Gxa2RdfDriver $@ 2>&1;
 exit $?;
