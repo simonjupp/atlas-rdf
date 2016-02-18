@@ -45,11 +45,6 @@
         <appender-ref ref="console"/>
     </logger>
 
-    <logger name="uk.ac.ebi.spot" additivity="false">
-        <level value="ERROR"/>
-        <appender-ref ref="console"/>
-    </logger>
-
     <logger name="org.springframework" additivity="false">
         <level value="INFO"/>
         <appender-ref ref="e-atlas-rdf-log"/>
