@@ -1,9 +1,11 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 
-import uk.ac.ebi.spot.atlas.rdf.cache.BaselineExperimentsCache;
+import uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.profiles.TsvRowQueueBuilder;
 import uk.ac.ebi.spot.rdf.model.baseline.BaselineExperiment;
 import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
+
+import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -16,9 +18,9 @@ public class BaselineExpressionsQueueBuilder implements TsvRowQueueBuilder<Basel
 
     private String experimentAccession;
 
-    private BaselineExperimentsCache experimentsCache;
+    private RnaSeqBaselineExperimentsCache experimentsCache;
 
-    public BaselineExpressionsQueueBuilder(BaselineExperimentsCache experimentsCache) {
+    public BaselineExpressionsQueueBuilder(RnaSeqBaselineExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
     }
 
@@ -39,13 +41,13 @@ public class BaselineExpressionsQueueBuilder implements TsvRowQueueBuilder<Basel
     }
 
     @Override
-    public BaselineExpressionsQueue build() {
+    public BaselineExpressionsQueue build() throws ExecutionException {
         checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
 
         BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
         //TODO: maybe we should use what we get from withHeaders - then we can remove dependency on experimentsCache
-        return new BaselineExpressionsQueue(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups());
+        return new BaselineExpressionsQueue(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder());
 
     }
 

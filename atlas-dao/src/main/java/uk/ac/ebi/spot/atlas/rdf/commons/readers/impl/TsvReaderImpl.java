@@ -2,22 +2,19 @@ package uk.ac.ebi.spot.atlas.rdf.commons.readers.impl;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Predicate;
-import org.apache.log4j.Logger;
+import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.spot.atlas.rdf.commons.readers.TsvReader;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Simon Jupp
- * @date 11/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
- */
 public class TsvReaderImpl implements TsvReader {
 
-    private static final Logger LOGGER = Logger.getLogger(TsvReaderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TsvReaderImpl.class);
 
     private InputStreamReader tsvFileInputStreamReader;
 
@@ -27,8 +24,8 @@ public class TsvReaderImpl implements TsvReader {
 
     @Override
     public String[] readLine(long lineIndex) {
+        try (CSVReader csvReader = new CSVReader(tsvFileInputStreamReader, '\t')) {
 
-        try (CSVReader csvReader = new CSVReader(tsvFileInputStreamReader, '\t')){
             String[] line = null;
             for (int i = 0; i <= lineIndex; i++) {
                 line = csvReader.readNext();
@@ -36,8 +33,8 @@ public class TsvReaderImpl implements TsvReader {
             return line;
 
         } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Cannot read Tsv file", e);
+            LOGGER.error("Cannot read TSV file: " + e.getMessage(), e);
+            throw Throwables.propagate(e);
         }
     }
 
@@ -46,38 +43,27 @@ public class TsvReaderImpl implements TsvReader {
         return readAndFilter(new IsNotCommentPredicate());
     }
 
-    List<String[]> readAndFilter(Predicate<String> acceptanceCriteria) {
+    private List<String[]> readAndFilter(Predicate<String> acceptanceCriteria) {
+        try (CSVReader csvReader = new CSVReader(tsvFileInputStreamReader, '\t')) {
 
-        try (CSVReader csvReader = new CSVReader(tsvFileInputStreamReader, '\t')){
-            List<String[]> rows = new ArrayList<>();
+            ImmutableList.Builder<String[]> rowsBuilder = new ImmutableList.Builder<>();
             for (String[] row : csvReader.readAll()) {
                 if (acceptanceCriteria.apply(row[0])) {
-                    rows.add(row);
+                    rowsBuilder.add(row);
                 }
             }
-            return rows;
+            return rowsBuilder.build();
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Cannot read Tsv file", e);
+            throw Throwables.propagate(e);
         }
     }
 
-    protected static class IsCommentPredicate implements Predicate<String> {
-
+    private static class IsNotCommentPredicate implements Predicate<String> {
         @Override
         public boolean apply(String rowHeader) {
-            return rowHeader.trim().startsWith("#");
+            return ! rowHeader.trim().startsWith("#");
         }
     }
-
-    protected static class IsNotCommentPredicate extends IsCommentPredicate {
-
-        @Override
-        public boolean apply(String rowHeader) {
-            return !super.apply(rowHeader);
-        }
-    }
-
-
 }

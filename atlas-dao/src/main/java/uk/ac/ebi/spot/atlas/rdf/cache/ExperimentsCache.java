@@ -2,14 +2,11 @@ package uk.ac.ebi.spot.atlas.rdf.cache;
 
 import uk.ac.ebi.spot.rdf.model.Experiment;
 
-/**
- * @author Simon Jupp
- * @date 07/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
- */
+import java.util.concurrent.ExecutionException;
+
 public interface ExperimentsCache<T extends Experiment> {
 
-    T getExperiment(String experimentAccession);
+    T getExperiment(String experimentAccession) throws ExecutionException;
 
     void evictExperiment(String experimentAccession);
 

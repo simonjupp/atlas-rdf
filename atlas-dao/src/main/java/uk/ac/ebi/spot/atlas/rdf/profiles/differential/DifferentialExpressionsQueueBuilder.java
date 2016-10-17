@@ -13,6 +13,7 @@ import uk.ac.ebi.spot.rdf.model.differential.DifferentialExperiment;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -42,7 +43,7 @@ public abstract class DifferentialExpressionsQueueBuilder<T extends Expression, 
     }
 
     @Override
-    public DifferentialExpressionsQueueBuilder withHeaders(String... tsvFileHeaders) {
+    public DifferentialExpressionsQueueBuilder withHeaders(String... tsvFileHeaders) throws ExecutionException {
 
         LOGGER.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
 

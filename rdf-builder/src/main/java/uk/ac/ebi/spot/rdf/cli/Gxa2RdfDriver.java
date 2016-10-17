@@ -12,6 +12,7 @@ import java.io.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -138,7 +139,7 @@ public class Gxa2RdfDriver {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException {
 
 
         int parseArgs = parseArguments(args);
@@ -149,7 +150,7 @@ public class Gxa2RdfDriver {
 
             ApplicationContext context = new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
 
-            ExperimentDTO builder =context.getBean("experimentBuilder", ExperimentDTO.class);
+            ExperimentDTO builder = context.getBean("experimentBuilder", ExperimentDTO.class);
             URIProvider uriProvider = context.getBean("uriProvider", URIProvider.class);
 
 

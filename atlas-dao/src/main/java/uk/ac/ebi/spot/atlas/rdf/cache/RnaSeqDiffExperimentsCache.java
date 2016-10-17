@@ -1,56 +1,36 @@
 package uk.ac.ebi.spot.atlas.rdf.cache;
 
-import org.apache.log4j.Logger;
-import uk.ac.ebi.spot.atlas.rdf.loader.DifferentialExperimentLoader;
+import com.google.common.cache.LoadingCache;
+import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.spot.rdf.model.differential.DifferentialExperiment;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExperiment;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.concurrent.ExecutionException;
 
-/**
- * @author Simon Jupp
- * @date 07/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
- */
+@Named
 public class RnaSeqDiffExperimentsCache implements ExperimentsCache<DifferentialExperiment> {
 
-    private static final Logger LOGGER = Logger.getLogger(RnaSeqDiffExperimentsCache.class);
+    private LoadingCache<String, DifferentialExperiment> experiments;
 
-    private DifferentialExperimentLoader loader;
-
-    //this is the name of the implementation being injected, required because LoadingCache is an interface
-    public RnaSeqDiffExperimentsCache(DifferentialExperimentLoader loader) {
-        this.loader = loader;
+    @Inject
+    public RnaSeqDiffExperimentsCache(@Qualifier("differentialExperimentsLoadingCache") LoadingCache<String, DifferentialExperiment> experiments) {
+        this.experiments = experiments;
     }
-    private Map<String, DifferentialExperiment> experimentMap = new HashMap<>();
 
     @Override
-    public DifferentialExperiment getExperiment(String experimentAccession) {
-        try {
-
-            if (!experimentMap.containsKey(experimentAccession)) {
-                experimentMap.put(experimentAccession, loader.load(experimentAccession));
-            }
-
-            return experimentMap.get(experimentAccession);
-
-
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("Exception while loading experiment %s: %s", experimentAccession, e.getMessage()), e.getCause());
-        }
+    public DifferentialExperiment getExperiment(String experimentAccession) throws ExecutionException {
+        return experiments.get(experimentAccession);
     }
 
     @Override
     public void evictExperiment(String experimentAccession) {
-        experimentMap.remove(experimentAccession);
+        experiments.invalidate(experimentAccession);
     }
 
     @Override
     public void evictAll() {
-        experimentMap.clear();
-
+        experiments.invalidateAll();
     }
 
 }

@@ -1,11 +1,12 @@
 package uk.ac.ebi.spot.atlas.rdf;
 
+import com.google.common.base.Joiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import uk.ac.ebi.spot.atlas.rdf.cache.BaselineExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.loader.BaselineProfilesLoader;
 import uk.ac.ebi.spot.atlas.rdf.loader.MicroarrayProfilesLoader;
@@ -16,6 +17,8 @@ import uk.ac.ebi.spot.rdf.model.differential.*;
 import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.spot.rdf.model.differential.rnaseq.RnaSeqProfile;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Simon Jupp
@@ -34,14 +37,14 @@ public class ExperimentDTO {
     private RnaSeqDiffExperimentsCache rnaReqDiffExperimentsCache;
     private RnaSeqDiffProfilesLoader rnaSeqDiffProfilesLoader;
 
-    private BaselineExperimentsCache baselineExperimentsCache;
+    private RnaSeqBaselineExperimentsCache baselineExperimentsCache;
     private BaselineProfilesLoader baselineProfilesLoader;
 
-    public BaselineExperimentsCache getBaselineExperimentsCache() {
+    public RnaSeqBaselineExperimentsCache getBaselineExperimentsCache() {
         return baselineExperimentsCache;
     }
 
-    public void setBaselineExperimentsCache(BaselineExperimentsCache baselineExperimentsCache) {
+    public void setBaselineExperimentsCache(RnaSeqBaselineExperimentsCache baselineExperimentsCache) {
         this.baselineExperimentsCache = baselineExperimentsCache;
     }
 
@@ -91,7 +94,7 @@ public class ExperimentDTO {
         this.trader = trader;
     }
 
-    public CompleteExperiment build (String experimentAccession) {
+    public CompleteExperiment build (String experimentAccession) throws ExecutionException {
 
         ExperimentConfiguration config = getTrader().getExperimentConfiguration(experimentAccession);
 
@@ -157,17 +160,17 @@ public class ExperimentDTO {
         System.out.println(String.format("Experiment description: %s", experiment.getDescription()));
         System.out.println(String.format("Experiment type: %s", experiment.getType().getDescription()));
         System.out.println(String.format("Experiment display name: %s", experiment.getDisplayName()));
-        System.out.println(String.format("Experiment pubmedids: %s", experiment.getPubMedIds()));
-        System.out.println(String.format("Experiment Species: %s", experiment.getFirstSpecies()));
+        System.out.println(String.format("Experiment pubmedids: %s", experiment.getAttributes().get("pubMedIds")));
+        System.out.println(String.format("Experiment Species: %s", experiment.getSpecies()));
         ExperimentDesign design = experiment.getExperimentDesign();
 
         for (String runs : experiment.getExperimentRunAccessions()) {
             System.out.println(String.format("Experiment run: %s", runs));
-            for (SampleValue sample : design.getSamples(runs)) {
-                System.out.println(String.format("\t sample: %s / %s (%s)", sample.getType(),  sample.getType(), sample.getOntologyTerm() ));
+            for (SampleCharacteristic sample : design.getSampleCharacteristics(runs)) {
+                System.out.println(String.format("\t sample: %s / %s (%s)", sample.header(),  sample.value(), Joiner.on(" ").join(sample.valueOntologyTerms())));
             }
             for (Factor factor : design.getFactors(runs)) {
-                System.out.println(String.format("\t factor: %s / %s (%s)", factor.getType(), factor.getValue(), factor.getValueOntologyTerm() ));
+                System.out.println(String.format("\t factor: %s / %s (%s)", factor.getType(), factor.getValue(), Joiner.on(" ").join(factor.getValueOntologyTerms())));
             }
 
         }
@@ -175,7 +178,7 @@ public class ExperimentDTO {
         for (BaselineProfile profile : profiles) {
             for (Factor factor : profile.getConditions()) {
                 if (profile.getExpression(factor).isKnown()) {
-                    System.out.println(String.format("basleline factor: %s %s", factor.getType(), factor.getValue()));
+                    System.out.println(String.format("baseline factor: %s %s", factor.getType(), factor.getValue()));
                     System.out.println(String.format("Expression: %s %s %s",
                             profile.getId(),
                             profile.getName(),
@@ -190,16 +193,16 @@ public class ExperimentDTO {
         System.out.println(String.format("Experiment description: %s", experiment.getDescription()));
         System.out.println(String.format("Experiment type: %s", experiment.getType().getDescription()));
         System.out.println(String.format("Experiment display name: %s", experiment.getDisplayName()));
-        System.out.println(String.format("Experiment pubmedids: %s", experiment.getPubMedIds()));
-        System.out.println(String.format("Experiment Species: %s", experiment.getFirstSpecies()));
+        System.out.println(String.format("Experiment pubmedids: %s", experiment.getAttributes().get("pubMedIds")));
+        System.out.println(String.format("Experiment Species: %s", experiment.getSpecies()));
         ExperimentDesign design = experiment.getExperimentDesign();
         for (String assays: experiment.getAssayAccessions()) {
             System.out.println(String.format("Experiment assays: %s", assays));
-            for (SampleValue sample : design.getSamples(assays)) {
-                System.out.println(String.format("\t sample: %s / %s (%s)", sample.getType(),  sample.getType(), sample.getOntologyTerm() ));
+            for (SampleCharacteristic sample : design.getSampleCharacteristics(assays)) {
+                System.out.println(String.format("\t sample: %s / %s (%s)", sample.header(),  sample.value(), Joiner.on(" ").join(sample.valueOntologyTerms())));
             }
             for (Factor factor : design.getFactors(assays)) {
-                System.out.println(String.format("\t factor: %s / %s (%s)", factor.getType(), factor.getValue(), factor.getValueOntologyTerm() ));
+                System.out.println(String.format("\t factor: %s / %s (%s)", factor.getType(), factor.getValue(), Joiner.on(" ").join(factor.getValueOntologyTerms())));
             }
         }
 
@@ -229,16 +232,16 @@ public class ExperimentDTO {
         System.out.println(String.format("Experiment description: %s", experiment.getDescription()));
         System.out.println(String.format("Experiment type: %s", experiment.getType().getDescription()));
         System.out.println(String.format("Experiment display name: %s", experiment.getDisplayName()));
-        System.out.println(String.format("Experiment pubmedids: %s", experiment.getPubMedIds()));
-        System.out.println(String.format("Experiment Species: %s", experiment.getFirstSpecies()));
+        System.out.println(String.format("Experiment pubmedids: %s", experiment.getAttributes().get("pubMedIds")));
+        System.out.println(String.format("Experiment Species: %s", experiment.getSpecies()));
         ExperimentDesign design = experiment.getExperimentDesign();
         for (String assays: experiment.getAssayAccessions()) {
             System.out.println(String.format("Experiment assays: %s", assays));
-            for (SampleValue sample : design.getSamples(assays)) {
-                System.out.println(String.format("\t sample: %s / %s (%s)", sample.getType(),  sample.getType(), sample.getOntologyTerm() ));
+            for (SampleCharacteristic sample : design.getSampleCharacteristics(assays)) {
+                System.out.println(String.format("\t sample: %s / %s (%s)", sample.header(),  sample.value(), Joiner.on(" ").join(sample.valueOntologyTerms())));
             }
             for (Factor factor : design.getFactors(assays)) {
-                System.out.println(String.format("\t factor: %s / %s (%s)", factor.getType(), factor.getValue(), factor.getValueOntologyTerm() ));
+                System.out.println(String.format("\t factor: %s / %s (%s)", factor.getType(), factor.getValue(), Joiner.on(" ").join(factor.getValueOntologyTerms())));
             }
         }
 
@@ -267,7 +270,7 @@ public class ExperimentDTO {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException {
 
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -280,7 +283,7 @@ public class ExperimentDTO {
         RnaSeqDiffExperimentsCache rnaReqDiffexperimentsCache = (RnaSeqDiffExperimentsCache) context.getBean("rnaSeqDiffExperimentsCache");
         RnaSeqDiffProfilesLoader rnadiffprofile = (RnaSeqDiffProfilesLoader) context.getBean("rnaSeqDiffProfilesLoader");
 
-        BaselineExperimentsCache baselineExperimentsCache = (BaselineExperimentsCache) context.getBean("baselineExperimentsCache");
+        RnaSeqBaselineExperimentsCache baselineExperimentsCache = (RnaSeqBaselineExperimentsCache) context.getBean("baselineExperimentsCache");
         BaselineProfilesLoader baselineProfilesLoader= (BaselineProfilesLoader) context.getBean("baselineProfilesLoader");
 
         ExperimentDTO dto = new ExperimentDTO();

@@ -1,25 +1,27 @@
 package uk.ac.ebi.spot.atlas.rdf.utils;
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.log4j.Logger;
+import com.google.common.base.Throwables;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
+import javax.inject.Named;
 import java.io.Reader;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.util.zip.GZIPInputStream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * @author Simon Jupp
- * @date 07/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
- */
+@Named
 public class CsvReaderFactory {
 
-    private static final Logger LOGGER = Logger.getLogger(CsvReaderFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderFactory.class);
 
     public CSVReader createTsvReader(String tsvFilePath) {
         try {
@@ -28,11 +30,23 @@ public class CsvReaderFactory {
             return createTsvReader(dataFileReader);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalArgumentException("Error trying to open " + tsvFilePath, e);
+            throw Throwables.propagate(e);
+        }
+    }
+
+    public CSVReader createTsvGzReader(String tsvGzFilePath) throws NoSuchFileException {
+        try {
+            Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvGzFilePath));
+            Reader dataFileReader = new BufferedReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(filePath))));
+            return createTsvReader(dataFileReader);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new NoSuchFileException(e.getMessage());
         }
     }
 
     public static CSVReader createTsvReader(Reader source) {
         return new CSVReader(source, '\t');
     }
+
 }

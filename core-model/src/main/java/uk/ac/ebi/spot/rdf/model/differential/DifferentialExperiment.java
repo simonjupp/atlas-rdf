@@ -2,49 +2,35 @@ package uk.ac.ebi.spot.rdf.model.differential;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.google.gson.Gson;
+import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.spot.rdf.model.Experiment;
 import uk.ac.ebi.spot.rdf.model.ExperimentDesign;
 import uk.ac.ebi.spot.rdf.model.ExperimentType;
+import uk.ac.ebi.spot.rdf.model.Species;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
 public class DifferentialExperiment extends Experiment {
+
+    private static final Gson gson = new Gson();
 
     private LinkedHashMap<String, Contrast> contrastsById = Maps.newLinkedHashMap();
 
-    public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasExtraInfoFile, species, pubMedIds, experimentDesign);
+    public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description,
+                                  boolean hasRData, Species species, Collection<String>
+                                          pubMedIds,
+                                  ExperimentDesign experimentDesign) {
+        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasRData, species, pubMedIds, experimentDesign);
     }
 
-    protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast> contrasts,
-                                     String description, boolean hasExtraInfoFile, Set<String> species, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        super(experimentType, accession, lastUpdate, description, hasExtraInfoFile, species, null, pubMedIds, experimentDesign);
+    protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast>
+            contrasts, String description, boolean hasRData, Species species, Collection<String>
+                                             pubMedIds, ExperimentDesign experimentDesign) {
+        super(experimentType, accession, lastUpdate,null, description, "", hasRData, species,
+                pubMedIds, experimentDesign,Collections.<String>emptyList(), Collections.<String>emptyList(),Collections.<String>emptyList(), Collections.<String>emptyList());
         for (Contrast contrast : contrasts) {
             contrastsById.put(contrast.getId(), contrast);
         }
@@ -56,7 +42,7 @@ public class DifferentialExperiment extends Experiment {
 
     public Contrast getContrast(String contrastId) {
         Contrast contrast = contrastsById.get(contrastId);
-        checkArgument(contrast != null, "Cannot find a contrast with contrastId: " + contrastId);
+        checkArgument(contrast != null, this.getAccession() + ": cannot find a contrast with contrastId: " + contrastId);
         return contrast;
     }
 
@@ -76,6 +62,41 @@ public class DifferentialExperiment extends Experiment {
         }
 
         return assayAccessions;
+    }
+
+    @Override
+    protected Set<String> getAnalysedRowsAccessions() {
+        return getAssayAccessions();
+    }
+
+    @Override
+    public Map<String, ?> getAttributes(){
+        Map<String, Object> result = new HashMap<>();
+        result.putAll(super.getAttributes());
+        result.put("regulationValues", Regulation.values());
+        result.put("isFortLauderdale", false);
+        result.put("contrasts", this.getContrasts());
+
+        return result;
+    }
+
+    public Map<String, ?> getDifferentialAttributes(){
+        //you only have a selected contrast when you're on an experiment design page
+        return getDifferentialAttributes("");
+    }
+
+    public Map<String, ?> getDifferentialAttributes(String selectedContrast){
+        Map<String, Object> result = new HashMap<>();
+        if (StringUtils.isBlank(selectedContrast)) {
+            selectedContrast = getContrasts().iterator().next().getId();
+        }
+
+        Contrast contrast = getContrast(selectedContrast);
+        result.put("referenceAssays", gson.toJson(Sets.newHashSet(contrast.getReferenceAssayGroup())));
+        result.put("testAssays", gson.toJson(Sets.newHashSet(contrast.getTestAssayGroup())));
+
+        return result;
+
     }
 
 }

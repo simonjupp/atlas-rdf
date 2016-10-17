@@ -2,10 +2,13 @@ package uk.ac.ebi.spot.atlas.rdf.commons;
 
 import java.io.Closeable;
 
-/**
- * @author Simon Jupp
- * @date 07/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
+/*
+ * Essentially a closeable iterator, however we don't use the Iterator interface because
+ * the semantics of this class is different. See discussion here:
+ * https://code.google.com/p/guava-libraries/issues/detail?id=973
+ *
+ * and comments here about Iterator not supporting IOException semantics
+ * http://stackoverflow.com/a/10811303/149412
  */
 public interface ObjectInputStream<T> extends Closeable {
 
@@ -13,4 +16,3 @@ public interface ObjectInputStream<T> extends Closeable {
     T readNext();
 
 }
-

@@ -1,13 +1,8 @@
 package uk.ac.ebi.spot.atlas.rdf.loader;
 
-import uk.ac.ebi.spot.atlas.rdf.commons.ObjectInputStream;
-import uk.ac.ebi.spot.atlas.rdf.profiles.baseline.BaselineExpressionsInputStreamFactory;
+import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.spot.atlas.rdf.profiles.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.spot.atlas.rdf.profiles.baseline.BaselineProfilesInputStream;
 import uk.ac.ebi.spot.rdf.model.baseline.*;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExperiment;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.spot.rdf.model.differential.rnaseq.RnaSeqProfile;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -36,7 +31,7 @@ public class BaselineProfilesLoader {
         Collection<BaselineProfile> profiles = new HashSet<BaselineProfile>();
 
             for (Factor factor : factors.getAllFactors()) {
-                BaselineProfilesInputStream stream = getBaselineExpressionsInputStreamFactory().createBaselineProfileInputStream(
+                ExpressionProfileInputStream stream = getBaselineExpressionsInputStreamFactory().createBaselineProfileInputStream(
                         experiment.getAccession(),
                         factor.getType(),
                         0.5d,
@@ -44,7 +39,7 @@ public class BaselineProfilesLoader {
                 );
 
                 BaselineProfile profile1;
-                while ( (profile1 = stream.readNext()) != null) {
+                while ( (profile1 = (BaselineProfile) stream.readNext()) != null) {
                     profiles.add(profile1);
                 }
 

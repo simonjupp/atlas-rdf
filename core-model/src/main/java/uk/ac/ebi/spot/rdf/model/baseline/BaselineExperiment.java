@@ -1,44 +1,32 @@
 package uk.ac.ebi.spot.rdf.model.baseline;
 
-import uk.ac.ebi.spot.rdf.model.*;
+import uk.ac.ebi.spot.rdf.model.AssayGroups;
+import uk.ac.ebi.spot.rdf.model.Experiment;
+import uk.ac.ebi.spot.rdf.model.ExperimentDesign;
+import uk.ac.ebi.spot.rdf.model.ExperimentType;
+import uk.ac.ebi.spot.rdf.model.Species;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
 
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
 public class BaselineExperiment extends Experiment {
 
     private ExperimentalFactors experimentalFactors;
-
     private AssayGroups assayGroups;
 
-    public BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
-                       String description,
-                       String displayName, Set<String> species, Map<String, String> speciesMapping,
-                       boolean hasExtraInfoFile,
-                       Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups) {
+    BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
+                       String description, String displayName, String disclaimer, Species species,
+                       boolean hasRData, Collection<String> pubMedIds, ExperimentDesign experimentDesign,
+                       AssayGroups assayGroups, List<String> dataProviderURL, List<String> dataProviderDescription,
+                       List<String> alternativeViews, List<String> alternativeViewDescriptions) {
 
-        super(ExperimentType.RNASEQ_MRNA_BASELINE, accession, lastUpdate, displayName, description,
-                hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
+        super(experimentType, accession, lastUpdate, displayName, description, disclaimer, hasRData, species,
+                pubMedIds, experimentDesign, dataProviderURL, dataProviderDescription,
+                alternativeViews, alternativeViewDescriptions);
+
         this.experimentalFactors = experimentalFactors;
         this.assayGroups = assayGroups;
     }
@@ -56,9 +44,15 @@ public class BaselineExperiment extends Experiment {
     }
 
     public SortedSet<Factor> getAssayGroupFactors(Collection<String> assayGroupIds, String factorType) {
-        return getExperimentalFactors().getFactorsForAssayGroupsByType(assayGroupIds, factorType);
+        return getExperimentalFactors().getFactors(assayGroupIds, factorType);
     }
 
+    public boolean isTissueExperiment() {
+        return getExperimentalFactors().getDefaultQueryFactorType().equals("ORGANISM_PART");
+    }
 
+    @Override
+    protected Set<String> getAnalysedRowsAccessions() {
+        return getExperimentRunAccessions();
+    }
 }
-

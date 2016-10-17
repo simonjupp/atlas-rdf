@@ -11,7 +11,7 @@ import java.util.Collection;
  * @date 02/05/2014
  * Samples, Phenotypes and Ontologies Team, EMBL-EBI
  *
- * Interface for getting URIs for rescources in Atlas. These may be types, properties
+ * Interface for getting URIs for resources in Atlas. These may be types, properties
  * or templates for constructing URIs from specified values
  *
  */

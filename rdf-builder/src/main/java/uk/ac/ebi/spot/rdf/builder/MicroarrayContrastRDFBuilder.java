@@ -1,6 +1,5 @@
 package uk.ac.ebi.spot.rdf.builder;
 
-
 import uk.ac.ebi.spot.rdf.model.AssayGroup;
 import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
 import uk.ac.ebi.spot.rdf.model.baseline.Factor;
@@ -118,7 +117,7 @@ public class MicroarrayContrastRDFBuilder extends DifferentialExperimentDesignRD
                 );
 
                 // add the link to gene
-                for (URI geneidUri : getUriProvider().getBioentityUri(geneId, experiment.getFirstSpecies())) {
+                for (URI geneidUri : getUriProvider().getBioentityUri(geneId, experiment.getSpecies().originalName)) {
                     builder.createTypeInstance(
                             geneidUri,
                             getUriProvider().getBioentityTypeUri("EnsemblDatabaseReference")

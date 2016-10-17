@@ -14,94 +14,39 @@
            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <context:annotation-config/>
+    <context:component-scan base-package="uk.ac.ebi.spot.atlas"/>
     <context:property-placeholder location="classpath:configuration.properties" ignore-unresolvable="true" system-properties-mode="OVERRIDE"/>
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
-    <bean id="configurationTrader" class="uk.ac.ebi.spot.atlas.rdf.ConfigurationTrader"/>
-
-    <bean id="limpopoUtils" class="uk.ac.ebi.spot.atlas.rdf.utils.MageTabLimpopoUtils"/>
-
-    <bean id="csvReaderFactory" class="uk.ac.ebi.spot.atlas.rdf.utils.CsvReaderFactory"/>
-
-
-    <!-- rnaseq diff config -->
-    <bean id="rnaSeqDiffExperimentLoader" class="uk.ac.ebi.spot.atlas.rdf.loader.DifferentialExperimentLoader">
-        <property name="limpopoUtils" ref="limpopoUtils"/>
-        <property name="trader" ref="configurationTrader"/>
+    <bean id="dataSourceOracle" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
+        <property name="URL" value="jdbc:oracle:thin:@ora-vm-064.ebi.ac.uk:1531:ATLASPRO"/>
+        <property name="user" value="atlasprd3"/>
+        <property name="password" value="atlasp543"/>
+        <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource"/>
+        <property name="initialPoolSize" value="3"/>
+        <property name="minPoolSize" value="3"/>
+        <property name="maxPoolSize" value="20"/>
+        <property name="maxIdleTime" value="1800"/>
+    </bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSourceOracle"/>
+    </bean>
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSourceOracle"/>
     </bean>
 
-    <bean id="rnaSeqDiffExperimentsCache" class="uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqDiffExperimentsCache">
-        <constructor-arg name="loader" ref="rnaSeqDiffExperimentLoader"/>
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"
+                  p:readTimeout="120000"
+                  p:connectTimeout="120000" />
+        </constructor-arg>
     </bean>
 
-    <bean id="rnaSeqDiffExpressionQueueBuilder" class="uk.ac.ebi.spot.atlas.rdf.profiles.differential.rnaseq.RnaSeqExpressionsQueueBuilder">
-        <constructor-arg name="experimentsCache" ref="rnaSeqDiffExperimentsCache"/>
-    </bean>
-
-    <bean id="rnaSeqDiffProfilesStreamFactory" class="uk.ac.ebi.spot.atlas.rdf.profiles.differential.rnaseq.RnaSeqProfileStreamFactory">
-        <constructor-arg name="expressionsQueueBuilder" ref="rnaSeqDiffExpressionQueueBuilder"/>
-        <constructor-arg name="csvReaderFactory" ref="csvReaderFactory"/>
-    </bean>
-
-    <bean id="rnaSeqDiffProfilesLoader" class="uk.ac.ebi.spot.atlas.rdf.loader.RnaSeqDiffProfilesLoader">
-        <property name="rnaSeqProfileStreamFactory" ref="rnaSeqDiffProfilesStreamFactory"/>
-    </bean>
-
-
-    <!-- microarray spring config -->
-    <bean id="microarrayExperimentLoader" class="uk.ac.ebi.spot.atlas.rdf.loader.MicroarrayExperimentLoader">
-        <property name="limpopoUtils" ref="limpopoUtils"/>
-        <property name="trader" ref="configurationTrader"/>
-    </bean>
-
-    <bean id="microarrayExperimentsCache" class="uk.ac.ebi.spot.atlas.rdf.cache.MicroarrayExperimentsCache">
-        <constructor-arg name="loader" ref="microarrayExperimentLoader"/>
-    </bean>
-
-    <bean id="expressionQueueBuilder" class="uk.ac.ebi.spot.atlas.rdf.profiles.differential.microarray.MicroarrayExpressionsQueueBuilder">
-        <constructor-arg name="experimentsCache" ref="microarrayExperimentsCache"/>
-    </bean>
-
-    <bean id="microarrayProfilesStreamFactory" class="uk.ac.ebi.spot.atlas.rdf.profiles.differential.microarray.MicroarrayProfileStreamFactory">
-        <constructor-arg name="expressionsQueueBuilder" ref="expressionQueueBuilder"/>
-        <constructor-arg name="csvReaderFactory" ref="csvReaderFactory"/>
-    </bean>
-
-    <bean id="microarrayProfilesLoader" class="uk.ac.ebi.spot.atlas.rdf.loader.MicroarrayProfilesLoader">
-        <property name="microarrayProfileStreamFactory" ref="microarrayProfilesStreamFactory"/>
-    </bean>
-
-    <!-- baseline spring config -->
-    <bean id="tsvReaderBuilder" class="uk.ac.ebi.spot.atlas.rdf.commons.readers.TsvReaderBuilder">
-
-    </bean>
-
-    <bean id="baselineExperimentExpressionLevelFile" class="uk.ac.ebi.spot.atlas.rdf.loader.BaselineExperimentExpressionLevelFile">
-        <constructor-arg name="tsvReaderBuilder" ref="tsvReaderBuilder"/>
-
-    </bean>
-
-    <bean id="baselineExperimentLoader" class="uk.ac.ebi.spot.atlas.rdf.loader.BaselineExperimentLoader">
-        <constructor-arg name="limpopoUtils" ref="limpopoUtils"/>
-        <constructor-arg name="trader" ref="configurationTrader"/>
-        <constructor-arg name="baselineExperimentExpressionLevelFile" ref="baselineExperimentExpressionLevelFile"/>
-    </bean>
-
-    <bean id="baselineExperimentsCache" class="uk.ac.ebi.spot.atlas.rdf.cache.BaselineExperimentsCache">
-        <constructor-arg name="loader" ref="baselineExperimentLoader"/>
-    </bean>
-
-    <bean id="baselineExpressionsQueueBuilder" class="uk.ac.ebi.spot.atlas.rdf.profiles.baseline.BaselineExpressionsQueueBuilder">
-        <constructor-arg name="experimentsCache" ref="baselineExperimentsCache"/>
-    </bean>
-
-    <bean id="baselineProfileInputStreamFactory" class="uk.ac.ebi.spot.atlas.rdf.profiles.baseline.BaselineProfileInputStreamFactory">
-        <constructor-arg name="baselineExpressionsQueueBuilder" ref="baselineExpressionsQueueBuilder"/>
-        <constructor-arg name="csvReaderFactory" ref="csvReaderFactory"/>
-    </bean>
-
-    <bean id="baselineProfilesLoader" class="uk.ac.ebi.spot.atlas.rdf.loader.BaselineProfilesLoader">
-        <property name="baselineExpressionsInputStreamFactory" ref="baselineProfileInputStreamFactory"/>
-    </bean>
+    <!-- Beans to be used by atlas-rdf -->
+    <bean id="rnaSeqDiffProfilesLoader" class="uk.ac.ebi.spot.atlas.rdf.loader.RnaSeqDiffProfilesLoader"/>
+    <bean id="microarrayProfilesLoader" class="uk.ac.ebi.spot.atlas.rdf.loader.MicroarrayProfilesLoader"/>
+    <bean id="baselineExperimentsCache" class="uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqBaselineExperimentsCache"/>
+    <bean id="baselineProfilesLoader" class="uk.ac.ebi.spot.atlas.rdf.loader.BaselineProfilesLoader"/>
 
 </beans>

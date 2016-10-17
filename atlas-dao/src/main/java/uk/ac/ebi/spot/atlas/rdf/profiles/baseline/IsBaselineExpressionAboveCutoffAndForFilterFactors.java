@@ -2,22 +2,19 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 
 import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
 import uk.ac.ebi.spot.rdf.model.baseline.Factor;
 
-import java.io.Serializable;
+import javax.inject.Named;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author Simon Jupp
- * @date 11/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
- */
-public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predicate<BaselineExpression>, Serializable {
+@Named
+@Scope("prototype")
+public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predicate<BaselineExpression> {
 
     private double cutoff;
-
     private Set<Factor> filterFactors = new HashSet<>();
 
     public IsBaselineExpressionAboveCutoffAndForFilterFactors() {
@@ -35,13 +32,11 @@ public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predi
 
     @Override
     public boolean apply(BaselineExpression expression) {
-        return !expression.isKnown() || (expression.isGreaterThan(cutoff) && checkFilterFactors(expression));
+        return checkFilterFactors(expression) && (!expression.isKnown() || expression.isGreaterThan(cutoff));
     }
 
     protected boolean checkFilterFactors(BaselineExpression expression) {
-        return (CollectionUtils.isEmpty(filterFactors)
-        || expression.containsAll(filterFactors));
+        return (CollectionUtils.isEmpty(filterFactors) || expression.containsAll(filterFactors));
     }
-
 
 }

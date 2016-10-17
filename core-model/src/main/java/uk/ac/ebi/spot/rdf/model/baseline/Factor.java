@@ -1,59 +1,60 @@
 package uk.ac.ebi.spot.rdf.model.baseline;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableSet;
+import org.apache.velocity.util.StringUtils;
+import uk.ac.ebi.spot.rdf.model.OntologyTerm;
 
-import java.io.Serializable;
+import java.util.Collections;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-public class Factor implements Comparable<Factor>, Serializable {
+public class Factor implements Comparable<Factor> {
 
-    private final String header;
+    private String header;
+    private String type;
+    private String value;
+    private Set<OntologyTerm> valueOntologyTerms;
 
-    private final String type;
+    public Factor() {}
 
-    private final String value;
-
-    private final String valueOntologyTerm;
-
-    public Factor(String type, String value) {
-        this(type, value, null);
+    public Factor(String header, String value) {
+        this(header, value, new OntologyTerm[0]);
     }
 
-    public Factor(String header, String value, String valueOntologyTerm) {
+    public Factor(String header, String value, OntologyTerm ... valueOntologyTerms) {
         this.header = header;
         this.type = normalize(checkNotNull(header));
         this.value = checkNotNull(value);
-        this.valueOntologyTerm = valueOntologyTerm;
+        this.valueOntologyTerms = new ImmutableSet.Builder<OntologyTerm>().add(valueOntologyTerms).build();
     }
-
 
     public static String normalize(String type) {
         return type.replaceAll(" ", "_").toUpperCase();
+    }
+
+    public static String convertToLowerCase(String type) {
+        StringBuilder result = new StringBuilder();
+        String[] split = type.replaceAll("_", " ").split(" ");
+
+        boolean firstTokenCapitalized = false;
+        for (String token : split) {
+            token = token.toLowerCase();
+
+            if (!firstTokenCapitalized) {
+                token = StringUtils.capitalizeFirstLetter(token);
+                firstTokenCapitalized = true;
+            }
+            result.append(token);
+
+            result.append(" ");
+        }
+
+        return result.toString().trim();
+
     }
 
     //same as type but un-normalized
@@ -70,11 +71,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         return type;
     }
 
-    public String getValueOntologyTerm() {
-        return valueOntologyTerm;
-    }
-
-        @Override
+    @Override
     public int hashCode() {
         return Objects.hashCode(type, value);
     }
@@ -93,7 +90,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         return Objects.toStringHelper(this)
                 .add("type", type)
                 .add("value", value)
-                .add("valueOntologyTerm", valueOntologyTerm)
+                .add("valueOntologyTerms", Collections.singletonList(valueOntologyTerms))
                 .toString();
     }
 
@@ -114,5 +111,8 @@ public class Factor implements Comparable<Factor>, Serializable {
         return result;
     }
 
-}
+    public Set<OntologyTerm> getValueOntologyTerms() {
+        return valueOntologyTerms;
+    }
 
+}

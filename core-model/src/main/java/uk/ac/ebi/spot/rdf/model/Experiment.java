@@ -1,71 +1,58 @@
 package uk.ac.ebi.spot.rdf.model;
 
-import com.google.common.collect.Lists;
+import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.StringUtils;
+import com.google.gson.Gson;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import uk.ac.ebi.spot.rdf.model.utils.ExperimentInfo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
-public class Experiment implements Serializable {
+public abstract class Experiment implements Serializable {
 
+    private static final Gson gson = new Gson();
     private ExperimentType type;
-    private ExperimentDesign experimentDesign;
-    private SortedSet<String> species;
-    private SortedSet<String> pubMedIds;
-    private Map<String, String> speciesMapping;
+    protected ExperimentDesign experimentDesign;
+    private Species species;
+    private List<String> pubMedIds;
     private String accession;
-    private String description;
+    protected String description;
     private String displayName;
-    private boolean hasExtraInfoFile;
+    private String disclaimer;
+    private boolean hasRData;
     private Date lastUpdate;
+    private List<String> dataProviderURL;
+    private List<String> dataProviderDescription;
+    private List<String> alternativeViews;
+    private List<String> alternativeViewDescriptions;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+                      String disclaimer, boolean hasRData, Species species,
+                      Collection<String> pubMedIds, ExperimentDesign experimentDesign, List<String> dataProviderURL,
+                      List<String> dataProviderDescription, List<String> alternativeViews, List<String> alternativeViewDescriptions) {
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
         this.accession = accession;
         this.displayName = displayName;
         this.description = description;
-        this.hasExtraInfoFile = hasExtraInfoFile;
-        this.species = new TreeSet<String>(species);
-        this.speciesMapping = speciesMapping;
-        this.pubMedIds = Sets.newTreeSet(pubMedIds);
-    }
-
-    public Experiment(ExperimentType type, String accession, Date lastUpdate, String description, boolean hasExtraInfoFile,
-                      Set<String> species, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        this(type, accession, lastUpdate, null, description, hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
+        this.disclaimer = disclaimer;
+        this.hasRData = hasRData;
+        this.species = species;
+        this.pubMedIds = ImmutableList.copyOf(Sets.newTreeSet(pubMedIds));
+        this.dataProviderURL = dataProviderURL;
+        this.dataProviderDescription = dataProviderDescription;
+        this.alternativeViews = alternativeViews;
+        this.alternativeViewDescriptions = alternativeViewDescriptions;
     }
 
     public ExperimentType getType() {
         return type;
-    }
-
-    public Date getLastUpdate() {
-        return lastUpdate;
     }
 
     public ExperimentDesign getExperimentDesign() {
@@ -83,36 +70,79 @@ public class Experiment implements Serializable {
         return description;
     }
 
-    public boolean hasExtraInfoFile() {
-        return hasExtraInfoFile;
-    }
-
     public String getAccession() {
         return accession;
     }
 
-    public Set<String> getSpecies() {
-        return Collections.unmodifiableSet(species);
+    @Deprecated
+    public String getSpeciesString() {
+        return species.originalName;
     }
 
-    public List<String> getPubMedIds() {
-        return Lists.newArrayList(pubMedIds);
+    public Species getSpecies(){
+        return species;
     }
 
-    public String getFirstSpecies() {
-        return species.iterator().next();
-    }
-
-    public Map<String, String> getSpeciesMapping() {
-        return Collections.unmodifiableMap(speciesMapping);
-    }
-
-    public String getRequestSpeciesName(String species) {
-        String speciesName = speciesMapping.get(species);
-        if (speciesName != null) {
-            return Character.toUpperCase(speciesName.charAt(0)) + speciesName.substring(1);
+    public List<Pair<String, String>> alternativeViews(){
+        List<Pair<String, String>> result = new ArrayList<>();
+        Preconditions.checkState(alternativeViews.size() == alternativeViewDescriptions.size());
+        for(int i = 0; i<alternativeViews.size(); i++){
+            result.add(Pair.of(alternativeViews.get(i), alternativeViewDescriptions.get(i)));
         }
-        return "";
+        return result;
     }
 
+    protected abstract Set<String> getAnalysedRowsAccessions();
+
+    public Map<String, ?> getAttributes(){
+        Map<String, Object> result = new HashMap<>();
+        result.put("type", type);
+        result.put("experimentHasRData", hasRData);
+        result.putAll(species.getAttributes());
+        result.put("experimentDescription", description);
+        result.put("pubMedIds", pubMedIds);
+        result.put("experimentAccession", accession);
+        result.put("disclaimer", disclaimer);
+        result.put("isFortLauderdale", "fortLauderdale".equalsIgnoreCase(disclaimer));//Deprecated,remove
+
+        //Internet says keywords are not that useful for SEO any more. Remove if it causes you problems.
+        List<String> keywords = ImmutableList.<String>builder()
+                .add("experiment")
+                .add(accession)
+                .addAll(dataProviderDescription)
+                .addAll(Arrays.asList(type.getDescription().split("_")))
+                .addAll(experimentDesign.getAssayHeaders())
+                .build();
+        result.put("pageKeywords", Joiner.on(',').join(keywords));
+
+        //We want this to show up in Google searches.
+        result.put("pageDescription", description);
+
+        // Extra information to show on experiment page (if they were provided in <expAcc>-factors.xml file)
+        result.put("dataProviderURL", dataProviderURL);
+        result.put("dataProviderDescription", dataProviderDescription);
+        result.put("alternativeViews", alternativeViews);
+        result.put("alternativeViewDescriptions", alternativeViewDescriptions);
+
+        //Experiment design related
+        result.put("runAccessions", gson.toJson(getAnalysedRowsAccessions()));
+        result.putAll(experimentDesign.getAttributes());
+
+        return result;
+    }
+
+    public ExperimentInfo getExperimentInfo(){
+
+        ExperimentInfo experimentInfo = new ExperimentInfo();
+        experimentInfo.setExperimentAccession(accession);
+        experimentInfo.setLastUpdate(new SimpleDateFormat("dd-MM-yyyy").format(lastUpdate));
+        experimentInfo.setExperimentDescription(description);
+        experimentInfo.setSpecies(species.originalName);
+        experimentInfo.setKingdom(species.kingdom);
+        experimentInfo.setEnsemblDB(species.ensemblDb);
+        experimentInfo.setExperimentType(type.getParent());
+        experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
+
+        return experimentInfo;
+    }
 }

@@ -2,36 +2,27 @@ package uk.ac.ebi.spot.atlas.rdf.profiles;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
-import uk.ac.ebi.spot.atlas.rdf.commons.ObjectInputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.ac.ebi.spot.rdf.model.Expression;
 
 import java.io.IOException;
 
-/**
- * @author Simon Jupp
- * @date 07/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
- */
-public abstract class TsvInputStream<T, K extends Expression> implements ObjectInputStream<T> {
+public abstract class TsvInputStream<T, K extends Expression> implements ExpressionProfileInputStream<T, K> {
 
-    private static final Logger LOGGER = Logger.getLogger(TsvInputStream.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TsvInputStream.class);
 
     private CSVReader csvReader;
 
-    private TsvRowQueue<K> tsvRowQueue;
+    private ExpressionsRowDeserializer<String, K> expressionsRowTsvDeserializer;
 
-    protected TsvInputStream(CSVReader csvReader, String experimentAccession
-            , TsvRowQueueBuilder tsvRowQueueBuilder) {
-
+    protected TsvInputStream(CSVReader csvReader, String experimentAccession, ExpressionsRowDeserializerBuilder expressionsRowDeserializerBuilder) {
         this.csvReader = csvReader;
 
         String[] firstCsvLine = readCsvLine();
         String[] headersWithoutGeneIdColumn = removeGeneIDAndNameColumns(firstCsvLine);
-        tsvRowQueue = tsvRowQueueBuilder.forExperiment(experimentAccession)
-                .withHeaders(headersWithoutGeneIdColumn).build();
+        expressionsRowTsvDeserializer = expressionsRowDeserializerBuilder.forExperiment(experimentAccession).withHeaders(headersWithoutGeneIdColumn).build();
     }
-
 
     @Override
     public T readNext() {
@@ -48,7 +39,6 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
         } while (geneProfile == null);
 
         return geneProfile;
-
     }
 
     private String[] readCsvLine() {
@@ -60,35 +50,23 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
         }
     }
 
-
     protected T buildObjectFromTsvValues(String[] values) {
-
         addGeneInfoValueToBuilder(values);
 
         //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowQueue().reload(removeGeneIDAndNameColumns(values));
+        expressionsRowTsvDeserializer.reload(removeGeneIDAndNameColumns(values));
 
         K expression;
 
-        while ((expression = getTsvRowQueue().poll()) != null) {
-
+        while ((expression = expressionsRowTsvDeserializer.next()) != null) {
             addExpressionToBuilder(expression);
-
         }
 
         return createProfile();
-
-
     }
 
-    protected abstract T createProfile();
-
-    protected abstract void addExpressionToBuilder(K expression);
-
-    protected abstract void addGeneInfoValueToBuilder(String[] values);
-
-    protected TsvRowQueue<K> getTsvRowQueue() {
-        return tsvRowQueue;
+    protected ExpressionsRowDeserializer<String, K> getExpressionsRowTsvDeserializer() {
+        return expressionsRowTsvDeserializer;
     }
 
     @Override
@@ -99,4 +77,5 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
     protected String[] removeGeneIDAndNameColumns(String[] columns) {
         return (String[]) ArrayUtils.subarray(columns, 2, columns.length);
     }
+
 }

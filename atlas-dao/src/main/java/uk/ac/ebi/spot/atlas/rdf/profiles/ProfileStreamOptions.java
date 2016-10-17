@@ -1,12 +1,15 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles;
 
-/**
- * @author Simon Jupp
- * @date 07/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
- */
-public interface ProfileStreamOptions {
+import java.util.Set;
+
+public interface ProfileStreamOptions<T> {
 
     Integer getHeatmapMatrixSize();
+
+    boolean isSpecific();
+
+    Set<T> getSelectedQueryFactors();
+
+    Set<T> getAllQueryFactors();
 
 }

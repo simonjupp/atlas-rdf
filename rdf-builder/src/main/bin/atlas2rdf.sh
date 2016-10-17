@@ -2,7 +2,7 @@
 
 base=${0%/*}/..;
 current=`pwd`;
-java='/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/bin/java'; # ${java.location};
+java='/Library/Java/JavaVirtualMachines/jdk1.8.0_31.jdk/Contents/Home/bin/java'; # ${java.location};
 #args="${java.args}";
 
 

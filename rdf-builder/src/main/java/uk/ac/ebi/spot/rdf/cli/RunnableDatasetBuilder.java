@@ -8,6 +8,7 @@ import uk.ac.ebi.spot.rdf.model.CompleteExperiment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Simon Jupp
@@ -32,7 +33,12 @@ public class RunnableDatasetBuilder implements Runnable {
 
 
     public void run() {
-        CompleteExperiment experiment = builder.build(accession);
+        CompleteExperiment experiment = null;
+        try {
+            experiment = builder.build(accession);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         String suffix = format.equals("TURTLE") ? ".ttl" : ".rdf";
         File out = new File(outputDir.getAbsoluteFile(), experiment.getExperiment().getAccession()+ suffix);
 

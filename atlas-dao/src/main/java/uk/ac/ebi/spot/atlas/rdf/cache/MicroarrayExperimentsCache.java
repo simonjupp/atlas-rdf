@@ -1,61 +1,36 @@
 package uk.ac.ebi.spot.atlas.rdf.cache;
 
 import com.google.common.cache.LoadingCache;
-import org.apache.log4j.Logger;
-import uk.ac.ebi.spot.atlas.rdf.loader.MicroarrayExperimentLoader;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExperiment;
+import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExperiment;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.concurrent.ExecutionException;
 
-/**
- * @author Simon Jupp
- * @date 07/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
- */
+@Named
 public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayExperiment> {
 
-    private static final Logger LOGGER = Logger.getLogger(MicroarrayExperimentsCache.class);
+    private LoadingCache<String, MicroarrayExperiment> experiments;
 
-    private MicroarrayExperimentLoader loader;
-
-    //this is the name of the implementation being injected, required because LoadingCache is an interface
-    public MicroarrayExperimentsCache(MicroarrayExperimentLoader loader) {
-        this.loader = loader;
+    @Inject
+    public MicroarrayExperimentsCache(@Qualifier("microarrayExperimentsLoadingCache") LoadingCache<String, MicroarrayExperiment> experiments) {
+        this.experiments = experiments;
     }
-    private Map<String, MicroarrayExperiment> experimentMap = new HashMap<>();
 
     @Override
-    public MicroarrayExperiment getExperiment(String experimentAccession) {
-        try {
-
-            if (!experimentMap.containsKey(experimentAccession)) {
-                experimentMap.put(experimentAccession, loader.load(experimentAccession));
-            }
-
-            return experimentMap.get(experimentAccession);
-
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("Exception while loading experiment %s: %s", experimentAccession, e.getMessage()), e.getCause());
-        }
+    public MicroarrayExperiment getExperiment(String experimentAccession) throws ExecutionException {
+        return experiments.get(experimentAccession);
     }
 
     @Override
     public void evictExperiment(String experimentAccession) {
-
-        experimentMap.remove(experimentAccession);
-
+        experiments.invalidate(experimentAccession);
     }
 
     @Override
     public void evictAll() {
-
-        experimentMap.clear();
-
-
+        experiments.invalidateAll();
     }
 
 }

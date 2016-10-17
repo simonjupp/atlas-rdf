@@ -1,19 +1,19 @@
 package uk.ac.ebi.spot.rdf.builder;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.ac.ebi.spot.rdf.exception.UnknownOrganismTypeException;
 import uk.ac.ebi.spot.rdf.model.Experiment;
 import uk.ac.ebi.spot.rdf.model.ExperimentDesign;
-import uk.ac.ebi.spot.rdf.model.SampleValue;
+import uk.ac.ebi.spot.rdf.model.SampleCharacteristic;
 import uk.ac.ebi.spot.rdf.model.baseline.Factor;
 import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
-import uk.ac.ebi.spot.rdf.model.baseline.FactorSet;
+import uk.ac.ebi.spot.rdf.model.baseline.impl.FactorSet;
 
 import java.io.OutputStream;
 import java.net.URI;
+import java.util.List;
 
 /**
  * @author Simon Jupp
@@ -76,10 +76,10 @@ public abstract class AbstractExperimentBuilder <T extends Experiment, V extends
                     builder.createLabel(experimentalFactorUri, "(Factor value) " + factor.getType() + "/" + factor.getValue());
 
                     // todo only one ontology term possible?
-                    if (StringUtils.isNotBlank(factor.getValueOntologyTerm())) {
+                    if (!factor.getValueOntologyTerms().isEmpty()) {
                         builder.createTypeInstance(
                                 experimentalFactorUri,
-                                getUriProvider().getEfoUriFromFragment(factor.getValueOntologyTerm())
+                                getUriProvider().getEfoUriFromFragment(factor.getValueOntologyTerms().iterator().next().uri())
                         );
                     }
                     else {
@@ -98,16 +98,16 @@ public abstract class AbstractExperimentBuilder <T extends Experiment, V extends
             }
 
             // sample info
-            for (SampleValue sample : experimentDesign.getSamples(runOrAssay)) {
+            for (SampleCharacteristic sample : experimentDesign.getSampleCharacteristics(runOrAssay)) {
 
-                URI sampleUri = getUriProvider().getSampleUri(accession, sample.getType(),  sample.getValue());
-                builder.createAnnotationAssertion(sampleUri, getUriProvider().getPropertyTypeAnnotationProperty(), sample.getType());
-                builder.createAnnotationAssertion(sampleUri, getUriProvider().getPropertyValueAnnotationProperty(), sample.getValue());
-                builder.createLabel(sampleUri, "(Sample) " + sample.getType() + "/" + sample.getValue());
-                if (StringUtils.isNotBlank(sample.getOntologyTerm())) {
+                URI sampleUri = getUriProvider().getSampleUri(accession, sample.header(),  sample.value());
+                builder.createAnnotationAssertion(sampleUri, getUriProvider().getPropertyTypeAnnotationProperty(), sample.header());
+                builder.createAnnotationAssertion(sampleUri, getUriProvider().getPropertyValueAnnotationProperty(), sample.value());
+                builder.createLabel(sampleUri, "(Sample) " + sample.header() + "/" + sample.value());
+                if (!sample.valueOntologyTerms().isEmpty()) {
                     builder.createTypeInstance(
                             sampleUri,
-                            getUriProvider().getEfoUriFromFragment(sample.getOntologyTerm())
+                            getUriProvider().getEfoUriFromFragment(sample.valueOntologyTerms().iterator().next().uri())
                     );
                 }
                 else {
@@ -148,7 +148,7 @@ public abstract class AbstractExperimentBuilder <T extends Experiment, V extends
                 experimentUri, getUriProvider().getDescriptionRelUri(),
                 experiment.getDescription());
 
-        for (String pubmedId : experiment.getPubMedIds()) {
+        for (String pubmedId : (List<String>) experiment.getAttributes().get("pubmedIds")) {
             builder.createAnnotationAssertion(
                     experimentUri,
                     getUriProvider().getPubmedPredicateUri(),
@@ -160,10 +160,9 @@ public abstract class AbstractExperimentBuilder <T extends Experiment, V extends
 //                getUriProvider().getDateOfLastUpdateUri(),
 //                experiment.getLastUpdate());
 
-        for (String speciesName : experiment.getSpecies()) {
-            URI speciesUri = null;
             try {
-                speciesUri = getUriProvider().getOrganismUri(speciesName);
+                URI speciesUri = null;
+                speciesUri = getUriProvider().getOrganismUri(experiment.getSpecies().originalName);
                 builder.createObjectPropertyAssertion(
                         experimentUri,
                         getUriProvider().getTaxonRelUri(),
@@ -172,14 +171,11 @@ public abstract class AbstractExperimentBuilder <T extends Experiment, V extends
                         speciesUri,
                         getUriProvider().getOrganismTypeUri()
                 );
-                builder.createLabel(speciesUri, speciesName);
+                builder.createLabel(speciesUri, experiment.getSpecies().originalName);
             } catch (UnknownOrganismTypeException e) {
-                log.error("Unknown organism in " + experiment.getAccession() + " " + speciesName);
+                log.error("Unknown organism in " + experiment.getAccession() + " " + experiment.getSpecies().originalName);
             }
 
         }
     }
 
-
-
-}

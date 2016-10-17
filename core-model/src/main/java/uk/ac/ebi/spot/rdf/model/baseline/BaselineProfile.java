@@ -1,36 +1,16 @@
 package uk.ac.ebi.spot.rdf.model.baseline;
 
+import com.google.common.base.Objects;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.spot.rdf.model.Profile;
-import uk.ac.ebi.spot.rdf.model.utils.NumberUtils;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
 public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     private static final double MIN_LEVEL = 0D;
     private double maxExpressionLevel = 0;
@@ -84,21 +64,36 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         return expressionLevel;
     }
 
+    public Set<Factor> getFactorsWithExpressionLevelAtLeast(double threshold){
+        Set<Factor> result = new HashSet<>();
+        for(Factor condition : expressionsByCondition.keySet()){
+            Double level = getKnownExpressionLevel(condition);
+            if (level != null && level >= threshold) {
+                result.add(condition);
+            }
+        }
+        return result;
+    }
+
 
     // add the expression levels of another profile to this one
     public BaselineProfile sumProfile(BaselineProfile otherProfile) {
         for (Factor factor : otherProfile.getConditions()) {
-            Double otherExpressionLevel = otherProfile.getKnownExpressionLevel(factor);
+            BaselineExpression otherExpression = otherProfile.getExpression(factor);
+            BaselineExpression thisExpression = getExpression(factor);
 
-            if (otherExpressionLevel != null) {
-                double totalExpressionLevel = otherExpressionLevel;
-                Double thisExpressionLevel = getKnownExpressionLevel(factor);
-                if (thisExpressionLevel != null) {
-                    totalExpressionLevel += thisExpressionLevel;
-                }
-                FactorGroup factorGroup = otherProfile.getExpression(factor).getFactorGroup();
-                BaselineExpression totalExpression =
-                        new BaselineExpression(totalExpressionLevel, factorGroup);
+            if (thisExpression == null) {
+                add(factor.getType(), otherExpression);
+            } else if (thisExpression.isKnown()) {
+                FactorGroup otherFactorGroup = otherExpression.getFactorGroup();
+                FactorGroup thisFactorGroup = thisExpression.getFactorGroup();
+
+                checkArgument(thisFactorGroup.equals(otherFactorGroup), "%s != %s", thisFactorGroup, otherFactorGroup);
+
+                BaselineExpression totalExpression = otherExpression.isKnown() ?
+                        new BaselineExpression(thisExpression.getLevel() + otherExpression.getLevel(), thisFactorGroup)
+                        : new BaselineExpression(otherExpression.getLevelAsString(), thisFactorGroup);
+
                 add(factor.getType(), totalExpression);
             }
         }
@@ -110,16 +105,18 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         resetMaxMin();
         for (Factor factor : getConditions()) {
             BaselineExpression expression = getExpression(factor);
-            double foldLevel = fold(expression.getLevel(), foldFactor);
-            BaselineExpression foldedExpression =
-                    new BaselineExpression(foldLevel, expression.getFactorGroup());
-            add(factor.getType(), foldedExpression);
+            if (expression.isKnown()) {
+                double foldLevel = fold(expression.getLevel(), foldFactor);
+                BaselineExpression foldedExpression =
+                        new BaselineExpression(foldLevel, expression.getFactorGroup());
+                add(factor.getType(), foldedExpression);
+            }
         }
         return this;
     }
 
     private static double fold(double value, int foldFactor) {
-        return new NumberUtils().round(value / foldFactor);
+        return BaselineExpressionLevelRounder.round(value / foldFactor);
     }
 
     private void resetMaxMin() {
@@ -134,4 +131,19 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BaselineProfile)) return false;
+        BaselineProfile that = (BaselineProfile) o;
+        return super.equals(that) &&
+                Double.compare(that.getMaxExpressionLevel(), getMaxExpressionLevel()) == 0 &&
+                Double.compare(that.getMinExpressionLevel(), getMinExpressionLevel()) == 0 ;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getMaxExpressionLevel(), getMinExpressionLevel(), super.hashCode());
+    }
 }

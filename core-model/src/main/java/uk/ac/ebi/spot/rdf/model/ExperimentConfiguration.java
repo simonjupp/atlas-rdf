@@ -1,48 +1,27 @@
 package uk.ac.ebi.spot.rdf.model;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import uk.ac.ebi.spot.rdf.model.AssayGroup;
-import uk.ac.ebi.spot.rdf.model.AssayGroups;
-import uk.ac.ebi.spot.rdf.model.ExperimentType;
 import uk.ac.ebi.spot.rdf.model.differential.Contrast;
 
 import javax.xml.xpath.*;
 import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
 public class ExperimentConfiguration {
 
-    public static final String EXPERIMENT_TYPE = "experimentType";
+    private static final String EXPERIMENT_TYPE = "experimentType";
+    private static final String RDATA = "r_data";
     private XMLConfiguration xmlConfiguration;
 
     private Document document;
@@ -56,7 +35,7 @@ public class ExperimentConfiguration {
 
     public Set<Contrast> getContrasts() {
 
-        Set<Contrast> contrasts = new LinkedHashSet<Contrast>();
+        Set<Contrast> contrasts = Sets.newLinkedHashSet();
 
         NodeList arrayDesigns = document.getElementsByTagName("array_design");
         for (int i = 0; i < arrayDesigns.getLength(); i++) {
@@ -81,7 +60,7 @@ public class ExperimentConfiguration {
         }
     }
 
-    Contrast getContrast(String id, String arrayDesignAccession) {
+    private Contrast getContrast(String id, String arrayDesignAccession) {
         Configuration configuration = xmlConfiguration.configurationAt("analytics/contrasts/contrast[@id=\'" + id + "\']");
         String name = configuration.getString("name");
         String reference = configuration.getString("reference_assay_group");
@@ -89,31 +68,47 @@ public class ExperimentConfiguration {
         return new Contrast(id, arrayDesignAccession, getAssayGroup(reference), getAssayGroup(test), name);
     }
 
-    AssayGroup getAssayGroup(String id) {
+    private AssayGroup getAssayGroup(String id) {
         try {
-
             XPathExpression expr = xpath.compile("/configuration/analytics/assay_groups/assay_group[@id='" + id + "']/assay");
 
             NodeList nl = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
             String[] assayAccessions = new String[nl.getLength()];
+
+            ImmutableSet.Builder<String> technicalReplicatesBuilder = ImmutableSet.builder();
+            int soloAssayCount = 0;
             for (int i = 0; i < nl.getLength(); i++) {
                 Node node = nl.item(i);
+                String technicalReplicateId = getAttribute(node, "technical_replicate_id");
+                if (technicalReplicateId != null) {
+                    technicalReplicatesBuilder.add(technicalReplicateId);
+                } else {
+                    soloAssayCount++;
+                }
                 assayAccessions[i] = node.getTextContent();
             }
 
-            return new AssayGroup(id, assayAccessions);
+            int technicalReplicates = technicalReplicatesBuilder.build().size();
+            int biologicalReplicates = technicalReplicates + soloAssayCount;
+            return new AssayGroup(id, biologicalReplicates, assayAccessions);
 
         } catch (XPathExpressionException e) {
             throw new IllegalStateException("Problem parsing configuration file.", e);
         }
     }
 
-    public Set<String> getAssayAccessions(){
+    private String getAttribute(Node node, String name) {
+        Node attribute = node.getAttributes().getNamedItem(name);
+        return (attribute == null) ? null : attribute.getNodeValue();
+    }
+
+
+    public Set<String> getAssayAccessions() {
         try {
 
             XPathExpression expr = xpath.compile("/configuration/analytics/assay_groups/assay_group/assay");
 
-            Set<String> assayAccessions = new HashSet<String>();
+            Set<String> assayAccessions = Sets.newHashSet();
 
             NodeList nl = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
             for (int i = 0; i < nl.getLength(); i++) {
@@ -129,11 +124,9 @@ public class ExperimentConfiguration {
     }
 
     public AssayGroups getAssayGroups() {
-        Set<AssayGroup> assayGroups = new HashSet<AssayGroup>();
+        List<AssayGroup> assayGroups = Lists.newArrayList();
 
-        String[] assayGoupIds = xmlConfiguration.getStringArray("/analytics/assay_groups/assay_group/@id");
-
-        for (String assayGoupId : assayGoupIds) {
+        for (String assayGoupId : xmlConfiguration.getStringArray("/analytics/assay_groups/assay_group/@id")) {
             assayGroups.add(getAssayGroup(assayGoupId));
         }
 
@@ -142,7 +135,6 @@ public class ExperimentConfiguration {
 
     public ExperimentType getExperimentType() {
         Element configuration = document.getDocumentElement();
-
         String type = configuration.getAttribute(EXPERIMENT_TYPE);
 
         if (StringUtils.isEmpty(type)) {
@@ -150,11 +142,14 @@ public class ExperimentConfiguration {
         }
 
         ExperimentType experimentType = ExperimentType.get(type);
-
         if (experimentType == null) {
             throw new IllegalStateException(String.format("Unknown %s attribute: \"%s\". Must be one of: [%s]", EXPERIMENT_TYPE, type, Joiner.on(", ").join(EnumSet.allOf(ExperimentType.class))));
         }
 
         return experimentType;
+    }
+
+    public boolean hasRData() {
+        return "1".equals(document.getDocumentElement().getAttribute(RDATA));
     }
 }

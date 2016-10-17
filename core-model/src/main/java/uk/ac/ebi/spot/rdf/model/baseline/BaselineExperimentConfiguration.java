@@ -2,30 +2,13 @@ package uk.ac.ebi.spot.rdf.model.baseline;
 
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
+import static com.google.common.collect.Lists.newArrayList;
+
 public class BaselineExperimentConfiguration {
 
     private XMLConfiguration config;
@@ -36,6 +19,22 @@ public class BaselineExperimentConfiguration {
 
     public String getExperimentDisplayName() {
         return config.getString("landingPageDisplayName");
+    }
+
+    private List<String> getListOfStrings(List<Object> objects) {
+        List<String> result = newArrayList();
+        for (Object object : objects) {
+            result.add(object != null ? object.toString() : null);
+        }
+        return result;
+    }
+
+    public List<String> getDataProviderURL() {
+        return getListOfStrings(config.getList("dataProviderURL"));
+    }
+
+    public List<String> getDataProviderDescription() {
+        return getListOfStrings(config.getList("dataProviderDescription"));
     }
 
     public Set<Factor> getDefaultFilterFactors() {
@@ -60,6 +59,10 @@ public class BaselineExperimentConfiguration {
         }
 
         return defaultQueryFactorType;
+    }
+
+    public boolean orderCurated() {
+        return "curated".equals(config.getString("orderFactor"));
     }
 
     public Set<String> getMenuFilterFactorTypes() {
@@ -88,6 +91,30 @@ public class BaselineExperimentConfiguration {
         }
 
         return mapping;
+    }
+
+    public List<String> getAlternativeViews() {
+        List<String> result = new ArrayList<>();
+        for(Object o:  config.getList("alternativeView")){
+            if(o.toString().matches("E-\\w+-\\d+")){
+                result.add(o.toString());
+            }
+        }
+
+        return result;
+    }
+    public String disclaimer(){
+        if("true".equals(config.getString("fortLauderdale"))){
+            return "fortLauderdale";
+        } else if (StringUtils.isNotEmpty(config.getString("disclaimer"))){
+            return config.getString("disclaimer");
+        } else {
+            return "";
+        }
+    }
+
+    public boolean isFortLauderdale() {
+        return "true".equals(config.getString("fortLauderdale"));
     }
 }
 

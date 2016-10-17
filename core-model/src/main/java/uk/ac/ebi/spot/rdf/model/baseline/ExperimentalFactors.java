@@ -1,35 +1,22 @@
 package uk.ac.ebi.spot.rdf.model.baseline;
 
-import com.google.common.base.Function;
 import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
-import uk.ac.ebi.spot.rdf.model.baseline.Factor;
 
 import java.io.Serializable;
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *  ExperimentalFactors has factor information per _assay group_.
+ *  ExperimentalFactors is used to render the experiment page.
+ *  At experiment load time it is built from a ExperimentDesign and list of assay group ids.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  ExperimentDesign also stores factors but per _assay_. It is used to render the
+ *  experiment design page.
  *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
  */
 public class ExperimentalFactors implements Serializable {
 
@@ -39,9 +26,11 @@ public class ExperimentalFactors implements Serializable {
 
     private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
 
+    private LinkedHashMultimap<String, Factor> xmlFactorsByType = LinkedHashMultimap.create();
+
     private BiMap<String, String> factorDisplayNamesByType = HashBiMap.create();
 
-    private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
+    private SetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
 
     private Set<String> menuFilterFactorTypes;
 
@@ -52,7 +41,6 @@ public class ExperimentalFactors implements Serializable {
     ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType,
                         Map<String, String> factorDisplayNamesByType,
                         List<FactorGroup> orderedFactorGroups,
-                        SortedSetMultimap<Factor, Factor> coOccurringFactors,
                         Set<String> menuFilterFactorTypes,
                         Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId,
                         String defaultQueryFactorType,
@@ -61,10 +49,49 @@ public class ExperimentalFactors implements Serializable {
         this.orderedFactorGroupsByAssayGroupId = orderedFactorGroupsByAssayGroupId;
         this.factorDisplayNamesByType.putAll(factorDisplayNamesByType);
         this.orderedFactorGroups = orderedFactorGroups;
-        this.coOccurringFactors = coOccurringFactors;
+        this.coOccurringFactors = createCoOccurringFactors(orderedFactorGroups);
         this.menuFilterFactorTypes = menuFilterFactorTypes;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
+    }
+
+    // TODO It might be better to have a general LinkedHashMultiMap for the factors and, depending on the XML, order it
+    // or not. So we can have a single interface for ExperimentalFactors and avoid bugs such as https://www.pivotaltracker.com/story/show/97196678
+    ExperimentalFactors(LinkedHashMultimap<String, Factor> factorsByType,
+                        Map<String, String> factorDisplayNamesByType,
+                        List<FactorGroup> orderedFactorGroups,
+                        Set<String> menuFilterFactorTypes,
+                        Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId,
+                        String defaultQueryFactorType,
+                        Set<Factor> defaultFilterFactors) {
+        this.xmlFactorsByType = factorsByType;
+        this.orderedFactorGroupsByAssayGroupId = orderedFactorGroupsByAssayGroupId;
+        this.factorDisplayNamesByType.putAll(factorDisplayNamesByType);
+        this.orderedFactorGroups = orderedFactorGroups;
+        this.coOccurringFactors = createCoOccurringFactors(orderedFactorGroups);
+        this.menuFilterFactorTypes = menuFilterFactorTypes;
+        this.defaultQueryFactorType = defaultQueryFactorType;
+        this.defaultFilterFactors = defaultFilterFactors;
+    }
+
+    static SetMultimap<Factor, Factor> createCoOccurringFactors(List<FactorGroup> orderedFactorGroups) {
+
+        SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
+
+        for (FactorGroup factorGroup : orderedFactorGroups) {
+            for (Factor factor : factorGroup) {
+                for (Factor value : factorGroup) {
+                    if (!value.equals(factor)) {
+                        coOccurringFactors.put(factor, value);
+                    }
+                }
+            }
+        }
+        return coOccurringFactors;
+    }
+
+    private boolean orderingSpecifiedByCuratorsInConfigurationFile() {
+        return xmlFactorsByType != null && !xmlFactorsByType.isEmpty();
     }
 
     public String getDefaultQueryFactorType() {
@@ -90,17 +117,38 @@ public class ExperimentalFactors implements Serializable {
     }
 
     //ToDo: this is only used to build factor filter menu, maybe should be encapsulated in a menu builder and the menu builder could be used by a menu cache loader
-    public SortedSet<Factor> getCoOccurringFactors(Factor factor) {
+    public Set<Factor> getCoOccurringFactors(Factor factor) {
         return coOccurringFactors.get(factor);
     }
 
-    public SortedSet<Factor> getFactorsByType(String type) {
+    public ImmutableSortedSet<Factor> getFactors(String type) {
 
         return ImmutableSortedSet.copyOf(factorsByType.get(type));
 
     }
 
-    public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors) {
+    public ImmutableMap<String, Factor> getFactorGroupedByAssayGroupId(String factorType) {
+        ImmutableMap.Builder<String, Factor> builder = ImmutableMap.builder();
+        for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
+            Factor factor = orderedFactorGroupsByAssayGroupId.get(groupId).factorOfType(factorType);
+            checkNotNull(factor, String.format("No factor of type %s for assay group %s", factorType, groupId));
+            builder.put(groupId, factor);
+        }
+
+        return builder.build();
+    }
+
+    public FactorGroup getNonDefaultFactors(String assayGroupId) {
+        FactorGroup factorGroup = orderedFactorGroupsByAssayGroupId.get(assayGroupId);
+        return factorGroup.withoutType(getDefaultQueryFactorType());
+    }
+
+    // return factors for the slice specified
+    public SortedSet<Factor> getComplementFactors(final FactorGroup slice) {
+        return getComplementFactors(Sets.newTreeSet(slice));
+    }
+
+    public SortedSet<Factor> getComplementFactors(final Set<Factor> filterFactors) {
 
         if (CollectionUtils.isEmpty(filterFactors)) {
             return getAllFactors();
@@ -110,39 +158,28 @@ public class ExperimentalFactors implements Serializable {
 
         for (FactorGroup factorGroup : orderedFactorGroups) {
 
-            List<Factor> remainingFactors = factorGroup.remove(filterFactors);
+            List<Factor> remainingFactors = factorGroup.without(filterFactors);
             if (remainingFactors.size() == 1) {
                 filteredFactors.add(remainingFactors.get(0));
             }
         }
 
         return filteredFactors;
-
     }
 
-    public FactorGroup getNonDefaultFilterFactors(String assayGroupId) {
-        FactorGroup factorGroup = orderedFactorGroupsByAssayGroupId.get(assayGroupId);
-        return factorGroup.removeType(getDefaultQueryFactorType());
-    }
+    // match each FactorGroup with the filterFactors, and for each match return the remaining single factor
+    // (if there is one and only one)
+    public List<AssayGroupFactor> getComplementAssayGroupFactors(final Set<Factor> filterFactors) {
 
-    public Multimap<FactorGroup, String> groupAssayGroupIdsByNonDefaultFilterFactor(Iterable<String> assayGroupIds) {
-        Function<String, FactorGroup> groupByFunction = new Function<String, FactorGroup>() {
-            public FactorGroup apply(String assayGroupId) {
-                return getNonDefaultFilterFactors(assayGroupId);
-            }
-        };
-        return Multimaps.index(assayGroupIds, groupByFunction);
-    }
-
-    public SortedSet<AssayGroupFactor> getFilteredAssayGroupFactors(final Set<Factor> filterFactors) {
-
-        SortedSet<AssayGroupFactor> result = Sets.newTreeSet();
+        Set<AssayGroupFactor> result =
+                orderingSpecifiedByCuratorsInConfigurationFile() ? Sets.<AssayGroupFactor>newLinkedHashSet() :
+                        Sets.<AssayGroupFactor>newTreeSet();
 
         for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
             List<Factor> remainingFactors;
 
             if (CollectionUtils.isNotEmpty(filterFactors)) {
-                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).remove(filterFactors);
+                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).without(filterFactors);
             } else {
                 remainingFactors = Lists.newArrayList(orderedFactorGroupsByAssayGroupId.get(groupId).iterator());
             }
@@ -151,18 +188,18 @@ public class ExperimentalFactors implements Serializable {
             }
         }
 
-        return result;
+        return Lists.newArrayList(result);
     }
 
-    public FactorGroup getFactorGroupByAssayGroupId(String assayGroupId) {
+    public FactorGroup getFactorGroup(String assayGroupId) {
         return orderedFactorGroupsByAssayGroupId.get(assayGroupId);
     }
 
-    public SortedSet<Factor> getFactorsForAssayGroupsByType(Collection<String> assayGroupIds, String factorType) {
+    public SortedSet<Factor> getFactors(Collection<String> assayGroupIds, String factorType) {
         SortedSet<Factor> factors = Sets.newTreeSet();
         for (String assayGroupId : assayGroupIds) {
-            FactorGroup factorGroupForAssay = getFactorGroupByAssayGroupId(assayGroupId);
-            Factor defaultFactorForAssay = factorGroupForAssay.getFactorByType(factorType);
+            FactorGroup factorGroupForAssay = getFactorGroup(assayGroupId);
+            Factor defaultFactorForAssay = factorGroupForAssay.factorOfType(factorType);
             factors.add(defaultFactorForAssay);
         }
         return factors;
@@ -182,15 +219,19 @@ public class ExperimentalFactors implements Serializable {
     }
 
     public SortedSet<Factor> getAllFactors() {
-        return ImmutableSortedSet.copyOf(factorsByType.values());
+        if (orderingSpecifiedByCuratorsInConfigurationFile()) {
+            return ImmutableSortedSet.copyOf(xmlFactorsByType.values());
+        } else {
+            return ImmutableSortedSet.copyOf(factorsByType.values());
+        }
     }
 
-    public int getFactorIndex(FactorGroup factorGroup) {
-        return orderedFactorGroups.indexOf(factorGroup);
+    public SortedSet<Factor> getAllFactorsOrderedByXML() {
+        return ImmutableSortedSet.copyOf(xmlFactorsByType.values());
     }
 
     // ordered the same as the assay group ids in the expression levels .tsv
-    public ImmutableList<FactorGroup> getOrderedFactorGroups() {
+    public ImmutableList<FactorGroup> getFactorGroupsInOrder() {
         return ImmutableList.copyOf(orderedFactorGroups);
     }
 
@@ -200,4 +241,3 @@ public class ExperimentalFactors implements Serializable {
                 + ", factorsByType = " + factorsByType;
     }
 }
-

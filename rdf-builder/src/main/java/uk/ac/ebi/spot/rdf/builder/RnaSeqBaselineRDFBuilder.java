@@ -109,7 +109,7 @@ public class RnaSeqBaselineRDFBuilder extends AbstractExperimentBuilder<Baseline
                         baselineValueUri
                 );
 
-                for (URI geneidUri : getUriProvider().getBioentityUri(profile.getId(), experiment.getFirstSpecies())) {
+                for (URI geneidUri : getUriProvider().getBioentityUri(profile.getId(), experiment.getSpecies().originalName)) {
 
                     builder.createTypeInstance(
                             geneidUri,

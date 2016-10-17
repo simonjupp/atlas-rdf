@@ -2,41 +2,42 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.differential.microarray;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.spot.atlas.rdf.commons.ObjectInputStream;
 import uk.ac.ebi.spot.atlas.rdf.commons.SequenceObjectInputStream;
+import uk.ac.ebi.spot.atlas.rdf.profiles.ProfileStreamFactory;
 import uk.ac.ebi.spot.atlas.rdf.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.spot.atlas.rdf.utils.CsvReaderFactory;
+import uk.ac.ebi.spot.rdf.model.differential.Contrast;
 import uk.ac.ebi.spot.rdf.model.differential.Regulation;
 import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayProfile;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.Vector;
 
-/**
- * @author Simon Jupp
- * @date 07/08/2014
- * Samples, Phenotypes and Ontologies Team, EMBL-EBI
- */
-public class MicroarrayProfileStreamFactory {
+@Named
+@Scope("prototype")
+public class MicroarrayProfileStreamFactory
+implements ProfileStreamFactory<MicroarrayProfileStreamOptions, MicroarrayProfile, Contrast> {
 
     @Value("#{configuration['microarray.experiment.data.path.template']}")
     private String experimentDataFileUrlTemplate;
 
-    @Value("${data.files.location}")
-    private String dataFileLocation;
-
-    private MicroarrayExpressionsQueueBuilder expressionsQueueBuilder;
+    private ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder;
 
     private CsvReaderFactory csvReaderFactory;
 
-    public MicroarrayProfileStreamFactory(MicroarrayExpressionsQueueBuilder expressionsQueueBuilder,
+    @Inject
+    public MicroarrayProfileStreamFactory(ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder,
                                           CsvReaderFactory csvReaderFactory) {
-        this.expressionsQueueBuilder = expressionsQueueBuilder;
+        this.expressionsRowDeserializerMicroarrayBuilder = expressionsRowDeserializerMicroarrayBuilder;
         this.csvReaderFactory = csvReaderFactory;
     }
 
 
-    public ObjectInputStream<MicroarrayProfile> createForAllArrayDesigns(MicroarrayProfileStreamOptions options) {
+    public ObjectInputStream<MicroarrayProfile> create(MicroarrayProfileStreamOptions options) {
         String experimentAccession = options.getExperimentAccession();
         double pValueCutOff = options.getPValueCutOff();
         double foldChangeCutOff = options.getFoldChangeCutOff();
@@ -46,7 +47,7 @@ public class MicroarrayProfileStreamFactory {
         return create(experimentAccession, pValueCutOff, foldChangeCutOff, regulation, arrayDesignAccessions);
     }
 
-    public MicroarrayProfileStream create(MicroarrayProfileStreamOptions options, String arrayDesign) {
+    public MicroarrayProfilesTsvInputStream create(MicroarrayProfileStreamOptions options, String arrayDesign) {
         String experimentAccession = options.getExperimentAccession();
         double pValueCutOff = options.getPValueCutOff();
         double foldChangeCutOff = options.getFoldChangeCutOff();
@@ -65,16 +66,16 @@ public class MicroarrayProfileStreamFactory {
         return new SequenceObjectInputStream<>(inputStreams.elements());
     }
 
-    public MicroarrayProfileStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation, String arrayDesignAccession) {
+    public MicroarrayProfilesTsvInputStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation, String arrayDesignAccession) {
         MicroarrayProfileReusableBuilder profileBuilder = createProfileBuilder(pValueCutOff, foldChangeCutOff, regulation);
         CSVReader csvReader = createCsvReader(experimentAccession, arrayDesignAccession);
 
-        return new MicroarrayProfileStream(csvReader, experimentAccession, expressionsQueueBuilder, profileBuilder);
+        return new MicroarrayProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerMicroarrayBuilder, profileBuilder);
     }
 
 
     private CSVReader createCsvReader(String experimentAccession, String arrayDesignAccession) {
-        String tsvFileURL = MessageFormat.format(dataFileLocation + experimentDataFileUrlTemplate, experimentAccession, arrayDesignAccession);
+        String tsvFileURL = MessageFormat.format(experimentDataFileUrlTemplate, experimentAccession, arrayDesignAccession);
         return csvReaderFactory.createTsvReader(tsvFileURL);
     }
 

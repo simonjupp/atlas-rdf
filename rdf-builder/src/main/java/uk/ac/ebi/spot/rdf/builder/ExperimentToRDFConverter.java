@@ -1,18 +1,10 @@
 package uk.ac.ebi.spot.rdf.builder;
 
-import org.apache.jena.riot.RDFFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import uk.ac.ebi.spot.atlas.rdf.ConfigurationTrader;
 import uk.ac.ebi.spot.atlas.rdf.ExperimentDTO;
-import uk.ac.ebi.spot.atlas.rdf.cache.BaselineExperimentsCache;
-import uk.ac.ebi.spot.atlas.rdf.cache.MicroarrayExperimentsCache;
-import uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqDiffExperimentsCache;
-import uk.ac.ebi.spot.atlas.rdf.loader.BaselineProfilesLoader;
-import uk.ac.ebi.spot.atlas.rdf.loader.MicroarrayProfilesLoader;
-import uk.ac.ebi.spot.atlas.rdf.loader.RnaSeqDiffProfilesLoader;
 import uk.ac.ebi.spot.rdf.jena.JenaAssertionBuilder;
 import uk.ac.ebi.spot.rdf.model.CompleteExperiment;
 import uk.ac.ebi.spot.rdf.model.Experiment;
@@ -20,6 +12,7 @@ import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
 import uk.ac.ebi.spot.rdf.model.Profile;
 
 import java.io.*;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Simon Jupp
@@ -74,7 +67,7 @@ public class ExperimentToRDFConverter {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException {
 
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
