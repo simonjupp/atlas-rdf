@@ -148,11 +148,15 @@ public abstract class AbstractExperimentBuilder <T extends Experiment, V extends
                 experimentUri, getUriProvider().getDescriptionRelUri(),
                 experiment.getDescription());
 
-        for (String pubmedId : (List<String>) experiment.getAttributes().get("pubmedIds")) {
-            builder.createAnnotationAssertion(
-                    experimentUri,
-                    getUriProvider().getPubmedPredicateUri(),
-                    getUriProvider().getPubmedUri(pubmedId));
+        if (experiment.getAttributes().get("pubmedIds") == null) {
+            log.warn(String.format("Experiment %s has no pubmed IDs", experiment.getAccession()));
+        } else {
+            for (String pubmedId : (List<String>) experiment.getAttributes().get("pubmedIds")) {
+                builder.createAnnotationAssertion(
+                        experimentUri,
+                        getUriProvider().getPubmedPredicateUri(),
+                        getUriProvider().getPubmedUri(pubmedId));
+            }
         }
 
 //        builder.createAnnotationAssertion(
