@@ -4,6 +4,7 @@ import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.spot.atlas.rdf.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.spot.rdf.model.baseline.*;
 
+import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ public class BaselineProfilesLoader {
         return baselineExpressionsInputStreamFactory;
     }
 
+    @Inject
     public void setBaselineExpressionsInputStreamFactory(BaselineProfileInputStreamFactory baselineExpressionsInputStreamFactory) {
         this.baselineExpressionsInputStreamFactory = baselineExpressionsInputStreamFactory;
     }
