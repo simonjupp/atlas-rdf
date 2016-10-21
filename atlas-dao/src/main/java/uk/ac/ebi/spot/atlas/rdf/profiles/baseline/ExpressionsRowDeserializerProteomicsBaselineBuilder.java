@@ -3,7 +3,7 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.spot.atlas.rdf.cache.ProteomicsBaselineExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.loader.ProteomicsBaselineExperimentExpressionLevelFile;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;

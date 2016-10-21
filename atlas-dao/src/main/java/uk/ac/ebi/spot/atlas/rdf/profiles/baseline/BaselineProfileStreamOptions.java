@@ -1,7 +1,7 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 
 import uk.ac.ebi.spot.atlas.rdf.profiles.ProfileStreamOptions;
-import uk.ac.ebi.spot.rdf.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.Set;
 

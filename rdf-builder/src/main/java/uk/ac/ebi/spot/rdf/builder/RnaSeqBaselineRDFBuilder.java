@@ -1,17 +1,15 @@
 package uk.ac.ebi.spot.rdf.builder;
 
 
-import uk.ac.ebi.spot.rdf.model.AssayGroup;
-import uk.ac.ebi.spot.rdf.model.ExperimentDesign;
-import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExperiment;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineProfile;
-import uk.ac.ebi.spot.rdf.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.spot.rdf.utils.HashingIdGenerator;
 
 import java.net.URI;
-import java.util.*;
 
 /**
  * @author Simon Jupp

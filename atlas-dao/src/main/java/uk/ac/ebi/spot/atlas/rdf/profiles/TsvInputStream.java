@@ -4,7 +4,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.spot.rdf.model.Expression;
+import uk.ac.ebi.atlas.model.Expression;
 
 import java.io.IOException;
 

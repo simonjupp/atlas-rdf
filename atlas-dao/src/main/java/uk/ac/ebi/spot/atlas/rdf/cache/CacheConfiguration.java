@@ -9,10 +9,10 @@ import uk.ac.ebi.spot.atlas.rdf.loader.MicroarrayExperimentsCacheLoader;
 import uk.ac.ebi.spot.atlas.rdf.loader.ProteomicsBaselineExperimentsCacheLoader;
 import uk.ac.ebi.spot.atlas.rdf.loader.PublicExperimentTypesCacheLoader;
 import uk.ac.ebi.spot.atlas.rdf.loader.RnaSeqBaselineExperimentsCacheLoader;
-import uk.ac.ebi.spot.rdf.model.ExperimentType;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExperiment;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExperiment;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Inject;
 

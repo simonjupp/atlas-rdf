@@ -3,9 +3,9 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.differential;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialProfile;
-import uk.ac.ebi.spot.rdf.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import java.util.Comparator;
 import java.util.Set;

@@ -2,8 +2,8 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.differential.microarray;
 
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionsRowTsvDeserializer;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 
 import java.util.Iterator;
 import java.util.List;

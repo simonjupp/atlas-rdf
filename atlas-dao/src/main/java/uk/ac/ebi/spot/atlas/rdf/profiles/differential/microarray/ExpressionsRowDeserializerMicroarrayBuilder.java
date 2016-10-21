@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.spot.atlas.rdf.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionsRowTsvDeserializer;
 import uk.ac.ebi.spot.atlas.rdf.profiles.differential.ExpressionsRowDeserializerDifferentialBuilder;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;

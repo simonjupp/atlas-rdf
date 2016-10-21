@@ -2,8 +2,8 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.differential;
 
 import uk.ac.ebi.spot.atlas.rdf.profiles.ProfileStreamOptions;
 import uk.ac.ebi.spot.atlas.rdf.profiles.RankProfiles;
-import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
-import uk.ac.ebi.spot.rdf.model.Profile;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.Profile;
 
 /**
  * @author Simon Jupp

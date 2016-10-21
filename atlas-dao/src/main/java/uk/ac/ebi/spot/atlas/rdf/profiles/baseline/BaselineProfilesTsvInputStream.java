@@ -2,8 +2,8 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.spot.atlas.rdf.profiles.TsvInputStream;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 
 public class BaselineProfilesTsvInputStream extends TsvInputStream<BaselineProfile, BaselineExpression> {
 

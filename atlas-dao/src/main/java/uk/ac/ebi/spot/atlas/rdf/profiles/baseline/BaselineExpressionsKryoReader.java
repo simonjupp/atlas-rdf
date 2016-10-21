@@ -3,8 +3,8 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoException;
 import com.esotericsoftware.kryo.io.UnsafeInput;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
-import uk.ac.ebi.spot.rdf.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
 import java.io.Closeable;
 

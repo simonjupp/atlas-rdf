@@ -1,8 +1,8 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles.differential;
 
 import uk.ac.ebi.spot.atlas.rdf.profiles.GeneProfilesListBuilder;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialProfile;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 
 /**
  * @author Simon Jupp

@@ -6,10 +6,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import uk.ac.ebi.spot.atlas.rdf.ExperimentDTO;
 import uk.ac.ebi.spot.rdf.builder.ExperimentToRDFConverter;
 import uk.ac.ebi.spot.rdf.builder.URIProvider;
-import uk.ac.ebi.spot.rdf.model.CompleteExperiment;
+import uk.ac.ebi.atlas.model.CompleteExperiment;
 
 import java.io.*;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;

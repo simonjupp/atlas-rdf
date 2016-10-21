@@ -3,9 +3,9 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionsRowTsvDeserializer;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
-import uk.ac.ebi.spot.rdf.model.baseline.FactorGroup;
-import uk.ac.ebi.spot.rdf.model.baseline.QuartilesArrayBuilder;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
 
 import java.util.Iterator;
 import java.util.List;

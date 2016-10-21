@@ -3,8 +3,8 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
-import uk.ac.ebi.spot.rdf.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Named;
 import java.util.HashSet;

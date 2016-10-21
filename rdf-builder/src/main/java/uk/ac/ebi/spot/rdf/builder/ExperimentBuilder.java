@@ -1,11 +1,9 @@
 package uk.ac.ebi.spot.rdf.builder;
 
-import uk.ac.ebi.spot.rdf.model.Experiment;
-import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Simon Jupp

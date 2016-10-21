@@ -7,9 +7,9 @@ import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.spot.atlas.rdf.cache.ExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionsRowTsvDeserializer;
-import uk.ac.ebi.spot.rdf.model.Expression;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import java.util.Arrays;
 import java.util.LinkedList;

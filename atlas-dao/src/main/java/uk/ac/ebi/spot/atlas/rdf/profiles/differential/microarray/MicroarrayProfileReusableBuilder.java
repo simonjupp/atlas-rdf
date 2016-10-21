@@ -1,9 +1,9 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles.differential.microarray;
 
 import com.google.common.base.Predicate;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExpression;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExpression;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 
 import static com.google.common.base.Preconditions.checkState;
 

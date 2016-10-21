@@ -4,7 +4,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import uk.ac.ebi.spot.rdf.model.OntologyTerm;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 
 public class OntologyTermKryoSerializer extends Serializer<OntologyTerm>  {
     public OntologyTermKryoSerializer() {

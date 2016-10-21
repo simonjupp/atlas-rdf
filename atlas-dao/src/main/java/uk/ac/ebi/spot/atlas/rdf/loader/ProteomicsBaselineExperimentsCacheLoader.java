@@ -2,7 +2,7 @@ package uk.ac.ebi.spot.atlas.rdf.loader;
 
 import uk.ac.ebi.spot.atlas.rdf.ConfigurationTrader;
 import uk.ac.ebi.spot.atlas.rdf.SpeciesFactory;
-import uk.ac.ebi.spot.rdf.model.ExperimentType;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;

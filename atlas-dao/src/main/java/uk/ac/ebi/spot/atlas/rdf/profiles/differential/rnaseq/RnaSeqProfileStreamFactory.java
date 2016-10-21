@@ -8,9 +8,9 @@ import uk.ac.ebi.spot.atlas.rdf.profiles.DifferentialProfileStreamOptions;
 import uk.ac.ebi.spot.atlas.rdf.profiles.ProfileStreamFactory;
 import uk.ac.ebi.spot.atlas.rdf.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.spot.atlas.rdf.utils.CsvReaderFactory;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.Regulation;
-import uk.ac.ebi.spot.rdf.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -8,9 +8,9 @@ import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.spot.atlas.rdf.profiles.ProfileStreamFactory;
 import uk.ac.ebi.spot.atlas.rdf.utils.CsvReaderFactory;
 import uk.ac.ebi.spot.atlas.rdf.utils.KryoReaderFactory;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineProfile;
-import uk.ac.ebi.spot.rdf.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Inject;
 import javax.inject.Named;

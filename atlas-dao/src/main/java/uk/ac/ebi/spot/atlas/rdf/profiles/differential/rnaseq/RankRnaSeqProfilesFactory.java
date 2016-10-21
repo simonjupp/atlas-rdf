@@ -5,8 +5,8 @@ import uk.ac.ebi.spot.atlas.rdf.profiles.RankProfiles;
 import uk.ac.ebi.spot.atlas.rdf.profiles.differential.DifferentialProfileComparatorFactory;
 import uk.ac.ebi.spot.atlas.rdf.profiles.differential.DifferentialProfilesListBuilder;
 import uk.ac.ebi.spot.atlas.rdf.profiles.differential.RankProfilesFactory;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.spot.rdf.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 
 import java.util.Comparator;
 

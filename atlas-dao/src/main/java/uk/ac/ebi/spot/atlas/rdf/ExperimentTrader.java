@@ -15,8 +15,8 @@ import uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.experimentimport.AtlasExperimentDTO;
 import uk.ac.ebi.spot.atlas.rdf.experimentimport.ExperimentDAO;
-import uk.ac.ebi.spot.rdf.model.Experiment;
-import uk.ac.ebi.spot.rdf.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -1,7 +1,7 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles;
 
-import uk.ac.ebi.spot.rdf.model.Expression;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 
 import java.util.Collections;
 import java.util.LinkedList;

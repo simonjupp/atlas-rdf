@@ -2,8 +2,8 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.differential.rnaseq;
 
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.spot.atlas.rdf.profiles.TsvRowQueue;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 
 import java.util.Iterator;
 import java.util.List;

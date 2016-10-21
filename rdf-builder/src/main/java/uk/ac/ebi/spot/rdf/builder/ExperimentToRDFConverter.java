@@ -6,10 +6,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import uk.ac.ebi.spot.atlas.rdf.ExperimentDTO;
 import uk.ac.ebi.spot.rdf.jena.JenaAssertionBuilder;
-import uk.ac.ebi.spot.rdf.model.CompleteExperiment;
-import uk.ac.ebi.spot.rdf.model.Experiment;
-import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
-import uk.ac.ebi.spot.rdf.model.Profile;
+import uk.ac.ebi.atlas.model.CompleteExperiment;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.Profile;
 
 import java.io.*;
 import java.util.concurrent.ExecutionException;

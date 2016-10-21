@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import uk.ac.ebi.spot.rdf.model.SpeciesUtils;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
 import uk.ac.ebi.spot.atlas.rdf.dao.OrganismEnsemblDAO;
 import uk.ac.ebi.spot.atlas.rdf.dao.OrganismKingdomDAO;
 

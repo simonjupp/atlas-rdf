@@ -2,8 +2,8 @@ package uk.ac.ebi.spot.atlas.rdf.profiles;
 
 import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.spot.atlas.rdf.profiles.baseline.BaselineExpressionsKryoReader;
-import uk.ac.ebi.spot.rdf.model.Expression;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 
 import java.io.IOException;
 

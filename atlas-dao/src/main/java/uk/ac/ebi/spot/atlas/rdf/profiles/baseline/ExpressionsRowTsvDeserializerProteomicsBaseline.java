@@ -3,7 +3,7 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 import com.google.common.base.Joiner;
 import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionsRowTsvDeserializer;
 import uk.ac.ebi.spot.atlas.rdf.utils.StringArrayUtil;
-import uk.ac.ebi.spot.rdf.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
 import java.util.List;
 

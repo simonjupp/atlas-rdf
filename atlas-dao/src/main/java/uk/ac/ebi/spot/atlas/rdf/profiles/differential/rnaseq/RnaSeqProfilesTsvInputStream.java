@@ -2,8 +2,8 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.differential.rnaseq;
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.spot.atlas.rdf.profiles.TsvInputStream;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExpression;
-import uk.ac.ebi.spot.rdf.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 
 public class RnaSeqProfilesTsvInputStream extends TsvInputStream<RnaSeqProfile, DifferentialExpression> {
 

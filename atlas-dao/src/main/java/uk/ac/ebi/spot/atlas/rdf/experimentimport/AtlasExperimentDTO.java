@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import uk.ac.ebi.spot.rdf.model.ExperimentType;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Date;
 import java.util.Set;

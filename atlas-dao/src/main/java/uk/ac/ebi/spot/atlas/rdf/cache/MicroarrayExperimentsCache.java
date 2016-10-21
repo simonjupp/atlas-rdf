@@ -2,7 +2,7 @@ package uk.ac.ebi.spot.atlas.rdf.cache;
 
 import com.google.common.cache.LoadingCache;
 import org.springframework.beans.factory.annotation.Qualifier;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;

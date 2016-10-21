@@ -1,8 +1,8 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles.differential;
 
 import com.google.common.base.Predicate;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExpression;
-import uk.ac.ebi.spot.rdf.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 /**
  * @author Simon Jupp

@@ -1,8 +1,8 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 
 import com.google.common.base.Predicate;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 
 import static com.google.common.base.Preconditions.checkState;
 

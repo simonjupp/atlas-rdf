@@ -1,8 +1,7 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles.differential;
 
 import uk.ac.ebi.spot.atlas.rdf.profiles.DifferentialProfileStreamOptions;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialProfile;
-import uk.ac.ebi.spot.atlas.rdf.profiles.differential.DifferentialProfileComparator;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 
 /**
  * @author Simon Jupp

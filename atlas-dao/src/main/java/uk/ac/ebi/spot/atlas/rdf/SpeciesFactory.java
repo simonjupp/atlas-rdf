@@ -4,9 +4,9 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import uk.ac.ebi.spot.rdf.model.Species;
-import uk.ac.ebi.spot.rdf.model.SpeciesUtils;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExperimentConfiguration;
+import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.model.SpeciesUtils;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration;
 import uk.ac.ebi.spot.atlas.rdf.experimentimport.AtlasExperimentDTO;
 
 import javax.inject.Inject;

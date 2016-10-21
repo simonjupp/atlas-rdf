@@ -1,8 +1,8 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 
 import uk.ac.ebi.spot.atlas.rdf.profiles.KryoInputStream;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 
 public class BaselineProfilesKryoInputStream extends KryoInputStream<BaselineProfile, BaselineExpression> {
 

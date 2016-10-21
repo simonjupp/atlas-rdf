@@ -7,7 +7,7 @@ import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import uk.ac.ebi.spot.rdf.model.ExperimentType;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

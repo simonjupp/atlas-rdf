@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.spot.atlas.rdf.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.spot.atlas.rdf.commons.readers.TsvReader;
-import uk.ac.ebi.spot.rdf.model.ExperimentDesign;
-import uk.ac.ebi.spot.rdf.model.OntologyTerm;
-import uk.ac.ebi.spot.rdf.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.OntologyTerm;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
 
 import javax.inject.Inject;
 import javax.inject.Named;

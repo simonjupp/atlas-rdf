@@ -1,6 +1,6 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles;
 
-import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
 
 /**
  * @author Simon Jupp

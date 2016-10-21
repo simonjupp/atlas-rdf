@@ -1,8 +1,8 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles;
 
 import com.google.common.collect.MinMaxPriorityQueue;
-import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
-import uk.ac.ebi.spot.rdf.model.Profile;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.Profile;
 
 import java.util.Comparator;
 

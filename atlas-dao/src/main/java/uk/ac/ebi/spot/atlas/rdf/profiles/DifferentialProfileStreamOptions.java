@@ -1,7 +1,7 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles;
 
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 public interface DifferentialProfileStreamOptions extends ProfileStreamOptions<Contrast> {
     Regulation getRegulation();

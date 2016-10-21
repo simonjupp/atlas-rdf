@@ -3,8 +3,8 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionsRowDeserializerBuilder;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExperiment;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;

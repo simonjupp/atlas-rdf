@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import uk.ac.ebi.spot.rdf.model.ExperimentConfiguration;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExperimentConfiguration;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.model.ExperimentConfiguration;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 
 import javax.inject.Named;
 import javax.xml.parsers.DocumentBuilder;

@@ -1,8 +1,12 @@
 package uk.ac.ebi.spot.atlas.rdf.loader;
 
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.spot.atlas.rdf.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.spot.atlas.rdf.profiles.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.spot.rdf.model.baseline.*;
 
 import javax.inject.Inject;
 import java.util.Collection;

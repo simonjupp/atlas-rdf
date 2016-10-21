@@ -3,9 +3,9 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.differential.rnaseq;
 import uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.profiles.TsvRowQueue;
 import uk.ac.ebi.spot.atlas.rdf.profiles.differential.DifferentialExpressionsQueueBuilder;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExperiment;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 
 import java.util.List;
 

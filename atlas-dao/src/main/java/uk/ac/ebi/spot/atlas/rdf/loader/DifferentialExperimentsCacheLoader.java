@@ -3,10 +3,10 @@ package uk.ac.ebi.spot.atlas.rdf.loader;
 import uk.ac.ebi.spot.atlas.rdf.ConfigurationTrader;
 import uk.ac.ebi.spot.atlas.rdf.SpeciesFactory;
 import uk.ac.ebi.spot.atlas.rdf.experimentimport.AtlasExperimentDTO;
-import uk.ac.ebi.spot.rdf.model.ExperimentConfiguration;
-import uk.ac.ebi.spot.rdf.model.ExperimentDesign;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.ExperimentConfiguration;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;

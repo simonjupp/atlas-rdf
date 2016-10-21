@@ -3,7 +3,7 @@ package uk.ac.ebi.spot.atlas.rdf.loader;
 import com.google.common.cache.CacheLoader;
 import uk.ac.ebi.spot.atlas.rdf.experimentimport.AtlasExperimentDTO;
 import uk.ac.ebi.spot.atlas.rdf.experimentimport.ExperimentDAO;
-import uk.ac.ebi.spot.rdf.model.ExperimentType;
+import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

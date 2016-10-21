@@ -3,9 +3,9 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.differential.microarray;
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.spot.atlas.rdf.profiles.TsvInputStream;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExpression;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 
 import java.util.List;
 

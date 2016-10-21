@@ -2,8 +2,8 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.baseline;
 
 import uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqBaselineExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.profiles.TsvRowQueueBuilder;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExperiment;
-import uk.ac.ebi.spot.rdf.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 
 import java.util.concurrent.ExecutionException;
 

@@ -3,9 +3,9 @@ package uk.ac.ebi.spot.atlas.rdf.profiles.differential.microarray;
 import uk.ac.ebi.spot.atlas.rdf.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.profiles.TsvRowQueue;
 import uk.ac.ebi.spot.atlas.rdf.profiles.differential.DifferentialExpressionsQueueBuilder;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.spot.rdf.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 
 import java.util.List;
 

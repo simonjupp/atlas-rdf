@@ -1,9 +1,9 @@
 package uk.ac.ebi.spot.rdf.builder;
 
-import uk.ac.ebi.spot.rdf.model.AssayGroup;
-import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
-import uk.ac.ebi.spot.rdf.model.differential.Contrast;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.spot.rdf.utils.HashingIdGenerator;
 
 import java.net.URI;

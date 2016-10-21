@@ -2,10 +2,10 @@ package uk.ac.ebi.spot.atlas.rdf.loader;
 
 import uk.ac.ebi.spot.atlas.rdf.commons.ObjectInputStream;
 import uk.ac.ebi.spot.atlas.rdf.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExperiment;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.spot.rdf.model.differential.Regulation;
-import uk.ac.ebi.spot.rdf.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 
 import javax.inject.Inject;
 import java.util.Collection;

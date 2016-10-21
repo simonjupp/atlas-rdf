@@ -3,13 +3,12 @@ package uk.ac.ebi.spot.atlas.rdf.loader;
 import com.google.common.cache.CacheLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.ac.ebi.spot.atlas.rdf.ExperimentDTO;
 import uk.ac.ebi.spot.atlas.rdf.ExperimentDesignParser;
 import uk.ac.ebi.spot.atlas.rdf.experimentimport.AtlasExperimentDTO;
 import uk.ac.ebi.spot.atlas.rdf.experimentimport.ExperimentDAO;
 import uk.ac.ebi.spot.atlas.rdf.utils.ArrayExpressClient;
-import uk.ac.ebi.spot.rdf.model.Experiment;
-import uk.ac.ebi.spot.rdf.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

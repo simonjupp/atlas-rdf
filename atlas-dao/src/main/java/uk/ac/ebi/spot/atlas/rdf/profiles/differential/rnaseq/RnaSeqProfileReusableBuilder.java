@@ -1,8 +1,8 @@
 package uk.ac.ebi.spot.atlas.rdf.profiles.differential.rnaseq;
 
 import com.google.common.base.Predicate;
-import uk.ac.ebi.spot.rdf.model.differential.DifferentialExpression;
-import uk.ac.ebi.spot.rdf.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 
 import static com.google.common.base.Preconditions.checkState;
 

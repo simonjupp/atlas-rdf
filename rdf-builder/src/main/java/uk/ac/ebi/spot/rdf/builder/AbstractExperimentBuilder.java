@@ -4,12 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.ac.ebi.spot.rdf.exception.UnknownOrganismTypeException;
-import uk.ac.ebi.spot.rdf.model.Experiment;
-import uk.ac.ebi.spot.rdf.model.ExperimentDesign;
-import uk.ac.ebi.spot.rdf.model.SampleCharacteristic;
-import uk.ac.ebi.spot.rdf.model.baseline.Factor;
-import uk.ac.ebi.spot.rdf.model.GeneProfilesList;
-import uk.ac.ebi.spot.rdf.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.GeneProfilesList;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.io.OutputStream;
 import java.net.URI;
