@@ -65,7 +65,7 @@ public class RnaSeqContrastRDFBuilder extends DifferentialExperimentDesignRDFBui
                     for (Factor factor : experiment.getExperimentDesign().getFactors(run)) {
                         URI experimentalFactorUri = getUriProvider().getFactorUri(experiment.getAccession(), factor.getType() , factor.getValue());
                         builder.createObjectPropertyAssertion(
-                                diffValueUri,
+                                analaysisUriForContrast,
                                 getUriProvider().getExpressionToEfRelUri(),
                                 experimentalFactorUri
                         );

@@ -65,7 +65,7 @@ public class MicroarrayContrastRDFBuilder extends DifferentialExperimentDesignRD
                     for (Factor factor : experiment.getExperimentDesign().getFactors(run)) {
                         URI experimentalFactorUri = getUriProvider().getFactorUri(experiment.getAccession(), factor.getType() , factor.getValue());
                         builder.createObjectPropertyAssertion(
-                                diffValueUri,
+                                analysisUri,
                                 getUriProvider().getExpressionToEfRelUri(),
                                 experimentalFactorUri
                         );
