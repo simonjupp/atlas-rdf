@@ -22,7 +22,6 @@ import uk.ac.ebi.spot.atlas.rdf.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.spot.atlas.rdf.loader.BaselineProfilesLoader;
 import uk.ac.ebi.spot.atlas.rdf.loader.MicroarrayProfilesLoader;
 import uk.ac.ebi.spot.atlas.rdf.loader.RnaSeqDiffProfilesLoader;
-import uk.ac.ebi.spot.rdf.model.*;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;

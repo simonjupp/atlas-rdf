@@ -3,13 +3,11 @@ package uk.ac.ebi.spot.rdf.builder;
 
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.spot.rdf.utils.HashingIdGenerator;
 
 import java.net.URI;
+import java.util.*;
 
 /**
  * @author Simon Jupp
@@ -33,48 +31,87 @@ public class RnaSeqBaselineRDFBuilder extends AbstractExperimentBuilder<Baseline
 
         AssertionBuilder builder = getBuilder();
 
-        String id = HashingIdGenerator.generateHashEncodedID(experiment.getAssayGroups().toString());
-        URI analysisURI = getUriProvider().getAnalysisUri(experiment.getAccession(), id);
+        // create a map mapping a factor to an assay group
+        Map<Factor, Set<AssayGroup>> factorToAssayGroup = new HashMap<>();
+        for (Factor factor : experiment.getExperimentalFactors().getAllFactors()) {
+            Map<String, Factor> groupToFactor = experiment.getExperimentalFactors().getFactorGroupedByAssayGroupId(factor.getType());
 
-        builder.createTypeInstance(
-                analysisURI,
-                getUriProvider().getRNASeqBaselineAnalysisTypeUri()
-        );
 
-        // link experiment to analysis
-        URI experimentUri = getUriProvider().getExperimentUri(experiment.getAccession());
-        builder.createObjectPropertyAssertion(
-                experimentUri,
-                getUriProvider().getExperimentToAnalysisRel(),
-                analysisURI
-        );
-
-        // get the groups and link to assays,
-        for (AssayGroup group : experiment.getAssayGroups()) {
-            for (String assay : group) {
-                URI assayUri = getUriProvider().getAssayUri(experiment.getAccession(), assay);
-                builder.createObjectPropertyAssertion(
-                        analysisURI,
-                        getUriProvider().getReferenceAssayRelUri(),
-                        assayUri
-                );
+            for (String group : groupToFactor.keySet()) {
+                AssayGroup assayGroup = experiment.getAssayGroups().getAssayGroup(group);
+                if (factor.equals(groupToFactor.get(group))) {
+                    if (!factorToAssayGroup.containsKey(factor)) {
+                        factorToAssayGroup.put(factor, new HashSet<AssayGroup>());
+                    }
+                    factorToAssayGroup.get(factor).add(assayGroup);
+                }
             }
         }
+        // for each factor create a URI to represent the analysis of a group of assays
+        Map<Factor, URI> factorToAnalysisUri = new HashMap<>();
+
+        for (Factor factor : factorToAssayGroup.keySet()) {
+
+            Set<AssayGroup> assayGroup = factorToAssayGroup.get(factor);
+
+            String id = HashingIdGenerator.generateHashEncodedID(assayGroup.toString());
+            URI analysisURI = getUriProvider().getAnalysisUri(experiment.getAccession(), id);
+
+            if (factorToAnalysisUri.containsKey(factor)) {
+                log.error("Factors should be unique for a baseline experiment");
+                throw new RuntimeException("Factors should be unique for a baseline experiment");
+            }
+            factorToAnalysisUri.put(factor, analysisURI);
+
+            builder.createTypeInstance(
+                    analysisURI,
+                    getUriProvider().getRNASeqBaselineAnalysisTypeUri()
+            );
+
+            // link experiment to analysis
+            URI experimentUri = getUriProvider().getExperimentUri(experiment.getAccession());
+            builder.createObjectPropertyAssertion(
+                    experimentUri,
+                    getUriProvider().getExperimentToAnalysisRel(),
+                    analysisURI
+            );
 
 
+            // get the groups and link to assays,
+            for (AssayGroup group : assayGroup) {
+
+                for (String assay : group) {
+                    URI assayUri = getUriProvider().getAssayUri(experiment.getAccession(), assay);
+                    builder.createObjectPropertyAssertion(
+                            analysisURI,
+                            getUriProvider().getReferenceAssayRelUri(),
+                            assayUri
+                    );
+                }
+            }
+
+            // get the factor
+            URI experimentalFactorUri = getUriProvider().getFactorUri(experiment.getAccession(), factor.getType() , factor.getValue());
+            builder.createObjectPropertyAssertion(
+                    analysisURI,
+                    getUriProvider().getExpressionToEfRelUri(),
+                    experimentalFactorUri
+            );
+
+        }
 
         for (BaselineProfile profile : profiles) {
+
             for (Factor factor : profile.getConditions()) {
 
                 BaselineExpression expression = profile.getExpression(factor);
-
                 if (!expression.isKnown()) {
                     continue;
                 }
                 String frag = HashingIdGenerator.generateHashEncodedID(
                         experiment.getAccession(),
                         profile.getId(),
-                        analysisURI.toString(),
+                        factorToAnalysisUri.get(factor).toString(),
                         factor.toString(),
                         String.valueOf(expression.getLevel()));
 
@@ -88,21 +125,8 @@ public class RnaSeqBaselineRDFBuilder extends AbstractExperimentBuilder<Baseline
                         profile.getName() + " expressed in " + factor.getValue()
                 );
 
-                // get the factor
-                URI experimentalFactorUri = getUriProvider().getFactorUri(experiment.getAccession(), factor.getType() , factor.getValue());
                 builder.createObjectPropertyAssertion(
-                        baselineValueUri,
-                        getUriProvider().getExpressionToEfRelUri(),
-                        experimentalFactorUri
-                );
-
-                builder.createObjectPropertyAssertion(
-                        baselineValueUri,
-                        getUriProvider().getExpressionValueToAnalysisRelUri(),
-                        analysisURI
-                );
-                builder.createObjectPropertyAssertion(
-                        analysisURI,
+                        factorToAnalysisUri.get(factor),
                         getUriProvider().getAnalysisToExpressionValueRelUri(),
                         baselineValueUri
                 );

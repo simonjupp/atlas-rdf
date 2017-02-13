@@ -19,7 +19,8 @@
     <util:properties id="configuration" location="classpath:configuration.properties"/>
 
     <bean id="dataSourceOracle" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
-        <property name="URL" value="jdbc:oracle:thin:@ora-vm-064.ebi.ac.uk:1531:ATLASPRO"/>
+        <!--<property name="URL" value="jdbc:oracle:thin:@ora-vm-064.ebi.ac.uk:1531:ATLASPRO"/>-->
+        <property name="URL" value="jdbc:oracle:thin:@ora-dlvm-030.ebi.ac.uk:1521:ATLASPUB"/>
         <property name="user" value="atlasprd3"/>
         <property name="password" value="atlasp543"/>
         <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource"/>

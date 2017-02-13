@@ -84,7 +84,7 @@ public class ExperimentToRDFConverter {
                 // baseline
 //                E-GEOD-26284
 
-      CompleteExperiment experiment = builder.build("E-TABM-713");
+      CompleteExperiment experiment = builder.build("E-GEOD-20523");
 //        CompleteExperiment experiment = builder.build("E-GEOD-3307");
 
         String outfile = "/Users/jupp/dev/gxardf-data/expression-atlas-rdf/" + experiment.getExperiment().getAccession()+ ".rdf";
